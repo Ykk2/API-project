@@ -1,20 +1,11 @@
-// backend/routes/api/users.js
 const express = require('express');
-
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
-
-// backend/routes/api/users.js
-// ...
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-// ...
 
 const router = express.Router();
 
-
-// backend/routes/api/users.js
-// ...
 const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
@@ -36,9 +27,6 @@ const validateSignup = [
   ];
 
 
-// backend/routes/api/users.js
-// ...
-
 // Sign up
 router.post(
     '/',
@@ -47,7 +35,7 @@ router.post(
       const { email, password, username, firstName, lastName } = req.body;
       const user = await User.signup({ email, username, password, firstName, lastName });
 
-      await setTokenCookie(res, user);
+      const token = setTokenCookie(res, user);
 
       return res.json({
         id: user.id,
@@ -55,7 +43,7 @@ router.post(
         lastName: user.lastName,
         email: user.email,
         username: user.username,
-        token: ""
+        token: token
       });
     }
   );

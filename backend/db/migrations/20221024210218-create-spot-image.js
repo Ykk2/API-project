@@ -12,6 +12,10 @@ module.exports = {
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'spots',
+          key: 'id'
+        }
       },
       url: {
         type: Sequelize.STRING,

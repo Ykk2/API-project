@@ -12,6 +12,10 @@ module.exports = {
       reviewId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'reviews',
+          key: 'id'
+        }
       },
       url: {
         type: Sequelize.STRING

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      SpotImage.belongsTo(models.Spot)
+      SpotImage.belongsTo(models.Spot, {foreignKey: 'spotId'})
     }
   }
   SpotImage.init({
@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   }, {
+    defaultScope: {attributes: {exclude: ['createdAt', 'updatedAt']}},
     sequelize,
     modelName: 'SpotImage',
   });
