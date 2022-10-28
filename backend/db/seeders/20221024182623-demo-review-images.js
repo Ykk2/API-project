@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('reviewImages', [
+    return queryInterface.bulkInsert('ReviewImages', [
       {
         reviewId: 1,
         url: 'url for reviewimage 1'
@@ -21,7 +21,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     const Op = Sequelize.Op
-    return queryInterface.bulkDelete('reviewimages', {
+    return queryInterface.bulkDelete('ReviewImages', {
       reviewId: {[Op.in]: [1, 2, 3]}
     }, {})
   }

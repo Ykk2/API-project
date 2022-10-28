@@ -5,7 +5,7 @@ const { urlencoded } = require('express');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('spotImages', [
+    return queryInterface.bulkInsert('SpotImages', [
       {
         spotId: 1,
         url: "this is the url for spot 1",
@@ -26,7 +26,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     const Op = Sequelize.Op
-    return queryInterface.bulkDelete('spotImages', {
+    return queryInterface.bulkDelete('SpotImages', {
       spotId: { [Op.in]: [1, 2, 3]}
     }, {})
   }
