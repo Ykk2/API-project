@@ -145,12 +145,11 @@ router.get('/', async (req, res) => {
         pagination.offset = size * (page -1)
     }
 
-    console.log(pagination)
+
 
     let result = []
 
-    const spots = await Spot.findAll({...pagination})
-    console.log(spots)
+    const spots = await Spot.findAll()
 
     for (let i = 0; i < spots.length; i++) {
 
@@ -168,12 +167,16 @@ router.get('/', async (req, res) => {
             where: { spotId: spot.id, preview: true },
             attributes: ['url']
         })
-        spot.previewImage = previewImage[0].toJSON().url
+
+
+        if (previewImage) {
+            spot.previewImage = previewImage[0].toJSON().url
+        }
 
         result.push(spot)
     }
 
-    return res.json({ "Spots": result })
+    return res.json({ "Spots": result, page, size})
 })
 
 
