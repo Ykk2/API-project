@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
 
-    userID:
+    userId:
     {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   }, {
-    defaultScope: {attributes: {exclude: ['createdAt', 'updatedAt']}},
+    // defaultScope: {attributes: {exclude: ['createdAt', 'updatedAt']}},
     sequelize,
     modelName: 'Booking',
   });
