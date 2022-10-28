@@ -111,9 +111,46 @@ router.get('/:spotId', async (req, res) => {
 //get all spots
 router.get('/', async (req, res) => {
 
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+
+    // let query = { where: {}, }
+    let err = {}
+
+    if (parseInt(page) <= 0 || parseInt(size) <= 0) {
+        if (parseInt(page) <= 0) {
+            err.page = "Page must be greater than or equal to 1"
+        }
+
+        if (parseInt(size) <= 0) {
+            err.size = "Size must be greater than or equal to 1"
+        }
+        return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors: err
+        })
+    }
+
+    // if (maxLat.check())
+
+
+
+    if (!page) page = 1
+    if (!size) size = 20
+
+    let pagination = {}
+    if (parseInt(page) >= 1 && parseInt(size) >= 1) {
+        pagination.limit = size;
+        pagination.offset = size * (page -1)
+    }
+
+    console.log(pagination)
+
     let result = []
 
-    const spots = await Spot.findAll()
+    const spots = await Spot.findAll({...pagination})
+    console.log(spots)
 
     for (let i = 0; i < spots.length; i++) {
 
