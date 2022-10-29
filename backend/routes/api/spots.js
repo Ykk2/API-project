@@ -142,8 +142,8 @@ router.get('/', async (req, res) => {
 
     let pagination = {}
     if (parseInt(page) >= 1 && parseInt(size) >= 1) {
-        pagination.limit = size;
-        pagination.offset = size * (page - 1)
+        pagination.limit = +size;
+        pagination.offset = +size * (+page - 1)
     }
 
     const spots = await Spot.findAll({
