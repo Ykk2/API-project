@@ -165,8 +165,9 @@ router.get('/', async (req, res) => {
             group:['Review.id'],
         })
 
+        let stuff = avgRating[0]
 
-        spot.avgRating = JSON.parse(JSON.stringify(avgRating[0])).avgRating
+        spot.avgRating = JSON.parse(JSON.stringify(stuff)).avgRating
 
 
         const previewImage = await SpotImage.findAll({
