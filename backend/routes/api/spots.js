@@ -174,7 +174,7 @@ router.get('/', async (req, res) => {
 
 
         if (previewImage) {
-            spot.previewImage = previewImage[0].toJSON().url
+            spot.previewImage = previewImage
         }
 
         result.push(spot)
