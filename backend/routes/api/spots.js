@@ -161,7 +161,7 @@ router.get('/', async (req, res) => {
         attributes: {
             include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],[sequelize.col('SpotImages.url'), 'url']]
         },
-        group: ['Spot.id']
+        group: ['Spot.id', 'SpotImages.url']
     })
 
     return res.json({ "Spots": spots, page, size })
