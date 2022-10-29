@@ -32,7 +32,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
         const avgRating = await Review.findAll({
             where: { spotId: spot.id },
-            group: "stars",
+            group: ["stars"],
             attributes: {
                 include: [[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
             }
@@ -159,6 +159,7 @@ router.get('/', async (req, res) => {
         const avgRating = await Review.findAll({
             where: { spotId: spot.id },
             attributes: {
+                group: ['Review.id'],
                 include: [[sequelize.fn('AVG', sequelize.col('id')), 'avgRating']]
             }
         })
