@@ -30,13 +30,13 @@ router.get('/current', requireAuth, async (req, res) => {
 
         let spot = spots[i].toJSON()
 
-        const avgRating = await Review.findAll({raw: true},{
+        const avgRating = await Review.findAll({ raw: true }, {
 
             where: { spotId: spot.id },
             attributes: {
-                include:[[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
+                include: [[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
             },
-            group:["stars"]
+            group: ["stars"]
 
         })
         spot.avgRating = JSON.parse(JSON.stringify(avgRating))
@@ -79,7 +79,7 @@ router.get('/:spotId', async (req, res) => {
     const reviewData = await Review.findAll({
         where: { spotId: spotId },
         attributes: {
-            include:[[sequelize.fn('COUNT', sequelize.col('stars')), 'numReviews'],
+            include: [[sequelize.fn('COUNT', sequelize.col('stars')), 'numReviews'],
             [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']]
         }
     })
@@ -145,45 +145,69 @@ router.get('/', async (req, res) => {
     let pagination = {}
     if (parseInt(page) >= 1 && parseInt(size) >= 1) {
         pagination.limit = size;
-        pagination.offset = size * (page -1)
+        pagination.offset = size * (page - 1)
     }
 
 
 
     let result = []
 
-    const spots = await Spot.findAll()
+    const spots = await Spot.findAll({
+        include: [{
+            model: Review,
+            as: 'Reviews',
+            attributes: []
+        }],
+        attributes: {
+            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating']]
+        },
+        group: ['Spot.id']
+    })
 
     for (let i = 0; i < spots.length; i++) {
 
         let spot = spots[i].toJSON()
-
-        const avgRating = await Review.findAll({
-
-            where: { spotId: spot.id },
-            attributes: {
-                include:[[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
-            },
-            group:['Review.id'],
-            raw: true,
-        })
-
-        spot.avgRating = JSON.parse(JSON.stringify(avgRating))[0]
-
         const previewImage = await SpotImage.findAll({
             where: { spotId: spot.id, preview: true },
             attributes: ['url']
         })
-
-
         if (previewImage) {
-            spot.previewImage = previewImage[0]
+            spot.previewImage = previewImage[0].url
         }
 
         result.push(spot)
     }
 
-    return res.json({ "Spots": result, page, size})
+    // for (let i = 0; i < spots.length; i++) {
+
+    //     let spot = spots[i].toJSON()
+
+    //     const avgRating = await Review.findAll({
+
+    //         where: { spotId: spot.id },
+    //         attributes: {
+    //             include:[[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
+    //         },
+    //         group:['Review.id'],
+    //         raw: true,
+    //     })
+
+    //     spot.avgRating = JSON.parse(JSON.stringify(avgRating))[0]
+
+    //     const previewImage = await SpotImage.findAll({
+    //         where: { spotId: spot.id, preview: true },
+    //         attributes: ['url']
+    //     })
+
+
+    //     if (previewImage) {
+    //         spot.previewImage = previewImage[0]
+    //     }
+
+    //     result.push(spot)
+    // }
+
+    return res.json({ "Spots": result, page, size })
 })
 
 
