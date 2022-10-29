@@ -147,25 +147,27 @@ router.get('/', async (req, res) => {
     }
 
     const spots = await Spot.findAll({
+
         include: [{
             model: Review,
             as: 'Reviews',
-            attributes: []
+            attributes:[],
+            duplicating: false,
         },{
             model: SpotImage,
             as: 'SpotImages',
             where: {preview: true},
             attributes:[],
-
+            duplicating: false
         }],
         attributes: {
-            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],[sequelize.col('SpotImages.url'), 'url']]
+            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'], [sequelize.col('SpotImages.url'), 'url']]
         },
         group: ['Spot.id', 'SpotImages.url'],
-        order: ['Spot.id', 'DESC'],
+        order: [['id', 'ASC']],
+        ...pagination
     })
-
-    return res.json({ "Spots": spots })
+    return res.json({ "Spots": spots, page, size })
 })
 
 
