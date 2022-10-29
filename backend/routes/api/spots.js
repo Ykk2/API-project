@@ -165,7 +165,9 @@ router.get('/', async (req, res) => {
             group:['Review.id']
         })
 
-        spot.avgRating = avgRating[0]
+        spot.avgRating = avgRating[0].toJSON()
+
+        console.log(avgRating[0].toJSON())
 
         const previewImage = await SpotImage.findAll({
             where: { spotId: spot.id, preview: true },
