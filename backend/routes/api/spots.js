@@ -160,10 +160,11 @@ router.get('/', async (req, res) => {
         const avgRating = await Review.findAll({
             where: { spotId: spot.id },
             attributes: {
-                include:[[sequelize.fn('AVG', sequelize.col('Review.stars')), 'avgRating']]
+                include:[[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
             },
             group:['Review.id']
         })
+        console.log(avgRating[0].toJSON())
         spot.avgRating = avgRating[0].toJSON().avgRating
 
         const previewImage = await SpotImage.findAll({
