@@ -32,6 +32,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
         const avgRating = await Review.findAll({
             where: { spotId: spot.id },
+            group: "stars",
             attributes: {
                 include: [[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
             }
@@ -481,7 +482,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const { spotId } = req.params
 
     const spot = await Spot.findByPk(spotId)
-    const ownerId = spot.ownerId
 
     if (!spot) {
         return res.json({
@@ -489,6 +489,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             statusCode: 404
         })
     }
+
+    const ownerId = spot.ownerId
 
     if (endDate <= startDate) {
         return res.json({
