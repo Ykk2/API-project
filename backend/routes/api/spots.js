@@ -137,8 +137,6 @@ router.get('/', async (req, res) => {
 
     // if (maxLat.check())
 
-
-
     if (!page) page = 1
     if (!size) size = 20
 
@@ -148,66 +146,25 @@ router.get('/', async (req, res) => {
         pagination.offset = size * (page - 1)
     }
 
-
-
-    let result = []
-
     const spots = await Spot.findAll({
         include: [{
             model: Review,
             as: 'Reviews',
             attributes: []
+        },{
+            model: SpotImage,
+            as: 'SpotImages',
+            where: {preview: true},
+            attributes:[],
+
         }],
         attributes: {
-            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating']]
+            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],[sequelize.col('SpotImages.url'), 'url']]
         },
         group: ['Spot.id']
     })
 
-    for (let i = 0; i < spots.length; i++) {
-
-        let spot = spots[i].toJSON()
-        const previewImage = await SpotImage.findAll({
-            where: { spotId: spot.id, preview: true },
-            attributes: ['url']
-        })
-        if (previewImage) {
-            spot.previewImage = previewImage[0].url
-        }
-
-        result.push(spot)
-    }
-
-    // for (let i = 0; i < spots.length; i++) {
-
-    //     let spot = spots[i].toJSON()
-
-    //     const avgRating = await Review.findAll({
-
-    //         where: { spotId: spot.id },
-    //         attributes: {
-    //             include:[[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
-    //         },
-    //         group:['Review.id'],
-    //         raw: true,
-    //     })
-
-    //     spot.avgRating = JSON.parse(JSON.stringify(avgRating))[0]
-
-    //     const previewImage = await SpotImage.findAll({
-    //         where: { spotId: spot.id, preview: true },
-    //         attributes: ['url']
-    //     })
-
-
-    //     if (previewImage) {
-    //         spot.previewImage = previewImage[0]
-    //     }
-
-    //     result.push(spot)
-    // }
-
-    return res.json({ "Spots": result, page, size })
+    return res.json({ "Spots": spots, page, size })
 })
 
 
