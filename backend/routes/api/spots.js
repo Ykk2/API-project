@@ -163,7 +163,6 @@ router.get('/', async (req, res) => {
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: ['Spot.id', 'DESC'],
-        ...pagination
     })
 
     return res.json({ "Spots": spots })
