@@ -161,7 +161,8 @@ router.get('/', async (req, res) => {
             duplicating: false
         }],
         attributes: {
-            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'], [sequelize.col('SpotImages.url'), 'url']]
+            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'], [sequelize.col('SpotImages.url'), 'url']],
+            raw: true
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
