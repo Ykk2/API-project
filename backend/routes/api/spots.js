@@ -165,7 +165,7 @@ router.get('/', async (req, res) => {
             group:['Review.id']
         })
 
-        let temp = avgRating[0].toJSON()
+        let temp = avgRating[0]
 
         spot.avgRating = temp.avgRating
 
