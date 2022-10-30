@@ -78,7 +78,8 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         where: {reviewId: reviewId},
         attributes: {
             include: [[sequelize.fn('COUNT', sequelize.col('url')), 'count']]
-        }
+        },
+        group: ['reviewImage.id']
     })
 
     const reviewImagesCount = reviewImages[0].toJSON().count
