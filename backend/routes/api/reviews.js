@@ -65,11 +65,11 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { reviewId } = req.params
     const { url } = req.body
 
-    const review = await Review.findOne({
-        where: { id: reviewId},
-        include:{
+    const review = await Review.findAll({
+        where: { id: reviewId },
+        include: {
             model: ReviewImage,
-            as: "ReviewImages",
+            as: 'ReviewImages',
             attributes:[],
             duplicating: false,
             required: true
