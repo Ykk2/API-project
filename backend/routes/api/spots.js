@@ -65,7 +65,7 @@ router.get('/:spotId', async (req, res) => {
             duplicating: false
         }, {
             model: User,
-            as: 'User',
+            as: 'Owner',
             attributes: ['id', 'firstName', 'lastName']
         }],
         attributes: {
