@@ -20,22 +20,22 @@ router.get('/current', requireAuth, async (req, res) => {
 
     const spots = await Spot.findAll({
 
-        where: {ownerId: userId},
+        where: { ownerId: userId },
         include: [{
             model: Review,
             as: 'Reviews',
-            attributes:[],
+            attributes: [],
             duplicating: false,
-        },{
+        }, {
             model: SpotImage,
             as: 'SpotImages',
-            where: {preview: true},
-            attributes:[],
+            where: { preview: true },
+            attributes: [],
             duplicating: false
         }],
         attributes: {
             include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-                      [sequelize.col('SpotImages.url'), 'previewImage']],
+            [sequelize.col('SpotImages.url'), 'previewImage']],
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
@@ -51,7 +51,29 @@ router.get('/:spotId', async (req, res) => {
     const { spotId } = req.params
 
     const spot = await Spot.findOne({
-        where: { id: spotId }
+        where: { id: spotId },
+        include: [{
+            model: Review,
+            as: 'Reviews',
+            attributes: [],
+            duplicating: false,
+        }, {
+            model: SpotImage,
+            as: 'SpotImages',
+            where: { preview: true },
+            attributes: ['id', 'url', 'preview'],
+            duplicating: false
+        }, {
+            model: User,
+            as: 'Users',
+            attributs: ['id', 'firstName', 'lastName']
+        }],
+        attributes: {
+            include: [[sequelize.fn('COUNT', sequelize.col('Reviews.id')), 'numReviews']
+                      [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
+                      [sequelize.col('SpotImages.url'), 'previewImage']],
+        },
+        group: ['Spot.id', 'SpotImages.url'],
     })
 
     if (!spot) {
@@ -60,44 +82,7 @@ router.get('/:spotId', async (req, res) => {
             statusCode: 404
         })
     }
-
-
-    let result;
-    result = spot.toJSON()
-
-
-    const reviewData = await Review.findAll({
-        where: { spotId: spotId },
-        attributes: {
-            include: [[sequelize.fn('COUNT', sequelize.col('stars')), 'numReviews'],
-            [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating']]
-        }
-    })
-    result.numReviews = reviewData[0].toJSON().numReviews
-    result.avgStarRating = reviewData[0].toJSON().avgStarRating
-
-
-
-    const spotImages = await SpotImage.findAll({
-        where: { spotId: spotId },
-        attributes: ['id', 'url', 'preview']
-    })
-    let spotImageArray = []
-    for (let i = 0; i < spotImages.length; i++) {
-        spotImageArray.push(spotImages[i].toJSON())
-    }
-    result.SpotImages = spotImageArray
-
-
-
-    const owner = await User.findOne({
-        where: { id: spot.ownerId },
-        attributes: ['id', 'firstName', 'lastName']
-    })
-    result.Owner = owner
-
-
-    return res.json(result)
+    return res.json(spot)
 })
 
 
@@ -141,18 +126,18 @@ router.get('/', async (req, res) => {
         include: [{
             model: Review,
             as: 'Reviews',
-            attributes:[],
+            attributes: [],
             duplicating: false,
-        },{
+        }, {
             model: SpotImage,
             as: 'SpotImages',
-            where: {preview: true},
-            attributes:[],
+            where: { preview: true },
+            attributes: [],
             duplicating: false
         }],
         attributes: {
             include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-                      [sequelize.col('SpotImages.url'), 'previewImage']],
+            [sequelize.col('SpotImages.url'), 'previewImage']],
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
