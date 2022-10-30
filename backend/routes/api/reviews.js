@@ -70,7 +70,9 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         include:[{
             model: ReviewImage,
             as: 'ReviewImages',
-            attributes:[]
+            attributes:[],
+            duplicating: false,
+            required: true
         }],
         attributes: {
             include: [[sequelize.fn('COUNT', sequelize.col('ReviewImages.id')), 'count']]
