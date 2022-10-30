@@ -67,13 +67,13 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
     const review = await Review.findOne({
         where: { id: reviewId},
-        include:[{
+        include:{
             model: ReviewImage,
             as: "ReviewImages",
             attributes:[],
             duplicating: false,
             required: true
-        }],
+        },
         attributes: {
             include: [[sequelize.fn('COUNT', sequelize.col('ReviewImages.id')), 'count']]
         },
