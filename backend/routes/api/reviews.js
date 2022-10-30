@@ -65,7 +65,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { reviewId } = req.params
     const { url } = req.body
 
-    const review = await Review.findAll({
+    const review = await Review.findOne({
         where: { id: reviewId },
         include: {
             model: ReviewImage,
@@ -77,7 +77,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         attributes: {
             include: [[sequelize.fn('COUNT', sequelize.col('ReviewImages.id')), 'count']]
         },
-        group: ['review.id'],
+        group: ['id'],
         raw: true
     })
 
