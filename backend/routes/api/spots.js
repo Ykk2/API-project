@@ -20,7 +20,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
     const spots = await Spot.findAll({
 
-        where: {owernId: userId},
+        where: {ownerId: userId},
         include: [{
             model: Review,
             as: 'Reviews',
