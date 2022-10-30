@@ -67,15 +67,13 @@ router.get('/:spotId', async (req, res) => {
             model: User,
             as: 'Owner',
             attributes: ['id', 'firstName', 'lastName'],
-            required: true,
-            duplicating: false
         }],
         attributes: {
             include: [[sequelize.fn('COUNT', sequelize.col('Reviews.id')), 'numReviews'],
                       [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating']]
 
         },
-        group: ['Spot.id', 'SpotImages.id', 'User.id'],
+        group: ['Spot.id', 'SpotImages.id', 'Owner.id'],
     })
 
     if (!spot) {
