@@ -69,7 +69,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         where: { id: reviewId},
         include:[{
             model: ReviewImage,
-            as: 'ReviewImages',
+            as: "ReviewImages",
             attributes:[],
             duplicating: false,
             required: true
