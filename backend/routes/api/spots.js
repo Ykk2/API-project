@@ -16,41 +16,32 @@ const router = express.Router();
 //get current user's spots
 router.get('/current', requireAuth, async (req, res) => {
 
-    // const { token } = req.cookies
-    // const user = jwt.decode(token).data
-
     const userId = req.user.id
-    let result = []
 
     const spots = await Spot.findAll({
-        where: { ownerId: userId }
+
+        where: {owernId: userId},
+        include: [{
+            model: Review,
+            as: 'Reviews',
+            attributes:[],
+            duplicating: false,
+        },{
+            model: SpotImage,
+            as: 'SpotImages',
+            where: {preview: true},
+            attributes:[],
+            duplicating: false
+        }],
+        attributes: {
+            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
+                      [sequelize.col('SpotImages.url'), 'url']],
+        },
+        group: ['Spot.id', 'SpotImages.url'],
+        order: [['id', 'ASC']],
+        ...pagination
     })
-
-    for (let i = 0; i < spots.length; i++) {
-
-        let spot = spots[i].toJSON()
-
-        const avgRating = await Review.findAll({ raw: true }, {
-
-            where: { spotId: spot.id },
-            attributes: {
-                include: [[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']]
-            },
-            group: ["stars"]
-
-        })
-        spot.avgRating = JSON.parse(JSON.stringify(avgRating))
-
-        const previewImage = await SpotImage.findAll({
-            where: { spotId: spot.id, preview: true },
-            attributes: ['url']
-        })
-        spot.previewImage = previewImage[0].toJSON().url
-
-        result.push(spot)
-    }
-
-    return res.json({ "Spots": result })
+    return res.json({ "Spots": spots })
 })
 
 
@@ -161,8 +152,8 @@ router.get('/', async (req, res) => {
             duplicating: false
         }],
         attributes: {
-            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'], [sequelize.col('SpotImages.url'), 'url']],
-            raw: true
+            include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
+                      [sequelize.col('SpotImages.url'), 'url']],
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
