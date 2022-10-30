@@ -35,7 +35,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }],
         attributes: {
             include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-                      [sequelize.col('SpotImages.url'), 'url']],
+                      [sequelize.col('SpotImages.url'), 'previewImage']],
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
@@ -152,7 +152,7 @@ router.get('/', async (req, res) => {
         }],
         attributes: {
             include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-                      [sequelize.col('SpotImages.url'), 'url']],
+                      [sequelize.col('SpotImages.url'), 'previewImage']],
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
