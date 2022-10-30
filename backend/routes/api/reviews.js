@@ -90,7 +90,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
     const reviewImagesCount = review.count
 
-    if (reviewImagesCount >= 10) {
+    if (parseInt(reviewImagesCount) >= 10) {
         res.json({
             message: "Maximum number of images for this resource was reached",
             statusCode: 403
