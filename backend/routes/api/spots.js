@@ -66,7 +66,9 @@ router.get('/:spotId', async (req, res) => {
         }, {
             model: User,
             as: 'Owner',
-            attributes: ['id', 'firstName', 'lastName']
+            attributes: ['id', 'firstName', 'lastName'],
+            required: true,
+            duplicating: false
         }],
         attributes: {
             include: [[sequelize.fn('COUNT', sequelize.col('Reviews.id')), 'numReviews'],
