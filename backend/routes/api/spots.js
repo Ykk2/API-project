@@ -39,7 +39,6 @@ router.get('/current', requireAuth, async (req, res) => {
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
-        ...pagination
     })
     return res.json({ "Spots": spots })
 })
