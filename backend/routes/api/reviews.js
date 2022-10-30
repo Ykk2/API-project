@@ -102,7 +102,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
     const reviewImage = await ReviewImage.create({ reviewId, url })
 
-    return res.json({id: reviewImage.toJSON().id, url: reviewImage.toJSON().url})
+    return res.json(reviewImage)
 })
 
 
