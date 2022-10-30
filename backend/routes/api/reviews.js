@@ -65,24 +65,28 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { reviewId } = req.params
     const { url } = req.body
 
-    const reviewExists = await Review.findOne({where: { id: reviewId }})
+    const review = await Review.findOne({
+        where: { id: reviewId},
+        include:[{
+            model: ReviewImage,
+            as: 'ReviewImages',
+            attributes:[]
+        }],
+        attributes: {
+            include: [[sequelize.fn('COUNT', sequelize.col('ReviewImages.id')), 'count']]
+        },
+        group: ['review.id'],
+        raw: true
+    })
 
-    if (!reviewExists) {
+    if (!review) {
         return res.json({
             message: "Review couldn't be found",
             statusCode: 404
         })
     }
 
-    const reviewImages = await ReviewImage.findAll({
-        where: {reviewId: reviewId},
-        attributes: {
-            include: [[sequelize.fn('COUNT', sequelize.col('url')), 'count']]
-        },
-        group: ['ReviewImage.id']
-    })
-
-    const reviewImagesCount = reviewImages[0].toJSON().count
+    const reviewImagesCount = review.count
 
     if (reviewImagesCount >= 10) {
         res.json({
