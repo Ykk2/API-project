@@ -39,7 +39,7 @@ router.post(
       })
 
       const userNameExists = await User.findOne({
-        where: {userName: username}
+        where: {username: username}
       })
 
       const err = {}
