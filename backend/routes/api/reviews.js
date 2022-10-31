@@ -65,28 +65,31 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { reviewId } = req.params
     const { url } = req.body
 
-    const review = await Review.findOne({
-        where: { id: reviewId },
-        include: [{
-            model: ReviewImage,
-            as: 'ReviewImages',
-            attributes:[],
-            duplicating: false,
-            required: true
-        }],
-        attributes: {
-            include: [[sequelize.fn('COUNT', sequelize.col('ReviewImages.id')), 'count'], 'id']
-        },
-        group: ['Review.id'],
-        raw: true
-    })
+    const reviewExists = await Review.findByPk(reviewId)
 
-    if (!review) {
+    if (!reviewExists) {
         return res.json({
             message: "Review couldn't be found",
             statusCode: 404
         })
     }
+
+    const review = await Review.findAll({
+        where: { id: reviewId },
+        include: {
+            model: ReviewImage,
+            as: 'ReviewImages',
+            attributes:[],
+            duplicating: false,
+            required: true
+        },
+        attributes: {
+            include: [[sequelize.fn('COUNT', sequelize.col('ReviewImages.id')), 'count'], 'Review.id']
+        },
+        group: ['Review.id'],
+        raw: true
+    })
+
 
     const reviewImagesCount = JSON.parse(JSON.stringify(review)).count
 
@@ -100,7 +103,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
     const reviewImage = await ReviewImage.create({ reviewId, url })
 
-    return res.json({ id: reviewImage.id, url: reviewImage.url})
+    return res.json({ id: reviewImage.id, url: reviewImage.url })
 })
 
 
