@@ -55,10 +55,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
     const currentBooking = await Booking.findByPk(bookingId)
 
-    const bookingOwnerId = currentBooking.userId
-
-    console.log(currentBooking)
-
 
     if (!currentBooking) {
         return res.json({
@@ -67,7 +63,8 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
-    // if (startDate <= Date.now())
+    const bookingOwnerId = currentBooking.userId
+
 
     if (userId !== bookingOwnerId) {
         res.json({
