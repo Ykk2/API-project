@@ -80,7 +80,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         group: ['Review.id'],
         raw: true
     })
-    return res.json(review)
 
     if (!review) {
         return res.json({
