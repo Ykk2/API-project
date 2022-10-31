@@ -13,7 +13,7 @@ const router = express.Router();
 //get all reviews from current user
 router.get('/current', requireAuth, async (req, res) => {
 
-    const userId = 1
+    const userId = req.user.id
 
     const reviews = await Review.findAll({
 
