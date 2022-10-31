@@ -57,7 +57,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
     const bookingOwnerId = currentBooking.toJSON().userId
 
-    return res.json(bookingOwnerId)
+
     if (!currentBooking) {
         return res.json({
             message: "Booking couldn't be found",
@@ -65,13 +65,13 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
-    if (startDate <= Date.now())
+    // if (startDate <= Date.now())
 
-        if (userId !== bookingOwnerId) {
-            res.json({
-                message: "You don't own this booking bro"
-            })
-        }
+    if (userId !== bookingOwnerId) {
+        res.json({
+            message: "You don't own this booking bro"
+        })
+    }
 
     if (endDate <= startDate) {
         return res.json({
@@ -93,7 +93,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     let err = {}
 
     if (currentBooking.endDate.getTime() == new Date(endDate).getTime() ||
-         currentBooking.startDate.getTime() == new Date(startDate).getTime()) {
+        currentBooking.startDate.getTime() == new Date(startDate).getTime()) {
 
         if (currentBooking.endDate.getTime() == new Date(endDate).getTime()) {
             err.endDate = "End date conflicts with an existing booking"
