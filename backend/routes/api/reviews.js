@@ -90,7 +90,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
     const reviewImagesCount = JSON.parse(JSON.stringify(review)).count
 
-    console.log(reviewImagesCount)
 
     if (parseInt(reviewImagesCount) >= 10) {
         res.json({
@@ -99,10 +98,9 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         })
     }
 
-
     const reviewImage = await ReviewImage.create({ reviewId, url })
 
-    return res.json(reviewImage)
+    return res.json({ id: reviewImage.id, url: reviewImage.url})
 })
 
 
