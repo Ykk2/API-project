@@ -12,50 +12,35 @@ const router = express.Router();
 
 //get all reviews from current user
 router.get('/current', requireAuth, async (req, res) => {
-    const userId = req.user.id
-    let result = []
 
+    const userId = 1
 
-    const reviews = await Review.findAll({ where: { userId: userId } })
+    const reviews = await Review.findAll({
 
-    for (let i = 0; i < reviews.length; i++) {
-        let review = reviews[i].toJSON()
-        let userId = reviews[i].toJSON().userId
-
-        let userInfo = await User.findOne({
-            where: { id: userId },
-            attributes: {
-                exclude: ['username']
-            }
-        })
-        review.User = userInfo
-
-
-        let spot = await Spot.findOne({
-            where: {id: review.spotId}
-        })
-        let previewImages = await SpotImage.findAll({
-            where: { spotId: review.spotId, preview: true },
-            attributes: ['url']
-        })
-
-        let reviewSpot = spot.toJSON()
-        let previewImage = previewImages[0].toJSON().url
-        reviewSpot.previewImage = previewImage
-        review.Spot = reviewSpot
-
-
-        let reviewId = reviews[i].toJSON().id
-
-        let images = await ReviewImage.findAll({
-            where: { reviewId: reviewId }
-        })
-        review.ReviewImages = images
-
-        result.push(review)
-    }
-
-    return res.json({ Reviews: result })
+        where: { userId: userId },
+        include: [{
+            model: User,
+            attributes: ['id', 'firstName', 'lastName']
+        }, {
+            model: Spot,
+            required: true,
+            include: [{
+                model: SpotImage,
+                as: 'SpotImages',
+                where: { preview: true },
+                attributes: ['url'],
+                duplicating: false,
+            }],
+            // attributes: {
+            //     include: [[sequelize.col('SpotImages.url'), 'previewImage']]
+            // },
+        }, {
+            model: ReviewImage,
+            as: 'ReviewImages',
+            attributes: ['id', 'url']
+        }],
+    })
+    return res.json({ "Reviews": reviews })
 
 })
 
