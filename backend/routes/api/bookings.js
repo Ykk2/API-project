@@ -55,7 +55,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
     const currentBooking = await Booking.findByPk(bookingId)
 
-    const bookingOwnerId = currentBooking.userId
+    const bookingOwnerId = JSON.parse(JSON.stringify(currentBooking)).userId
 
 
     if (!currentBooking) {
