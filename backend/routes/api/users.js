@@ -1,20 +1,11 @@
-// backend/routes/api/users.js
 const express = require('express');
-
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
-
-// backend/routes/api/users.js
-// ...
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-// ...
 
 const router = express.Router();
 
-
-// backend/routes/api/users.js
-// ...
 const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
@@ -36,21 +27,69 @@ const validateSignup = [
   ];
 
 
-// backend/routes/api/users.js
-// ...
-
 // Sign up
 router.post(
     '/',
     validateSignup,
     async (req, res) => {
       const { email, password, username, firstName, lastName } = req.body;
+
+      const emailExists = await User.findOne({
+        where: {email: email}
+      })
+
+      const userNameExists = await User.findOne({
+        where: {username: username}
+      })
+
+      const err = {}
+
+      if (!email, !username, !firstName, !lastName) {
+        if (!email) {
+          err.mail = "Invalid email"
+        }
+        if (!username) {
+          err.username = "Username is required"
+        }
+        if (!firstName) {
+          err.firstName = "First Name is required"
+        }
+        if (!lastName) {
+          err.lastName = "Last Name is required"
+        }
+        return res.json({
+          message: "Validation error",
+          statusCode: 400,
+          errors: err
+        })
+      }
+
+      if (emailExists || userNameExists) {
+
+        if (emailExists) {
+          err.email = "User with that email already exists"
+        }
+        if (userNameExists) {
+          err.userame = "User with that username already exists"
+        }
+        return res.json({
+          message: "User already exists",
+          statusCode: 403,
+          errors: err
+        })
+      }
+
       const user = await User.signup({ email, username, password, firstName, lastName });
 
-      await setTokenCookie(res, user);
+      const token = setTokenCookie(res, user);
 
       return res.json({
-        user,
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username,
+        token: token
       });
     }
   );

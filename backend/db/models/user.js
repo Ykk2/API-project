@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
 
     toSafeObject() {
-      const { id, username, email } = this; // context will be the User instance
-      return { id, username, email };
+      const { id, firstName, lastName, email, username} = this; // context will be the User instance
+      return { id, firstName, lastName, email, username };
     }
 
     validatePassword(password) {
@@ -33,18 +33,22 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static async signup({ username, email, password }) {
+    static async signup({ username, email, password, firstName, lastName }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         username,
         email,
+        firstName,
+        lastName,
         hashedPassword
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
 
     static associate(models) {
-      // define association here
+      User.hasMany(models.Spot, {foreignKey: 'ownerId', as: 'Owner', onDelete: 'CASCADE'})
+      User.hasMany(models.Booking, {foreignKey: 'userId', onDelete: 'CASCADE'})
+      User.hasMany(models.Review, {foreignKey: 'userId', onDelete: 'CASCADE'})
     }
   };
 
@@ -53,8 +57,6 @@ module.exports = (sequelize, DataTypes) => {
       username: {
         type: DataTypes.STRING,
         allowNull: false,
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
         validate: {
           len: [4, 30],
           isNotEmail(value) {
@@ -64,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
+
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -72,6 +75,23 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true
         }
       },
+
+      firstName:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isAlpha: true
+        }
+      },
+
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isAlpha: true
+        }
+      },
+
       hashedPassword: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
