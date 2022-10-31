@@ -65,20 +65,20 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { reviewId } = req.params
     const { url } = req.body
 
-    const review = await Review.findOne({
+    const review = await Review.findAll({
         where: { id: reviewId },
-        // include: {
-        //     model: ReviewImage,
-        //     as: 'ReviewImages',
-        //     attributes:[],
-        //     duplicating: false,
-        //     required: true
-        // },
-        // attributes: {
-        //     include: [[sequelize.fn('COUNT', sequelize.col('ReviewImages.id')), 'count'], 'Review.id']
-        // },
-        // group: ['Review.id'],
-        // raw: true
+        include: {
+            model: ReviewImage,
+            as: 'ReviewImages',
+            attributes:[],
+            duplicating: false,
+            required: true
+        },
+        attributes: {
+            include: [[sequelize.fn('COUNT', sequelize.col('ReviewImages.id')), 'count'], 'Review.id']
+        },
+        group: ['Review.id'],
+        raw: true
     })
     return res.json(review)
 
