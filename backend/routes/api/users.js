@@ -67,7 +67,7 @@ router.post(
       if (emailExists || userNameExists) {
 
         if (emailExists) {
-          err.errors.email = "User with that email already exists"
+          err.email = "User with that email already exists"
         }
         if (userNameExists) {
           err.userame = "User with that username already exists"
