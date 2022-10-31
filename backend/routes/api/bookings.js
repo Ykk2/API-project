@@ -57,6 +57,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
     const bookingOwnerId = currentBooking.toJSON().userId
 
+    return res.json(bookingOwnerId)
     if (!currentBooking) {
         return res.json({
             message: "Booking couldn't be found",
