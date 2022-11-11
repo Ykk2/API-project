@@ -84,13 +84,15 @@ router.post(
       const token = setTokenCookie(res, user);
 
       return res.json({
+        user: {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
         username: user.username,
         token: token
-      });
+      }
+    });
     }
   );
 module.exports = router;
