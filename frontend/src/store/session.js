@@ -29,7 +29,6 @@ export const login = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  console.log("this is the data from login", data)
   dispatch(setUser(data.user));
   return response;
 };
@@ -58,10 +57,13 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
-
-
-
-
+export const logout = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE',
+  });
+  dispatch(removeUser());
+  return response;
+};
 
 const initialState = { user: null };
 
