@@ -39,13 +39,15 @@ router.post('/', validateLogin, async (req, res, next) => {
     const token = setTokenCookie(res, user);
 
     return res.json({
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      username: user.username,
-      token: token
-    });
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username,
+        token: token
+      }
+  });
   }
 );
 
@@ -61,13 +63,14 @@ router.delete(
 
 
 // Restore session user
-router.get('/', [restoreUser, requireAuth], (req, res) => {
+router.get('/', (req, res) => {
     const { user } = req;
     if (user) {
-      return res.json(
-        user.toSafeObject()
+      return res.json({
+        user: user.toSafeObject()
+      }
       );
-    } else return res.json({});
+    } else return res.json({user: null});
   }
 );
 
