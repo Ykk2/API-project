@@ -13,7 +13,7 @@ function LoginForm({setShowModal}) {
     setErrors([]);
 
     return dispatch(sessionActions.login({ credential, password }))
-    .then(setShowModal(false))
+    .then(() => setShowModal(false))
     .catch(
       async (res) => {
 
