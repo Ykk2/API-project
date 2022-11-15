@@ -7,6 +7,7 @@ import './Navigation.css';
 import { Modal } from '../../context/Modal'
 import LoginForm from '../LoginFormModal/LoginForm';
 import SignupFormPage from '../SignupFormPage';
+import CreateSpotForm from '../SpotFormPage/Index';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
@@ -37,10 +38,15 @@ function Navigation({ isLoaded }){
           setShowModal={setShowModal}
           />}
       </li>
-      {showModal && <Modal onClose={() => setShowModal(false)}>
-        {login ? <LoginForm setShowModal={setShowModal}/>:
-        <SignupFormPage setShowModal={setShowModal}/>}
-      </Modal>}
+      {
+      showModal &&
+      <Modal
+      onClose={() => setShowModal(false)}>
+      {login ? <LoginForm setShowModal={setShowModal}/>:
+               <SignupFormPage setShowModal={setShowModal}/>}
+      </Modal>
+      }
+      <CreateSpotForm />
     </ul>
   );
 }

@@ -1,8 +1,10 @@
 import { normalize } from "./helperFunctions"
+import { csrfFetch } from './csrf';
 
 const LOAD_SPOTS = '/spots/loadSpots'
 const LOAD_SPOT = '/spots/getSpot'
 const EDIT_SPOT = '/spots/editSpot'
+const CREATE_SPOT = '/spots/createSpot'
 const DELETE_SPOT = '/spots/deleteSpot'
 
 const loadSpots = (data) => {
@@ -15,6 +17,13 @@ const loadSpots = (data) => {
 const loadSpot = (data) => {
     return {
         type: LOAD_SPOT,
+        data
+    }
+}
+
+const createSpot = (data) => {
+    return {
+        type: CREATE_SPOT,
         data
     }
 }
@@ -42,14 +51,37 @@ export const getSpots = () => async (dispatch) => {
     }
 }
 
+export const newSpot = (data) => async (dispatch) => {
+    const res = await csrfFetch('/api/spots', {
+        method: "POST",
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    if (res.ok) {
+        const spot = await res.json()
+        dispatch(createSpot(spot))
+        return spot
+    }
+}
+
+export const updateSpot = () => async (dispatch) => {
+
+}
+
 const initialState = {}
 
 const spotsReducer = (state = initialState, action) => {
+    let newState = {}
     switch (action.type) {
         case LOAD_SPOTS:
-            let newState = {}
-            const response = action.data.Spots
-            newState = normalize(response)
+            newState = normalize(action.data.Spots)
+            return newState
+        case CREATE_SPOT:
+            console.log(action.type)
+            newState = {...state}
+            newState[action.data.id] = action.data
             return newState
     default:
         return state;

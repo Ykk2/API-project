@@ -23,7 +23,7 @@ function Spots() {
                     <img src={`${spot.previewImage}`}></img>
                     <span id="cityandstate">`{spot.city}, {spot.state}`</span>
                     <span id="distance">distance will go here</span>
-                    <span id="availability">futures availability here</span>
+                    <span id="availability">future availability here</span>
                     <span id="cost">{spot.price}</span>
                 </div>
             )}

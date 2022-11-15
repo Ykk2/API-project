@@ -1,6 +1,8 @@
 .spotsContainer {
     display:flex;
     flex-direction: row;
+    height: 80%;
+    width: 80%
 
 }
 
