@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import Spots from "./components/Spots";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +23,9 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Route exact path ='/'>
+        <Spots />
+      </Route>
     </>
   );
 }

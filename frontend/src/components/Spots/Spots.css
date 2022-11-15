@@ -1,0 +1,14 @@
+.spotsContainer {
+    display:flex;
+    flex-direction: row;
+
+}
+
+.spotCard {
+    display:flex;
+    flex-direction: column;
+    height: 200px;
+    width: 200px;
+    margin: 10px;
+    border: 2px red solid
+}
