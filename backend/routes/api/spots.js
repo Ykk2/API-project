@@ -29,7 +29,6 @@ router.get('/current', requireAuth, async (req, res) => {
         }, {
             model: SpotImage,
             as: 'SpotImages',
-            where: { preview: true },
             attributes: [],
             duplicating: false
         }],
@@ -60,7 +59,6 @@ router.get('/:spotId', async (req, res) => {
         }, {
             model: SpotImage,
             as: 'SpotImages',
-            where: { preview: true },
             attributes: ['id', 'url', 'preview'],
             duplicating: false
         }, {
@@ -295,6 +293,16 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
     if (!spot) {
         return res.json({
             message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    const userId = req.user.id
+    const ownerId = spot.ownerId
+
+    if (userId !== ownerId) {
+        return res.json({
+            message: "You don't own this spot",
             statusCode: 404
         })
     }

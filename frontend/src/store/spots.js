@@ -35,10 +35,10 @@ const deleteSpot = (data) => {
     }
 }
 
-const editSpot = (data) => {
+const editSpot = (id) => {
     return {
         type: EDIT_SPOT,
-        data
+        id
     }
 }
 
@@ -47,6 +47,15 @@ export const getSpots = () => async (dispatch) => {
     if (res.ok) {
         const data = await res.json()
         dispatch(loadSpots(data))
+        return data
+    }
+}
+
+export const getSpot = (id) => async (dispatch) => {
+    const res = await fetch(`/api/spots/${id}`)
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(loadSpot(data))
         return data
     }
 }
@@ -82,21 +91,41 @@ export const updateSpot = (data) => async (dispatch) => {
 
 }
 
-const initialState = {}
+export const removeSpot = (id) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${id}`, {
+        method: "DELETE"
+    })
+    if (res.ok) {
+        const response = await res.json()
+        dispatch(deleteSpot(response))
+        return response
+    }
+}
+
+const initialState = {spots: {}, spot: {}}
 
 const spotsReducer = (state = initialState, action) => {
-    let newState = {}
+    let newState = {spots: {}, spot: {}}
     switch (action.type) {
         case LOAD_SPOTS:
-            newState = normalize(action.data.Spots)
+            newState.spots = normalize(action.data.Spots)
+            return newState
+        case LOAD_SPOT:
+            newState.spot = action.data
             return newState
         case CREATE_SPOT:
-            newState = {...state}
-            newState[action.data.id] = action.data
+            newState.spots = {...state.spots}
+            newState.spots[action.data.id] = action.data
+            newState.spot = action.data
             return newState
         case EDIT_SPOT:
+            newState.spots = {...state.spots}
+            newState.spots[action.data.id] = action.data
+            newState.spot = action.data
+            return newState
+        case DELETE_SPOT:
             newState = {...state}
-            newState[action.data.id] = action.data
+            delete newState[action.data.id]
             return newState
     default:
         return state;

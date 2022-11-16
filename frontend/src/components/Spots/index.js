@@ -8,12 +8,11 @@ function Spots() {
 
     const dispatch = useDispatch()
 
-    const spots = Object.values(useSelector((state) => state.spots))
-
-
     useEffect(() => {
         dispatch(spotActions.getSpots())
     }, [dispatch])
+
+    const spots = Object.values(useSelector((state) => state.spots.spots))
 
     return(
         <>

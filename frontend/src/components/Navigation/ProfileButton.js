@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 import * as sessionActions from '../../store/session';
-import CreateSpotForm from '../SpotFormPage/Index';
+
 
 function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();
@@ -31,10 +31,6 @@ function ProfileButton({ user, setLogin, setShowModal }) {
     dispatch(sessionActions.logout());
   };
 
-  const host = (e) => {
-    e.preventDefault();
-
-  }
 
   return (
     <>
@@ -45,10 +41,10 @@ function ProfileButton({ user, setLogin, setShowModal }) {
         (<ul className="profile-dropdown">
           <li>{user.username}</li>
           <li>{user.email}</li>
+          <Link to={'/host'}>host</Link>
           <li>
             <button onClick={logout}>Log Out</button>
           </li>
-          <Link to={'/spots/host'}>host</Link>
         </ul>) :
         (<ul className="profile-dropdown">
           <li>
