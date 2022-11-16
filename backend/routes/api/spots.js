@@ -121,6 +121,8 @@ router.get('/', async (req, res) => {
         pagination.offset = +size * (+page - 1)
     }
 
+
+
     const spots = await Spot.findAll({
 
         include: [{
@@ -131,7 +133,6 @@ router.get('/', async (req, res) => {
         }, {
             model: SpotImage,
             as: 'SpotImages',
-            where: { preview: true },
             attributes: [],
             duplicating: false
         }],
@@ -143,6 +144,7 @@ router.get('/', async (req, res) => {
         order: [['id', 'ASC']],
         ...pagination
     })
+
     return res.json({ "Spots": spots, page, size })
 })
 
@@ -217,7 +219,6 @@ router.post('/', requireAuth, async (req, res) => {
 
     const ownerId = req.user.id
     const spot = await Spot.create({ ownerId, address, city, state, country, lat, lng, name, description, price })
-
     return res.json(spot)
 
 })
