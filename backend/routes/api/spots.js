@@ -237,6 +237,15 @@ router.put('/:spotId', requireAuth, async (req, res) => {
         })
     }
 
+    const userId = req.user.id
+    const ownerId = spot.ownerId
+
+    if (userId !== ownerId) {
+        return res.json({
+            message: "You don't own this spot",
+            statusCode: 404
+        })
+    }
 
     if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
         const err = {}

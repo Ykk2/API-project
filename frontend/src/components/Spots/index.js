@@ -19,13 +19,13 @@ function Spots() {
         <h1>SPOT LIST</h1>
         <div className="spotsContainer">
             {spots?.map(spot =>
-                <div className="spotCard" key={spot.id}>
-                    <Link to={`/spots/${spot.id}`}>
-                    <img src={`${spot.previewImage}`}></img>
-                    <span id="cityandstate">`{spot.city}, {spot.state}`</span>
+                <div className="spotCard" key={spot?.id}>
+                    <Link to={`/spots/${spot?.id}`}>
+                    <img src={`${spot?.previewImage}`}></img>
+                    <span id="cityandstate">`{spot?.city}, {spot?.state}`</span>
                     <span id="distance">distance will go here</span>
                     <span id="availability">future availability here</span>
-                    <span id="cost">{spot.price}</span>
+                    <span id="cost">{spot?.price}</span>
                     </Link>
                 </div>
             )}

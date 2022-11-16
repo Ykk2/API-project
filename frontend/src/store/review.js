@@ -1,57 +1,57 @@
 import { normalize } from "./helperFunctions"
 import { csrfFetch } from './csrf';
 
-const LOAD_SPOTS = '/spots/loadSpots'
-const LOAD_SPOT = '/spots/getSpot'
-const EDIT_SPOT = '/spots/editSpot'
-const CREATE_SPOT = '/spots/createSpot'
-const DELETE_SPOT = '/spots/deleteSpot'
+const LOAD_REVIEWS = '/reviews/loadReviews'
+const LOAD_REVIEW = '/reviews/getReview'
+const EDIT_REVIEW = '/reviews/editReview'
+const CREATE_REVIEW = '/reviews/createReview'
+const DELETE_REVIEW = '/reviews/deleteReview'
 
-const loadSpots = (data) => {
+const loadReviews = (data) => {
     return {
-        type: LOAD_SPOTS,
+        type: LOAD_REVIEWS,
         data
     }
 }
 
-const loadSpot = (data) => {
+const loadReview = (data) => {
     return {
-        type: LOAD_SPOT,
+        type: LOAD_REVIEW,
         data
     }
 }
 
-const createSpot = (data) => {
+const createReview = (data) => {
     return {
-        type: CREATE_SPOT,
+        type: CREATE_REVIEW,
         data
     }
 }
 
-const deleteSpot = (data) => {
+const deleteReview = (data) => {
     return {
-        type: DELETE_SPOT,
+        type: DELETE_REVIEW,
         data
     }
 }
 
-const editSpot = (data) => {
+const editReview = (data) => {
     return {
-        type: EDIT_SPOT,
+        type: EDIT_REVIEW,
         data
     }
 }
 
-export const getSpots = () => async (dispatch) => {
-    const res = await fetch('/api/spots')
+export const getReviews = (spotId) => async (dispatch) => {
+    const res = await fetch(`/api/spots/${spotId}/reviews`)
     if (res.ok) {
         const data = await res.json()
-        dispatch(loadSpots(data))
+        dispatch(loadReviews(data))
         return data
     }
 }
 
-export const getSpot = (id) => async (dispatch) => {
+export const getReview = (id) => async (dispatch) => {
     const res = await fetch(`/api/spots/${id}`)
     if (res.ok) {
         const data = await res.json()
@@ -102,28 +102,28 @@ export const removeSpot = (id) => async (dispatch) => {
     }
 }
 
-const initialState = {spots: {}, spot: {}}
+const initialState = {reviews: {}, review: {}}
 
-const spotsReducer = (state = initialState, action) => {
-    let newState = {spots: {}, spot: {}}
+const reviewsReducer = (state = initialState, action) => {
+    let newState = {reviews: {}, review: {}}
     switch (action.type) {
-        case LOAD_SPOTS:
-            newState.spots = normalize(action.data.Spots)
+        case LOAD_REVIEWS:
+            newState.reviews = normalize(action.data.reviews)
             return newState
-        case LOAD_SPOT:
-            newState.spot = action.data
+        case LOAD_REVIEW:
+            newState.review = action.data
             return newState
-        case CREATE_SPOT:
-            newState.spots = {...state.spots}
-            newState.spots[action.data.id] = action.data
-            newState.spot = action.data
+        case CREATE_REVIEW:
+            newState.reviews = {...state.reviews}
+            newState.reviews[action.data.id] = action.data
+            newState.review = action.data
             return newState
-        case EDIT_SPOT:
-            newState.spots = {...state.spots}
-            newState.spots[action.data.spotId] = action.data
-            newState.spot = action.data
+        case EDIT_REVIEW:
+            newState.reviews = {...state.reviews}
+            newState.reviews[action.data.reviewId] = action.data
+            newState.review = action.data
             return newState
-        case DELETE_SPOT:
+        case DELETE_REVIEW:
             newState = {...state}
             delete newState[action.data.id]
             return newState
@@ -133,4 +133,4 @@ const spotsReducer = (state = initialState, action) => {
 
 }
 
-export default spotsReducer
+export default reviewsReducer
