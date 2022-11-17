@@ -14,13 +14,6 @@ const loadReviews = (data) => {
     }
 }
 
-const loadReview = (data) => {
-    return {
-        type: LOAD_REVIEW,
-        data
-    }
-}
-
 const createReview = (data) => {
     return {
         type: CREATE_REVIEW,
@@ -51,17 +44,10 @@ export const getReviews = (spotId) => async (dispatch) => {
     }
 }
 
-export const getReview = (id) => async (dispatch) => {
-    const res = await fetch(`/api/spots/${id}`)
-    if (res.ok) {
-        const data = await res.json()
-        dispatch(loadSpot(data))
-        return data
-    }
-}
 
-export const newSpot = (data) => async (dispatch) => {
-    const res = await csrfFetch('/api/spots', {
+export const newReview = (spotId, data) => async (dispatch) => {
+    console.log(JSON.stringify(data))
+    const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
         headers: {
             'Content-Type': "application/json"
@@ -69,49 +55,47 @@ export const newSpot = (data) => async (dispatch) => {
         body: JSON.stringify(data)
     })
     if (res.ok) {
-        const spot = await res.json()
-        dispatch(createSpot(spot))
-        return spot
+        const review = await res.json()
+        console.log("coming from thunk", review)
+        dispatch(createReview(review))
+        return review
     }
 }
 
-export const updateSpot = (spotId, data) => async (dispatch) => {
-    const res = await csrfFetch(`/api/spots/${spotId}`, {
-        method: "PUT",
-        headers: {
-            'ContentType': "application/json"
-        },
-        body: JSON.stringify(data)
-    })
-    if (res.ok) {
-        const data = await res.json()
-        dispatch(editSpot(data))
-        return data
-    }
+// export const updateSpot = (spotId, data) => async (dispatch) => {
+//     const res = await csrfFetch(`/api/spots/${spotId}`, {
+//         method: "PUT",
+//         headers: {
+//             'ContentType': "application/json"
+//         },
+//         body: JSON.stringify(data)
+//     })
+//     if (res.ok) {
+//         const data = await res.json()
+//         dispatch(editSpot(data))
+//         return data
+//     }
 
-}
+// }
 
-export const removeSpot = (id) => async (dispatch) => {
-    const res = await csrfFetch(`/api/spots/${id}`, {
-        method: "DELETE"
-    })
-    if (res.ok) {
-        const response = await res.json()
-        dispatch(deleteSpot(response))
-        return response
-    }
-}
+// export const removeSpot = (id) => async (dispatch) => {
+//     const res = await csrfFetch(`/api/spots/${id}`, {
+//         method: "DELETE"
+//     })
+//     if (res.ok) {
+//         const response = await res.json()
+//         dispatch(deleteSpot(response))
+//         return response
+//     }
+// }
 
-const initialState = {reviews: {}, review: {}}
+const initialState = {}
 
 const reviewsReducer = (state = initialState, action) => {
-    let newState = {reviews: {}, review: {}}
+    let newState = {}
     switch (action.type) {
         case LOAD_REVIEWS:
-            newState.reviews = normalize(action.data.reviews)
-            return newState
-        case LOAD_REVIEW:
-            newState.review = action.data
+            newState = normalize(action.data.Reviews)
             return newState
         case CREATE_REVIEW:
             newState.reviews = {...state.reviews}
