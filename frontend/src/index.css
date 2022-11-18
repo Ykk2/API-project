@@ -1,1 +1,5 @@
 /* TODO Add site wide styles */
+html, #root, #app, #app>div {
+    min-height: 100%;
+    min-width: 100%;
+}

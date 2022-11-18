@@ -2,7 +2,6 @@ import { normalize } from "./helperFunctions"
 import { csrfFetch } from './csrf';
 
 const LOAD_REVIEWS = '/reviews/loadReviews'
-const LOAD_REVIEW = '/reviews/getReview'
 const EDIT_REVIEW = '/reviews/editReview'
 const CREATE_REVIEW = '/reviews/createReview'
 const DELETE_REVIEW = '/reviews/deleteReview'
@@ -46,7 +45,6 @@ export const getReviews = (spotId) => async (dispatch) => {
 
 
 export const newReview = (spotId, data) => async (dispatch) => {
-    console.log(JSON.stringify(data))
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
         headers: {
@@ -55,39 +53,40 @@ export const newReview = (spotId, data) => async (dispatch) => {
         body: JSON.stringify(data)
     })
     if (res.ok) {
+
         const review = await res.json()
-        console.log("coming from thunk", review)
         dispatch(createReview(review))
         return review
     }
 }
 
-// export const updateSpot = (spotId, data) => async (dispatch) => {
-//     const res = await csrfFetch(`/api/spots/${spotId}`, {
-//         method: "PUT",
-//         headers: {
-//             'ContentType': "application/json"
-//         },
-//         body: JSON.stringify(data)
-//     })
-//     if (res.ok) {
-//         const data = await res.json()
-//         dispatch(editSpot(data))
-//         return data
-//     }
+export const updateReview = (reviewId, data) => async (dispatch) => {
 
-// }
+    const res = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: "PUT",
+        headers: {
+            'ContentType': "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(editReview(data))
+        return data
+    }
 
-// export const removeSpot = (id) => async (dispatch) => {
-//     const res = await csrfFetch(`/api/spots/${id}`, {
-//         method: "DELETE"
-//     })
-//     if (res.ok) {
-//         const response = await res.json()
-//         dispatch(deleteSpot(response))
-//         return response
-//     }
-// }
+}
+
+export const removeReview = (id) => async (dispatch) => {
+    const res = await csrfFetch(`/api/reviews/${id}`, {
+        method: "DELETE"
+    })
+    if (res.ok) {
+        const response = await res.json()
+        dispatch(deleteReview(id))
+        return response
+    }
+}
 
 const initialState = {}
 
@@ -98,18 +97,16 @@ const reviewsReducer = (state = initialState, action) => {
             newState = normalize(action.data.Reviews)
             return newState
         case CREATE_REVIEW:
-            newState.reviews = {...state.reviews}
-            newState.reviews[action.data.id] = action.data
-            newState.review = action.data
+            newState = {...state}
+            newState[action.data.id] = action.data
             return newState
         case EDIT_REVIEW:
-            newState.reviews = {...state.reviews}
-            newState.reviews[action.data.reviewId] = action.data
-            newState.review = action.data
+            newState = {...state}
+            newState[action.data.id] = action.data
             return newState
         case DELETE_REVIEW:
             newState = {...state}
-            delete newState[action.data.id]
+            delete newState[action.data]
             return newState
     default:
         return state;

@@ -1,0 +1,9 @@
+.profile-dropdown {
+    position: absolute;
+}
+
+.navBar {
+    border: 2px green solid;
+    margin: 0;
+    padding: 0
+}

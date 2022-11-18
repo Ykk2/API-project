@@ -1,18 +1,22 @@
 .spotsContainer {
     display: flex;
-    height: 80vh;
-    width: 80vw;
     border: 2px blue solid;
-    justify-content: center;
-    margin-left: 100px;
-    flex-direction: row;
+    align-content:flex-start;
+    margin-right: 5%;
+    margin-left: 3%;
+    margin-bottom: 0;
+    height: 100%;
     flex-wrap: wrap
 }
 
 .spotCard {
-    height: 25%;
-    width: 25%;
-    margin: 10px;
+    min-height: 350px;
+    min-width: 200px;
+    max-height: 500px;
+    max-width: 300px;
+    margin: 5px;
+    margin-top: 10px;
+    padding: 0;
     border: 2px red solid
 }
 
