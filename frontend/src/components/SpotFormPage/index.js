@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { newSpot } from '../../store/spots';
+import * as spotActions from "../../store/spots";
 
 const CreateSpotForm = () => {
 
@@ -17,6 +17,7 @@ const CreateSpotForm = () => {
     const [name, setName] = useState()
     const [description, setDescription] = useState()
     const [price, setPrice] = useState()
+    const [url, setImageUrl] = useState()
 
     const updateAddress = (e) => setAddress(e.target.value)
     const updateCity = (e) => setCity(e.target.value)
@@ -27,16 +28,19 @@ const CreateSpotForm = () => {
     const updateName = (e) => setName(e.target.value)
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
+    const updateImageUrl = (e) => setImageUrl(e.target.value)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         const payload = {address, city, state, country, lat, lng, name, description, price}
+        const preview = true
 
-
-        let spot = await dispatch(newSpot(payload))
-
-        if (spot) {
+        let spot = await dispatch(spotActions.newSpot(payload))
+        const spotId = spot.id
+        let image = await dispatch(spotActions.addSpotImage({spotId, url, preview}))
+        console.log("coming from component", image)
+        if (spot && image) {
             history.push(`/spots/${spot.id}`)
         }
     }
@@ -105,13 +109,20 @@ const CreateSpotForm = () => {
                 value={description}
                 onChange={updateDescription}
                 />
-                 <input
+                <input
                 type="integer"
                 placeholder="price"
                 min="0"
                 required
                 value={price}
                 onChange={updatePrice}
+                />
+                <input
+                type="url"
+                placeholder="preview image"
+                required
+                value={url}
+                onChange={updateImageUrl}
                 />
                 <button type="submit">Submit</button>
                 <button type="button" onClick={handleCancelClick}>Cancel</button>

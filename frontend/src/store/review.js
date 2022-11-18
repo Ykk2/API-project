@@ -44,7 +44,8 @@ export const getReviews = (spotId) => async (dispatch) => {
 }
 
 
-export const newReview = (spotId, data) => async (dispatch) => {
+export const newReview = (spotId, data, user) => async (dispatch) => {
+
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
         headers: {
@@ -52,15 +53,16 @@ export const newReview = (spotId, data) => async (dispatch) => {
         },
         body: JSON.stringify(data)
     })
-    if (res.ok) {
 
+    if (res.ok) {
         const review = await res.json()
+        review.User = user
         dispatch(createReview(review))
         return review
     }
 }
 
-export const updateReview = (reviewId, data) => async (dispatch) => {
+export const updateReview = (reviewId, data, user) => async (dispatch) => {
 
     const res = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: "PUT",
@@ -70,9 +72,10 @@ export const updateReview = (reviewId, data) => async (dispatch) => {
         body: JSON.stringify(data)
     })
     if (res.ok) {
-        const data = await res.json()
-        dispatch(editReview(data))
-        return data
+        const review = await res.json()
+        review.User = user
+        dispatch(editReview(review))
+        return review
     }
 
 }

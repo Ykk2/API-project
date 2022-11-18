@@ -6,6 +6,9 @@ const LOAD_SPOT = '/spots/getSpot'
 const EDIT_SPOT = '/spots/editSpot'
 const CREATE_SPOT = '/spots/createSpot'
 const DELETE_SPOT = '/spots/deleteSpot'
+const ADD_IMAGE = '/spots/addSpotImage'
+
+//eventually add another action for adding images to an existing spot
 
 const loadSpots = (data) => {
     return {
@@ -38,6 +41,13 @@ const deleteSpot = (data) => {
 const editSpot = (data) => {
     return {
         type: EDIT_SPOT,
+        data
+    }
+}
+
+const addImage = (data) => {
+    return {
+        type: ADD_IMAGE,
         data
     }
 }
@@ -79,7 +89,7 @@ export const updateSpot = (spotId, data) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}`, {
         method: "PUT",
         headers: {
-            'ContentType': "application/json"
+            'Content-Type': "application/json",
         },
         body: JSON.stringify(data)
     })
@@ -99,6 +109,21 @@ export const removeSpot = (id) => async (dispatch) => {
         const response = await res.json()
         dispatch(deleteSpot(response))
         return response
+    }
+}
+
+export const addSpotImage = (data) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${data.spotId}/images`, {
+        method: "POST",
+        headers: {
+            'Content-Type': "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(addImage(data))
+        return data
     }
 }
 
@@ -126,6 +151,12 @@ const spotsReducer = (state = initialState, action) => {
         case DELETE_SPOT:
             newState = {...state}
             delete newState[action.data.id]
+            return newState
+        case ADD_IMAGE:
+            newState = {...state}
+            newState.spot.SpotImages = []
+            console.log("coming from reducer", newState)
+            newState.spot.SpotImages.push(action.data)
             return newState
     default:
         return state;

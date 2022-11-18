@@ -6,7 +6,7 @@ import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/review";
 import { Modal } from '../../context/Modal'
 import EditReview from '../EditReview';
-
+import './SpotPage.css'
 
 function SpotPage() {
 
@@ -16,11 +16,13 @@ function SpotPage() {
     const spotId = useRouteMatch("/spots/:spotId").params.spotId
     const spot = useSelector((state) => state.spots.spot)
 
-    const userId = useSelector((state) => state.session.user?.id)
+    const user = useSelector((state) => state.session.user)
+    const userId = user.id
     const ownerId = spot.ownerId
 
-
     const reviews = Object.values(useSelector((state) => state.reviews))
+
+
     //useState for spots
     const [edit, setEdit] = useState(false)
     const [editting, setEditting] = useState(false)
@@ -37,10 +39,11 @@ function SpotPage() {
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
 
+
     //useState for creating reviews
     const [showModal, setShowModal] = useState(false)
     const [hasReview, setHasReview] = useState(false)
-    const [reviewData, setReviewData] = useState("")
+    const [review, setReview] = useState("")
     const [stars, setStars] = useState("")
 
     //dispatch for all reviews
@@ -73,12 +76,13 @@ function SpotPage() {
         }
     }, [reviews, userId])
 
+
+
+
     //function returning boolean for determining if user is the owner of the review
     const reviewOwner = (id) => (
         userId === id
     )
-
-
 
     //setters for creating spot form.
     const updateAddress = (e) => setAddress(e.target.value)
@@ -91,8 +95,9 @@ function SpotPage() {
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
 
+
     //setters for creating review
-    const updateReview = (e) => setReviewData(e.target.value)
+    const updateReview = (e) => setReview(e.target.value)
     const updateStars = (e) => setStars(e.target.value)
 
     //save click for updating spot
@@ -100,7 +105,9 @@ function SpotPage() {
         e.preventDefault()
         const payload = {address, city, state, country, lat, lng, name, description, price}
 
+
         let spot = await dispatch(spotActions.updateSpot(spotId, payload))
+
 
         if (spot) {
             history.push(`/spots/${spotId}`)
@@ -140,16 +147,18 @@ function SpotPage() {
     //create click to create new review
     const handleReviewSaveClick = async (e) => {
         e.preventDefault()
-        const payload = {reviewData, stars:+stars}
-        let res = await dispatch(reviewActions.newReview(spotId, payload))
+        const payload = {review, stars:+stars}
+        let res = await dispatch(reviewActions.newReview(spotId, payload, user))
         if (res) {
-            history.push(`/spots/${spotId}`)
+            setReview("")
+            setStars("")
+            setShowModal(false)
         }
     }
 
 
     return (
-    <div>
+    <div className="spot-container">
         {
         editting ?
         <div>
@@ -262,7 +271,7 @@ function SpotPage() {
                 {
                 hasReview ? null :
                 <section className="create-review">
-                    <form className="create-review-container">
+                    <form onSubmit={handleReviewSaveClick} className="create-review-container">
                         <input
                             type="number"
                             placeholder="Stars"
@@ -274,11 +283,11 @@ function SpotPage() {
                             type="text"
                             placeholder="Type review here"
                             required
-                            value={reviewData}
+                            value={review}
                             onChange={updateReview}
                         />
                         <div>
-                            <button type="button" onClick={handleReviewSaveClick}>Save</button>
+                            <button type="submit">Save</button>
                         </div>
                     </form>
                 </section>
@@ -290,12 +299,12 @@ function SpotPage() {
                         <p>{review?.stars}</p>
                         <p>{review?.review}</p>
                     {
-                        reviewOwner(review.User.id)?
+                        reviewOwner(review?.User?.id)?
                         <div key={`review_${review?.id}`}>
                         <button type="button" onClick={handleReviewEditClick}>Edit Review</button>
                         { showModal &&
                         <Modal onClose={() => setShowModal(false) }>
-                             <EditReview setShowModal={setShowModal} setHasReview={setHasReview} reviewId={review.id} spotId={spotId}/>
+                             <EditReview setShowModal={setShowModal} setHasReview={setHasReview} reviewId={review.id} spotId={spotId} user={user}/>
                         </Modal>
                         }
                         </div>
@@ -304,7 +313,7 @@ function SpotPage() {
                     }
                     </div>
                 </div>
-                ): null}
+                ): <div>No reviews yet</div>}
             </div>
 
         </div>

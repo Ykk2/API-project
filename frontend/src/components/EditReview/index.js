@@ -5,7 +5,7 @@ import * as reviewActions from "../../store/review";
 
 
 
-function EditReview ({setShowModal, setHasReview, reviewId, spotId}) {
+function EditReview ({setShowModal, setHasReview, reviewId, spotId, user}) {
 
     const history = useHistory()
     const dispatch = useDispatch()
@@ -25,11 +25,10 @@ function EditReview ({setShowModal, setHasReview, reviewId, spotId}) {
         e.preventDefault()
         e.stopPropagation()
         const payload = {review, stars:+stars}
-        let res = await dispatch(reviewActions.updateReview(reviewId, payload))
+        let res = await dispatch(reviewActions.updateReview(reviewId, payload, user))
         if (res) {
-
             history.push(`/spots/${spotId}`)
-
+            setShowModal(false)
         }
     }
 
@@ -38,8 +37,7 @@ function EditReview ({setShowModal, setHasReview, reviewId, spotId}) {
         e.preventDefault()
         let res = await dispatch(reviewActions.removeReview(reviewId))
         if (res) {
-            history.push(`/spots/${spotId}`)
-            setHasReview(true)
+            setHasReview(false)
         }
     }
 
@@ -47,7 +45,7 @@ function EditReview ({setShowModal, setHasReview, reviewId, spotId}) {
     return (
         <div>
             <section className="edit-spot-form-container">
-            <form className="edit-spot-form">
+            <form onSubmit={handleSaveClick} className="edit-spot-form">
                 <input
                 type="number"
                 placeholder="Stars"
@@ -64,7 +62,7 @@ function EditReview ({setShowModal, setHasReview, reviewId, spotId}) {
                 />
             <div>
             <button type="button" onClick={handleCancelClick}>Cancel</button>
-            <button type="button" onClick={handleSaveClick}>Save</button>
+            <button type="submit" >Save</button>
             <button type="button" onClick={handleDeleteClick}>Delete Review</button>
             </div>
             </form>

@@ -374,7 +374,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
     const { review, stars } = req.body
     const spotId = Number(req.params.spotId)
     const userId = req.user.id
-    console.log(review, stars)
     if (!review || !stars) {
         const err = {}
         if (!review) {
