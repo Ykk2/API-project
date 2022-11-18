@@ -1,5 +1,8 @@
 /* TODO Add site wide styles */
-html, #root, #app, #app>div {
-    min-height: 100%;
-    min-width: 100%;
+body, #root {
+    box-sizing: border-box;
+    min-height: 100vh;
+    min-width: 100vw;
+    margin: 0;
+    padding: 0;
 }

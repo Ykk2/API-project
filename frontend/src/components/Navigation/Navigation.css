@@ -1,9 +1,33 @@
+ul {
+    list-style-type: none
+}
+
 .profile-dropdown {
     position: absolute;
+    background-color: gray;
+    border: 1px solid #fc0;
+    width: 40px;
+
+}
+
+.profile-button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.navBar-right {
+    border: 2px blue solid;
+    margin-right: 5vw;
 }
 
 .navBar {
     border: 2px green solid;
     margin: 0;
-    padding: 0
+    padding: 0;
+    min-height: 5vh;
+    max-height: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }

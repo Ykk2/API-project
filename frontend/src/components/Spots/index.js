@@ -16,16 +16,20 @@ function Spots() {
 
     return(
         <>
-        <h1>SPOT LIST</h1>
         <div className="spotsContainer">
             {spots?.map(spot =>
                 <div className="spotCard" key={spot?.id}>
-                    <Link to={`/spots/${spot?.id}`}>
-                    <img src={`${spot?.previewImage}`}></img>
-                    <span id="cityandstate">`{spot?.city}, {spot?.state}`</span>
-                    <span id="distance">distance will go here</span>
-                    <span id="availability">future availability here</span>
-                    <span id="cost">{spot?.price}</span>
+                    <Link to={`/spots/${spot?.id}`} style={{textDecoration:'none'}}>
+                    <div className="image-container">
+                        <img src={`${spot?.previewImage}`}></img>
+                    </div>
+                    <div className="details-container">
+                        <div className='details-container-top'>
+                            <p id="cityandstate">{`${spot?.city}, ${spot?.state}`}</p>
+                            <p id="avgRating">{` ${spot.avgRating? `★ ${spot.avgRating}`: ""}`}</p>
+                        </div>
+                        <p id="cost">{`$${spot?.price} /night`}</p>
+                    </div>
                     </Link>
                 </div>
             )}

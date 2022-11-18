@@ -30,6 +30,12 @@ function Navigation({ isLoaded }){
 
   return (
     <ul className="navBar">
+      <div>
+        <a href="https://www.freeiconspng.com/img/8765">
+          <img src="https://www.freeiconspng.com/uploads/flickr-logo-png-1.png" width="100"></img>
+        </a>
+      </div>
+      <div className="navBar-right">
       <li>
         <NavLink exact to="/">Home</NavLink>
         {isLoaded && <ProfileButton
@@ -46,7 +52,7 @@ function Navigation({ isLoaded }){
                <SignupFormPage setShowModal={setShowModal}/>}
       </Modal>
       }
-
+      </div>
     </ul>
   );
 }
