@@ -17,7 +17,7 @@ function SpotPage() {
     const spot = useSelector((state) => state.spots.spot)
 
     const user = useSelector((state) => state.session.user)
-    const userId = user.id
+    const userId = user?.id
     const ownerId = spot.ownerId
 
     const reviews = Object.values(useSelector((state) => state.reviews))
