@@ -254,11 +254,22 @@ function SpotPage() {
             <span>{spot.avgStarRating}, ({spot.numReviews})</span>
             <div className="spot-page-images">
                 {spot?.SpotImages?.map(image =>(
-                    <div>
-                    <img key={image.id} src={image.url}/>
-                    <p>spot images go here</p>
-                    </div>
+                    <img className="spot-image" key={image.id} src={image.url}/>
                 ))}
+            </div>
+            <div>
+            {
+            !editting && edit ?
+            <button type="submit" onClick={handleSpotEditClick}>Edit Spot</button>
+            :
+            null
+        }
+        {
+            !editting && destroy ?
+            <button type="button" onClick={handleSpotDeleteClick}>Delete Spot</button>
+            :
+            null
+        }
             </div>
             <div className="spot-page-details">
                 <h1>Description</h1>
@@ -319,18 +330,7 @@ function SpotPage() {
         </div>
         }
 
-        {
-            !editting && edit ?
-            <button type="submit" onClick={handleSpotEditClick}>Edit Spot</button>
-            :
-            null
-        }
-        {
-            !editting && destroy ?
-            <button type="button" onClick={handleSpotDeleteClick}>Delete Spot</button>
-            :
-            null
-        }
+
 
     </div>
     )

@@ -26,7 +26,7 @@ function Spots() {
                     <div className="details-container">
                         <div className='details-container-top'>
                             <p id="cityandstate">{`${spot?.city}, ${spot?.state}`}</p>
-                            <p id="avgRating">{` ${spot.avgRating? `★ ${spot.avgRating}`: ""}`}</p>
+                            <p id="avgRating">{` ${spot.avgRating? `★ ${spot.avgRating}`: "New"}`}</p>
                         </div>
                         <p id="cost">{`$${spot?.price} /night`}</p>
                     </div>
