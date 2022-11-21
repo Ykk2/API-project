@@ -74,6 +74,21 @@ p {
     margin-top: 5px;
 }
 
+.details-container-top > p {
+    margin: 0;
+}
+
+#cityandstate {
+    font-weight: bold;
+}
+
+#avgRating {
+    margin:0
+}
+
+.details-container > p {
+    margin: 0;
+}
 
 
 /* object-fit: contain for images */
