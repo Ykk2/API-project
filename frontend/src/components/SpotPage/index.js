@@ -219,7 +219,7 @@ function SpotPage() {
         <div className="spacer"></div>
           <div className="spot-page-top">
                 <h1>{spot?.name}</h1>
-                <span>{`★ ${spot.avgStarRating ? spot.avgStarRating.toFixed(1) : "New" }`} · {`${spot.numReviews} reviews`} . {spot?.city}, {spot?.state}, {spot?.country}</span>
+                <span>{`★ ${spot.avgStarRating ? Number(spot.avgStarRating).toFixed(1) : "New" }`} · {`${spot.numReviews} reviews`} . {spot?.city}, {spot?.state}, {spot?.country}</span>
             </div>
         {
         editting ?
