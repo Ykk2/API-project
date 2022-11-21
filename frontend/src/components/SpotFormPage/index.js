@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch} from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as spotActions from "../../store/spots";
+import './SpotFormPage.css';
 
 const CreateSpotForm = () => {
 
@@ -50,6 +51,7 @@ const CreateSpotForm = () => {
             if (price < 0) error.push("You cannot have a negative dollar amount for price")
             if (url?.length === 0) error.push("URL for preview image is required")
             setErrors(error)
+            setPassed(false)
             if (error.length === 0) setPassed(true)
 
 

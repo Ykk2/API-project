@@ -1,0 +1,26 @@
+
+.new-spot-form-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%
+}
+
+.create-spot-form > button {
+    outline: none;
+    background: #FF385C;
+    border-radius: 7px;
+    color: white;
+    width: 350px;
+    min-height: 40px;
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.create-spot-form > button:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    cursor: pointer;
+}

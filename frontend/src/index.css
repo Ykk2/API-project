@@ -35,3 +35,11 @@ body, #root {
     margin: 0;
     padding: 0;
 }
+
+li {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}

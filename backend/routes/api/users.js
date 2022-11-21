@@ -44,11 +44,9 @@ router.post(
 
       const err = {message: ["Validation Error"], errors: []}
 
-      // if (!/[^a-zA-Z]/.test(firstName)) {
-      //   err.firstName="First Name must be alphabetic"
-      // }
 
-      if (!email || !username || !firstName || !lastName || emailExists || userNameExists) {
+      if (!email || !username || !firstName || !lastName || emailExists || userNameExists ||
+        firstName.toUpperCase() === firstName.toLowerCase() || lastName.toUpperCase() === lastName.toLowerCase()) {
         if (!email) {
           err.errors.push("Invalid email")
         }
@@ -61,26 +59,19 @@ router.post(
         if (!lastName) {
           err.errors.push("Last Name is required")
         }
-      //   return res.json({
-      //     message: "Validation error",
-      //     statusCode: 400,
-      //     errors: err
-      //   })
-      // }
-
-      // if (emailExists || userNameExists) {
-
+        if (firstName.toUpperCase() === firstName.toLowerCase()) {
+          err.errors.push("Sorry, First Name cannot be numbers")
+        }
+        if (lastName.toUpperCase() === lastName.toLowerCase()) {
+          err.errors.push("Sorry, Last Name cannot be numbers")
+        }
         if (emailExists) {
           err.errors.push("User with that email already exists")
         }
         if (userNameExists) {
           err.errors.push("User with that username already exists")
         }
-        // return res.json({
-        //   message: "User already exists",
-        //   statusCode: 403,
-        //   errors: err
-        // })
+
         err.status = 400
         console.log(err)
         return next(err)

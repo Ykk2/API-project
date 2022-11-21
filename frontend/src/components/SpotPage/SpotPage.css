@@ -72,6 +72,7 @@
     margin-top: 20px;
     font-weight: bold;
     margin-right: 20px;
+    cursor: pointer;
 
 }
 
@@ -112,6 +113,7 @@
     width: 70px;
     height: 28px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .stars-container {
@@ -161,6 +163,12 @@
     height: 40px;
     margin-top: 20px;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.save-Review-Button:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    cursor: pointer;
 }
 
 .reviews-cotainer {
@@ -173,4 +181,32 @@
 
 .review-content > p {
     margin-left: 0
+}
+
+.edit-spot-form-container > ul {
+    color:#FF385C
+}
+
+.create-review > ul {
+    color:#FF385C;
+    text-align: center;
+}
+
+.monkey {
+    position: relative;
+}
+
+.review-edit-button {
+    color: #FF385C;
+    float: right;
+}
+
+.edit-button-container > button:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    cursor: pointer;
+}
+
+.edit-spot-button-container > button:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    cursor: pointer;
 }

@@ -9,6 +9,11 @@ import './SpotPage.css'
 
 function SpotPage() {
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
+
+
     const history = useHistory()
     const dispatch = useDispatch()
 
@@ -27,16 +32,16 @@ function SpotPage() {
     const [editting, setEditting] = useState(false)
     const [destroy, setDestroy] = useState(false)
 
-    //useState for creating spots
-    const [address, setAddress] = useState()
-    const [city, setCity] = useState()
-    const [state, setState] = useState()
-    const [country, setCountry] = useState()
-    const [lat, setLat] = useState()
-    const [lng, setLng] = useState()
-    const [name, setName] = useState()
-    const [description, setDescription] = useState()
-    const [price, setPrice] = useState()
+    //useState for editting spots
+    const [address, setAddress] = useState(spot.address)
+    const [city, setCity] = useState(spot.city)
+    const [state, setState] = useState(spot.state)
+    const [country, setCountry] = useState(spot.country)
+    const [lat, setLat] = useState(spot.lat)
+    const [lng, setLng] = useState(spot.lng)
+    const [name, setName] = useState(spot.name)
+    const [description, setDescription] = useState(spot.description)
+    const [price, setPrice] = useState(spot.price)
 
 
     //useState for editting spots
@@ -46,13 +51,27 @@ function SpotPage() {
     //useState for creating reviews
     const [showModal, setShowModal] = useState(false)
     const [hasReview, setHasReview] = useState(false)
-    const [review, setReview] = useState("")
-    const [stars, setStars] = useState("")
+    const [review, setReview] = useState()
+    const [stars, setStars] = useState()
+
 
     const addressRegex = /^[a-zA-Z0-9\s\,\''\-]*$/
     const alphaRegex = /^[a-zA-Z ]*$/
 
+
     //useEffect for creating errors while editting
+
+    useEffect(() => {
+        let error = []
+        if (stars === undefined || stars <= 0) error.push ("Please select star rating")
+        if (review?.length <= 0) error.push ("Your review is empty")
+
+        setErrors(error)
+        setPassed(false)
+        if (error.length === 0) setPassed(true)
+    }, [stars, review])
+
+
     useEffect(() => {
 
         let error = []
@@ -66,7 +85,11 @@ function SpotPage() {
         if (name && name?.length > 30) error.push("Please keep name under 30 characters")
         if (description?.length < 20) error.push("Please provide more description")
         if (price < 0) error.push("You cannot have a negative dollar amount for price")
+
+
+
         setErrors(error)
+        setPassed(false)
         if (error.length === 0) setPassed(true)
 
 
@@ -140,6 +163,7 @@ function SpotPage() {
                 history.push(`/spots/${spotId}`)
             }
             setEditting(false)
+            setPassed(false) ///////////////////////////////////////////////////
         }
     }
 
@@ -175,12 +199,16 @@ function SpotPage() {
     //create click to create new review
     const handleReviewSaveClick = async (e) => {
         e.preventDefault()
-        const payload = {review, stars:+stars}
-        let res = await dispatch(reviewActions.newReview(spotId, payload, user))
-        if (res) {
-            setReview("")
-            setStars("")
-            setShowModal(false)
+        if (passed === true) {
+
+            const payload = {review, stars:+stars}
+            let res = await dispatch(reviewActions.newReview(spotId, payload, user))
+            if (res) {
+                setReview("")
+                setStars("")
+                setShowModal(false)
+            }
+            setPassed(false)
         }
     }
 
@@ -191,7 +219,7 @@ function SpotPage() {
         <div className="spacer"></div>
           <div className="spot-page-top">
                 <h1>{spot?.name}</h1>
-                <span>{`★ ${spot.avgStarRating ? spot.avgStarRating : "New" }`} · {`${spot.numReviews} reviews`} . {spot?.city}, {spot?.state}, {spot?.country}</span>
+                <span>{`★ ${spot.avgStarRating ? spot.avgStarRating.toFixed(1) : "New" }`} · {`${spot.numReviews} reviews`} . {spot?.city}, {spot?.state}, {spot?.country}</span>
             </div>
         {
         editting ?
@@ -317,6 +345,9 @@ function SpotPage() {
                 {
                 hasReview ? null :
                 <section className="create-review">
+                    <ul>
+                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </ul>
                     <form onSubmit={handleReviewSaveClick} className="create-review-container">
                     <div className="stars-container">
                     <span> Rating: </span>
@@ -358,11 +389,11 @@ function SpotPage() {
                             <p>{review?.review}</p>
                         {
                             reviewOwner(review?.User?.id)?
-                            <div key={`review_${review?.id}`}>
-                            <button type="button" onClick={handleReviewEditClick}>Edit Review</button>
+                            <div className="monkey" key={`review_${review?.id}`}>
+                            <button className="review-edit-button" type="button" onClick={handleReviewEditClick}>Edit Review</button>
                             { showModal &&
                             <Modal onClose={() => setShowModal(false) }>
-                                <EditReview setShowModal={setShowModal} setHasReview={setHasReview} reviewId={review.id} spotId={spotId} user={user}/>
+                                <EditReview currentReview={review.review} currentRating={review.stars} setShowModal={setShowModal} setHasReview={setHasReview} reviewId={review.id} spotId={spotId} user={user}/>
                             </Modal>
                             }
                             </div>

@@ -22,6 +22,7 @@ if (process.env.NODE_ENV !== "production") {
   window.reviewActions = reviewActions;
 }
 
+
 function Root() {
   return (
     <Provider store={store}>

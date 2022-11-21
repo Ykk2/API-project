@@ -1,13 +1,14 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
 function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const history = useHistory()
 
   const openMenu = () => {
     if (showMenu) return;
@@ -28,10 +29,9 @@ function ProfileButton({ user, setLogin, setShowModal }) {
 
   const logout = (e) => {
     e.preventDefault();
-
     dispatch(sessionActions.logout());
+    history.push('/')
   };
-
 
   return (
     <div className="profile-button-container">
@@ -48,22 +48,20 @@ function ProfileButton({ user, setLogin, setShowModal }) {
           <Link to={'/host'}>Host a Spot</Link>
           <li>
             <button onClick={logout}>Log Out</button>
-
           </li>
         </ul>) :
         (<ul className="profile-dropdown">
-          <li>
-            <button onClick={() => {
+
+            <button className="login" onClick={() => {
               setLogin(true)
               setShowModal(true)
             }}>Log In</button>
-          </li>
-          <li>
+
             <button onClick={() => {
               setLogin(false)
               setShowModal(true)
             }}>Sign Up</button>
-          </li>
+
         </ul>)
       )}
     </div>
