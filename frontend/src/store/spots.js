@@ -66,7 +66,6 @@ export const updateStarRating = (spotId) => async (dispatch) => {
     if (res.ok) {
         const spot = await res.json()
         const avgRating = spot.avgStarRating
-        console.log("from spots thunk", spotId, avgRating)
         dispatch(updateRating(spotId, avgRating))
         return avgRating
     }
@@ -180,7 +179,6 @@ const spotsReducer = (state = initialState, action) => {
             newState.spot.SpotImages.push(action.data)
             return newState
         case UPDATE_RATING:
-            console.log("from thunk", action.avgRating)
             newState = {...state}
             newState.spot.avgStarRating = action.avgRating
             return newState
