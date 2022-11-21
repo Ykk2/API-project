@@ -2,9 +2,13 @@
 
 Project Link: <a href='https://dashboard.heroku.com/apps/richard-kwon-auth-me'>BnB</a> 
 
-## Purpose : To learn how to develop a fullstack application.
+## Purpose
 
-## Description : An AirBnB clone that attempts to imitate the functionalities of the original site.
+To learn how to develop a fullstack application.
+
+## Description
+
+AirBnB clone that attempts to imitate the functionalities of the original site.
 
 ## Technologies
 <div align="center">
@@ -19,6 +23,42 @@ Project Link: <a href='https://dashboard.heroku.com/apps/richard-kwon-auth-me'>B
 	<code><img height="50" src="https://user-images.githubusercontent.com/25181517/183898674-75a4a1b1-f960-4ea9-abcb-637170a00a75.png" alt="CSS" title="CSS" /></code>
 </div>
 
+## Features
+
+- User can sign up or continue as a demo user. 
+- User can host a spot with a preview image.
+- User can update a spot.
+- User can delete a spot they hosted.
+- User can create a review for a spot.
+- User can update a review for a spot.
+- User can delete a review they created.
+- User can view spots and view individual spots in more detail. 
+
+## Future Features
+
+- User profile page with user's reviews, hosted spots, and favorited spots. 
+- User ability to book a spot, update that booking, and delete it.
+- User ability to upload and view more than one image.
+- User ability to sign in via other methods (google, etc)
+- More design features to make the site feel more responsive and engaging. 
+
+## How to get started
+
+1) Clone the repo
+2) CD into backend folder and run <pre><code>npm install</code></pre>
+3) In the same folder run <pre><code>npm start</code></pre>
+4) CD into frontend folder and run <pre><code>npm install</code></pre>
+5) In the same folder run <pre><code>npm start</code></pre>
+6) A new browser should be open now with the running application.
 
 
+## Contact Me
 
+Please feel free to reach out to me with anything related to this project. 
+
+<code>
+<a href="www.linkedin.com/in/richardkwon2">
+<img height="50" src="https://www.vectorlogo.zone/logos/linkedin/linkedin-icon.svg" alt="CSS" title="CSS" />
+</a>
+</code>
+</div>
