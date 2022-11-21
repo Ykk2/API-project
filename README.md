@@ -45,6 +45,7 @@ AirBnB clone that attempts to imitate the functionalities of the original site.
 ## How to get started
 
 1) Clone the repo
+
 2) CD into backend folder and run <pre><code>npm install</code></pre>
 3) In the same folder run <pre><code>npm start</code></pre>
 4) CD into frontend folder and run <pre><code>npm install</code></pre>
