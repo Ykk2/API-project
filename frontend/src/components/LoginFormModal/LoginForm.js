@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
+import './LoginForm.css';
 
-function LoginForm() {
+function LoginForm({setShowModal}) {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -11,9 +12,28 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password })).catch(
+
+    return dispatch(sessionActions.login({ credential, password }))
+    .then(() => setShowModal(false))
+    .catch(
       async (res) => {
+
         const data = await res.json();
+
+        if (data && data.errors) setErrors(data.errors);
+      }
+    );
+  };
+
+  const handleDemoUserSubmit = (e) => {
+    e.preventDefault()
+    return dispatch(sessionActions.login({ credential:"Demo-lition", password:'password'}))
+    .then(() => setShowModal(false))
+    .catch(
+      async (res) => {
+
+        const data = await res.json();
+
         if (data && data.errors) setErrors(data.errors);
       }
     );
@@ -21,30 +41,32 @@ function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <ul>
+      <span className="login-header">Login</span>
+      <ul className="login-errors">
         {errors.map((error, idx) => (
           <li key={idx}>{error}</li>
         ))}
       </ul>
       <label>
-        Username or Email
         <input
           type="text"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
+          placeholder="Username or Email"
         />
       </label>
       <label>
-        Password
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          placeholder={"Password"}
         />
       </label>
-      <button type="submit">Log In</button>
+      <button className="LoginButton" type="submit">Continue</button>
+      <button className="DemoUserButton" onClick={handleDemoUserSubmit}>Login as Demo User</button>
     </form>
   );
 }

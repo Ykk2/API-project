@@ -1,0 +1,46 @@
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    overflow: auto
+}
+
+.sign-up-form {
+    margin-right: 30px;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.sign-up-form > label {
+    margin-right: 10px;
+
+}
+
+.sign-up-form > label > input {
+    height: 27px;
+    margin-left: 10px;
+}
+
+.sign-up-form > button {
+    outline: none;
+    background: #FF385C;
+    border-radius: 7px;
+    color: white;
+    width: 350px;
+    min-height: 40px;
+    margin-top: 20px;
+    font-weight: bold;
+    margin-right: 13%;
+    margin-top: 8%;
+    margin-bottom: 5%;
+    cursor: pointer;
+}
+
+.sign-up-errors {
+    align-self: center;
+    padding-left: 16px
+}
+
+.sign-up-form > button:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    cursor: pointer;
+}

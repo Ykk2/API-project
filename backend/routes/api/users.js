@@ -31,7 +31,7 @@ const validateSignup = [
 router.post(
     '/',
     validateSignup,
-    async (req, res) => {
+    async (req, res, next) => {
       const { email, password, username, firstName, lastName } = req.body;
 
       const emailExists = await User.findOne({
@@ -42,41 +42,39 @@ router.post(
         where: {username: username}
       })
 
-      const err = {}
+      const err = {message: ["Validation Error"], errors: []}
 
-      if (!email, !username, !firstName, !lastName) {
+
+      if (!email || !username || !firstName || !lastName || emailExists || userNameExists ||
+        firstName.toUpperCase() === firstName.toLowerCase() || lastName.toUpperCase() === lastName.toLowerCase()) {
         if (!email) {
-          err.mail = "Invalid email"
+          err.errors.push("Invalid email")
         }
         if (!username) {
-          err.username = "Username is required"
+          err.errors.push("Username is required")
         }
         if (!firstName) {
-          err.firstName = "First Name is required"
+          err.errors.push("First Name is required")
         }
         if (!lastName) {
-          err.lastName = "Last Name is required"
+          err.errors.push("Last Name is required")
         }
-        return res.json({
-          message: "Validation error",
-          statusCode: 400,
-          errors: err
-        })
-      }
-
-      if (emailExists || userNameExists) {
-
+        if (firstName.toUpperCase() === firstName.toLowerCase()) {
+          err.errors.push("Sorry, First Name cannot be numbers")
+        }
+        if (lastName.toUpperCase() === lastName.toLowerCase()) {
+          err.errors.push("Sorry, Last Name cannot be numbers")
+        }
         if (emailExists) {
-          err.email = "User with that email already exists"
+          err.errors.push("User with that email already exists")
         }
         if (userNameExists) {
-          err.userame = "User with that username already exists"
+          err.errors.push("User with that username already exists")
         }
-        return res.json({
-          message: "User already exists",
-          statusCode: 403,
-          errors: err
-        })
+
+        err.status = 400
+        console.log(err)
+        return next(err)
       }
 
       const user = await User.signup({ email, username, password, firstName, lastName });

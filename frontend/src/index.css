@@ -1,1 +1,45 @@
 /* TODO Add site wide styles */
+
+@font-face {
+    font-family: "Light";
+    src: local("Poppins-Thin"),
+    url("./assets/fonts/Poppins-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Thick";
+    src: local("Poppins-Thick"),
+    url("./assets/fonts/Poppins-ExtraBold.ttf") format("truetype");
+}
+
+* {
+    font-family: Light;
+}
+
+.spacer {
+    max-height: 10%;
+    min-height: 40px;
+    width: 100%;
+}
+
+html {
+    height: 100vw;
+    position: relative;
+}
+
+body, #root {
+    position: absolute;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}

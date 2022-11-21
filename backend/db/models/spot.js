@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     country: {
       type: DataTypes.STRING,
       allowNull: false,
+
     },
 
     lat: {

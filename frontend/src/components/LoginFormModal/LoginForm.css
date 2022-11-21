@@ -1,0 +1,73 @@
+form {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: 550px;
+    color: #FF385C;
+    align-items: center;
+
+}
+
+#modal-content {
+    border-radius: 10px;
+}
+
+.login-header {
+    margin-top: 20px;
+    font-weight: bold;
+
+}
+
+label {
+    flex-direction: column;
+}
+
+.login-errors {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    padding-left: 0
+}
+input {
+    border-radius: 7px;
+    border: 1px solid #666;
+    background-color: white;
+    width: 350px;
+    height: 40px;
+    margin-top: 10px;
+}
+
+.LoginButton {
+    outline: none;
+    background: #FF385C;
+    border-radius: 7px;
+    color: white;
+    width: 350px;
+    height: 40px;
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.DemoUserButton {
+    outline: none;
+    background: #FF385C;
+    border-radius: 7px;
+    color: white;
+    width: 350px;
+    height: 40px;
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.DemoUserButton:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    cursor: pointer;
+}
+
+.LoginButton:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    cursor: pointer;
+}

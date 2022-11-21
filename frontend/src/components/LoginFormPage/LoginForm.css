@@ -1,9 +1,0 @@
-form {
-    display: flex;
-    height: 2rem;
-    width: 2rem;
-}
-
-label {
-    flex-direction: column;
-}

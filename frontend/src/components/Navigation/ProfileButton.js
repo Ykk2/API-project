@@ -1,11 +1,14 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
+import './Navigation.css';
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const history = useHistory()
 
   const openMenu = () => {
     if (showMenu) return;
@@ -27,23 +30,43 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push('/')
   };
 
   return (
-    <>
-      <button onClick={openMenu}>
+    <div className="profile-button-container">
+      <button className="profile-button" onClick={openMenu}>
         <i className="fas fa-user-circle" />
+
       </button>
-      {showMenu && (
-        <ul className="profile-dropdown">
+      {showMenu && ( user ?
+        (<ul className="profile-dropdown">
+          <div id="profile-drop-down-divide">
           <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
+          <li >{user.email}</li>
+          </div>
+          <Link to={'/host'}>
+            <span>Host</span>
+          </Link>
+
+          <button className="logout" onClick={logout}>Log Out</button>
+
+        </ul>) :
+        (<ul className="profile-dropdown">
+
+            <button className="login" onClick={() => {
+              setLogin(true)
+              setShowModal(true)
+            }}>Log In</button>
+
+            <button onClick={() => {
+              setLogin(false)
+              setShowModal(true)
+            }}>Sign Up</button>
+
+        </ul>)
       )}
-    </>
+    </div>
   );
 }
 
