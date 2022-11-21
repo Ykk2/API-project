@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
-import { removeSpot } from '../../store/spots';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/review";
 import { Modal } from '../../context/Modal'
@@ -29,22 +28,49 @@ function SpotPage() {
     const [destroy, setDestroy] = useState(false)
 
     //useState for creating spots
-    const [address, setAddress] = useState("")
-    const [city, setCity] = useState("")
-    const [state, setState] = useState("")
-    const [country, setCountry] = useState("")
-    const [lat, setLat] = useState("")
-    const [lng, setLng] = useState("")
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [price, setPrice] = useState("")
+    const [address, setAddress] = useState()
+    const [city, setCity] = useState()
+    const [state, setState] = useState()
+    const [country, setCountry] = useState()
+    const [lat, setLat] = useState()
+    const [lng, setLng] = useState()
+    const [name, setName] = useState()
+    const [description, setDescription] = useState()
+    const [price, setPrice] = useState()
 
+
+    //useState for editting spots
+    const [errors, setErrors] = useState([])
+    const [passed, setPassed] = useState(false)
 
     //useState for creating reviews
     const [showModal, setShowModal] = useState(false)
     const [hasReview, setHasReview] = useState(false)
     const [review, setReview] = useState("")
     const [stars, setStars] = useState("")
+
+    const addressRegex = /^[a-zA-Z0-9\s\,\''\-]*$/
+    const alphaRegex = /^[a-zA-Z ]*$/
+
+    //useEffect for creating errors while editting
+    useEffect(() => {
+
+        let error = []
+
+        if (!addressRegex.test(address)) error.push("Please enter a valid address")
+        if (!alphaRegex.test(city)) error.push("City cannot contain numbers")
+        if (!alphaRegex.test(state)) error.push("State cannot contain numbers")
+        if (!alphaRegex.test(country)) error.push("Country cannot contain numbers")
+        if (+lat < -90 || +lat > 90) error.push("latitude must be between -90 and 90")
+        if (+lng < -180 || +lng > 180) error.push("longitude must be between -180 and 180")
+        if (name && name?.length > 30) error.push("Please keep name under 30 characters")
+        if (description?.length < 20) error.push("Please provide more description")
+        if (price < 0) error.push("You cannot have a negative dollar amount for price")
+        setErrors(error)
+        if (error.length === 0) setPassed(true)
+
+
+}, [address, city, state, country, lat, lng, name, description, price])
 
     //dispatch for all reviews
     useEffect(() => {
@@ -98,21 +124,23 @@ function SpotPage() {
 
     //setters for creating review
     const updateReview = (e) => setReview(e.target.value)
-    const updateStars = (e) => setStars(e.target.value)
+
+    const ratingIndex = [1, 2, 3, 4, 5]
 
     //save click for updating spot
     const handleSpotSaveClick = async (e) => {
         e.preventDefault()
-        const payload = {address, city, state, country, lat, lng, name, description, price}
+        if (passed === true) {
 
+            const payload = {address, city, state, country, lat, lng, name, description, price}
 
-        let spot = await dispatch(spotActions.updateSpot(spotId, payload))
+            let spot = await dispatch(spotActions.updateSpot(spotId, payload))
 
-
-        if (spot) {
-            history.push(`/spots/${spotId}`)
+            if (spot) {
+                history.push(`/spots/${spotId}`)
+            }
+            setEditting(false)
         }
-        setEditting(false)
     }
 
     //cancel click for cancelling updating spot
@@ -158,22 +186,32 @@ function SpotPage() {
 
 
     return (
+
     <div className="spot-container">
+        <div className="spacer"></div>
+          <div className="spot-page-top">
+                <h1>{spot?.name}</h1>
+                <span>{`★ ${spot.avgStarRating ? spot.avgStarRating : "New" }`} · {`${spot.numReviews} reviews`} . {spot?.city}, {spot?.state}, {spot?.country}</span>
+            </div>
         {
         editting ?
         <div>
             <div className="spot-page">
-                <h1>{spot?.name}</h1>
+
                 <div className="spot-page-images">
                     {spot?.SpotImages?.map(image =>(
                     <div>
                         <img key={image.id} src={image.url}/>
-                        <p>spot images go here</p>
                     </div>
                         ))}
                 </div>
+
             </div>
         <section className="edit-spot-form-container">
+            <p>You are currently editting</p>
+            <ul>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
             <form className="edit-spot-form">
                 <input
                 type="text"
@@ -239,57 +277,63 @@ function SpotPage() {
                 value={price}
                 onChange={updatePrice}
                 />
-            <div>
-            <button type="button" onClick={handleSpotCancelClick}>Cancel</button>
-            <button type="button" onClick={handleSpotSaveClick}>Save</button>
-            </div>
             </form>
+            <div className="edit-spot-button-container">
+                <button type="button" onClick={handleSpotCancelClick}>Cancel</button>
+                <button type="button" onClick={handleSpotSaveClick}>Save</button>
+            </div>
         </section>
         </div>
 
         :
 
         <div className="spot-page">
-            <h1>{spot?.name}</h1>
-            <span>{spot.avgStarRating}, ({spot.numReviews})</span>
+
             <div className="spot-page-images">
                 {spot?.SpotImages?.map(image =>(
                     <img className="spot-image" key={image.id} src={image.url}/>
                 ))}
             </div>
-            <div>
+        <div className="edit-button-container">
             {
             !editting && edit ?
-            <button type="submit" onClick={handleSpotEditClick}>Edit Spot</button>
+            <button className="spot-edit-button"type="submit" onClick={handleSpotEditClick}>Edit Spot</button>
             :
             null
         }
         {
             !editting && destroy ?
-            <button type="button" onClick={handleSpotDeleteClick}>Delete Spot</button>
+            <button className="spot-edit-button" type="button" onClick={handleSpotDeleteClick}>Delete Spot</button>
             :
             null
         }
             </div>
             <div className="spot-page-details">
                 <h1>Description</h1>
-                <p>{spot?.address}</p>
-                <p>{spot?.city}, {spot?.state}</p>
                 <p>{spot?.description}</p>
             </div>
-            <div className="review-container">
                 <h1>Reviews</h1>
+            <div className="create-review-container">
                 {
                 hasReview ? null :
                 <section className="create-review">
                     <form onSubmit={handleReviewSaveClick} className="create-review-container">
-                        <input
-                            type="number"
-                            placeholder="Stars"
-                            required
-                            value={stars}
-                            onChange={updateStars}
-                        />
+                    <div className="stars-container">
+                    <span> Rating: </span>
+                        {ratingIndex.map((star) => {
+                            let index = ratingIndex.indexOf(star) + 1
+                            return (
+                                    <button
+                                    type="button"
+                                    key={index}
+                                    className = {+index <= +stars ? "on": "off"}
+                                    onClick={() => setStars(index)}
+                                    >
+                                    <div className="star">&#9733;</div>
+                                    </button>
+                            )
+                        })}
+                    </div>
                         <input
                             type="text"
                             placeholder="Type review here"
@@ -298,33 +342,36 @@ function SpotPage() {
                             onChange={updateReview}
                         />
                         <div>
-                            <button type="submit">Save</button>
+                            <button className="save-Review-Button" type="submit">Save</button>
                         </div>
                     </form>
                 </section>
                 }
+
+            </div>
+            <div className="reviews-container">
                 {reviews && reviews.length > 0 ? reviews?.map(review =>
-                <div className="review" key={review.id}>
-                    <div className="review-content">
-                        <p>{review?.User?.firstName}</p>
-                        <p>{review?.stars}</p>
-                        <p>{review?.review}</p>
-                    {
-                        reviewOwner(review?.User?.id)?
-                        <div key={`review_${review?.id}`}>
-                        <button type="button" onClick={handleReviewEditClick}>Edit Review</button>
-                        { showModal &&
-                        <Modal onClose={() => setShowModal(false) }>
-                             <EditReview setShowModal={setShowModal} setHasReview={setHasReview} reviewId={review.id} spotId={spotId} user={user}/>
-                        </Modal>
+                    <div className="review" key={review.id}>
+                        <div className="review-content">
+                            <h3>{review?.User?.firstName}</h3>
+                            <p>{`${review?.stars} ★`}</p>
+                            <p>{review?.review}</p>
+                        {
+                            reviewOwner(review?.User?.id)?
+                            <div key={`review_${review?.id}`}>
+                            <button type="button" onClick={handleReviewEditClick}>Edit Review</button>
+                            { showModal &&
+                            <Modal onClose={() => setShowModal(false) }>
+                                <EditReview setShowModal={setShowModal} setHasReview={setHasReview} reviewId={review.id} spotId={spotId} user={user}/>
+                            </Modal>
+                            }
+                            </div>
+                            :
+                            null
                         }
                         </div>
-                        :
-                        null
-                    }
                     </div>
-                </div>
-                ): <div>No reviews yet</div>}
+                    ): <div className={"review-content"}>No reviews yet</div>}
             </div>
 
         </div>

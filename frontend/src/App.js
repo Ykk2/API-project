@@ -18,6 +18,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <div className="spacer"></div>
       {isLoaded && (
         <Switch>
           <Route path="/signup">

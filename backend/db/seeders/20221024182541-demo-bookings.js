@@ -15,20 +15,14 @@ module.exports = {
         userId: 2,
         startDate: new Date('2023-02-02'),
         endDate: new Date('2024-02-02')
-      },
-      {
-        spotId: 3,
-        userId: 3,
-        startDate: new Date('2023-03-03'),
-        endDate: new Date('2024-03-03')
-      },
+      }
     ], {})
   },
 
   async down (queryInterface, Sequelize) {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete('Bookings', {
-      spotId: { [Op.in]: [1, 2, 3] }
+      spotId: { [Op.in]: [1, 2] }
     }, {})
   }
 };

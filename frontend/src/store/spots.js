@@ -147,6 +147,7 @@ const spotsReducer = (state = initialState, action) => {
             newState.spots = {...state.spots}
             newState.spots[action.data.spotId] = action.data
             newState.spot = action.data
+            newState.spot.SpotImages = state.spot.SpotImages
             return newState
         case DELETE_SPOT:
             newState = {...state}
@@ -155,7 +156,6 @@ const spotsReducer = (state = initialState, action) => {
         case ADD_IMAGE:
             newState = {...state}
             newState.spot.SpotImages = []
-            console.log("coming from reducer", newState)
             newState.spot.SpotImages.push(action.data)
             return newState
     default:

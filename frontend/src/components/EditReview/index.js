@@ -12,9 +12,10 @@ function EditReview ({setShowModal, setHasReview, reviewId, spotId, user}) {
 
     const [review, setReview] = useState("")
     const [stars, setStars] = useState("")
+    const ratingIndex = [1, 2, 3, 4, 5]
 
     const updateReview = (e) => setReview(e.target.value)
-    const updateStars = (e) => setStars(e.target.value)
+
 
     const handleCancelClick = (e) => {
         e.preventDefault()
@@ -46,13 +47,21 @@ function EditReview ({setShowModal, setHasReview, reviewId, spotId, user}) {
         <div>
             <section className="edit-spot-form-container">
             <form onSubmit={handleSaveClick} className="edit-spot-form">
-                <input
-                type="number"
-                placeholder="Stars"
-                required
-                value={stars}
-                onChange={updateStars}
-                />
+            <div className="stars-container"> Rating:
+                {ratingIndex.map((star) => {
+                    let index = ratingIndex.indexOf(star) + 1
+                    return (
+                        <button
+                        type="button"
+                        key={index}
+                        className = {+index <= +stars ? "on": "off"}
+                        onClick={() => setStars(index)}
+                        >
+                        <div className="star">&#9733;</div>
+                        </button>
+                    )
+                })}
+            </div>
                <input
                 type="text"
                 placeholder="Type review here"
