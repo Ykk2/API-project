@@ -65,6 +65,19 @@ ul {
     height: 35px;
 }
 
+.profile-dropdown > a {
+    height: 30px;
+    margin-left: 0;
+    padding-top: 10px;
+    margin-top: 0;
+}
+
+.profile-dropdown > a > span {
+    vertical-align: middle;
+    margin-left: 10px
+}
+
+
 .login {
     font-weight: bold;
 }

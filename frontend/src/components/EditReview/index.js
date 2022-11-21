@@ -5,7 +5,7 @@ import * as reviewActions from "../../store/review";
 import './EditReview.css'
 
 
-function EditReview ({currentReview, currentRating, setShowModal, setHasReview, reviewId, spotId, user}) {
+function EditReview ({clearErrors, currentReview, currentRating, setShowModal, setHasReview, reviewId, spotId, user}) {
 
     const history = useHistory()
     const dispatch = useDispatch()
@@ -58,6 +58,7 @@ function EditReview ({currentReview, currentRating, setShowModal, setHasReview, 
         let res = await dispatch(reviewActions.removeReview(reviewId))
         if (res) {
             setHasReview(false)
+            clearErrors([])
         }
     }
 

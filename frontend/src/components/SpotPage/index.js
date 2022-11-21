@@ -393,7 +393,7 @@ function SpotPage() {
                             <button className="review-edit-button" type="button" onClick={handleReviewEditClick}>Edit Review</button>
                             { showModal &&
                             <Modal onClose={() => setShowModal(false) }>
-                                <EditReview currentReview={review.review} currentRating={review.stars} setShowModal={setShowModal} setHasReview={setHasReview} reviewId={review.id} spotId={spotId} user={user}/>
+                                <EditReview clearErrors={setErrors} currentReview={review.review} currentRating={review.stars} setShowModal={setShowModal} setHasReview={setHasReview} reviewId={review.id} spotId={spotId} user={user}/>
                             </Modal>
                             }
                             </div>
