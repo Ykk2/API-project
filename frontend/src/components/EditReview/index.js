@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as reviewActions from "../../store/review";
+import * as spotActions from "../../store/spots";
 import './EditReview.css'
 
 
@@ -42,6 +43,7 @@ function EditReview ({clearErrors, currentReview, currentRating, setShowModal, s
         if (passed === true) {
             const payload = {review, stars:+stars}
             let res = await dispatch(reviewActions.updateReview(reviewId, payload, user))
+            let ratingUpdate = await dispatch(spotActions.updateStarRating(spotId))
             if (res) {
                 history.push(`/spots/${spotId}`)
                 setReview("")
@@ -56,6 +58,7 @@ function EditReview ({clearErrors, currentReview, currentRating, setShowModal, s
     const handleDeleteClick = async (e) => {
         e.preventDefault()
         let res = await dispatch(reviewActions.removeReview(reviewId))
+        let ratingUpdate = await dispatch(spotActions.updateStarRating(spotId))
         if (res) {
             setHasReview(false)
             clearErrors([])

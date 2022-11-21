@@ -1,10 +1,13 @@
 import { normalize } from "./helperFunctions"
 import { csrfFetch } from './csrf';
+import {updateStarRating} from './spots.js'
 
 const LOAD_REVIEWS = '/reviews/loadReviews'
 const EDIT_REVIEW = '/reviews/editReview'
 const CREATE_REVIEW = '/reviews/createReview'
 const DELETE_REVIEW = '/reviews/deleteReview'
+
+
 
 const loadReviews = (data) => {
     return {
@@ -54,6 +57,7 @@ export const newReview = (spotId, data, user) => async (dispatch) => {
         body: JSON.stringify(data)
     })
 
+
     if (res.ok) {
         const review = await res.json()
         review.User = user
@@ -72,6 +76,7 @@ export const updateReview = (reviewId, data, user) => async (dispatch) => {
         body: JSON.stringify(data)
     })
     if (res.ok) {
+
         const review = await res.json()
         review.User = user
         dispatch(editReview(review))
@@ -85,6 +90,7 @@ export const removeReview = (id) => async (dispatch) => {
         method: "DELETE"
     })
     if (res.ok) {
+
         const response = await res.json()
         dispatch(deleteReview(id))
         return response

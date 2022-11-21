@@ -203,6 +203,7 @@ function SpotPage() {
 
             const payload = {review, stars:+stars}
             let res = await dispatch(reviewActions.newReview(spotId, payload, user))
+            let ratingUpdate = await dispatch(spotActions.updateStarRating(spotId))
             if (res) {
                 setReview("")
                 setStars("")

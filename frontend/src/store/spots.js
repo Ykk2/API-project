@@ -7,6 +7,7 @@ const EDIT_SPOT = '/spots/editSpot'
 const CREATE_SPOT = '/spots/createSpot'
 const DELETE_SPOT = '/spots/deleteSpot'
 const ADD_IMAGE = '/spots/addSpotImage'
+const UPDATE_RATING = '/spots/updateStarRating'
 
 //eventually add another action for adding images to an existing spot
 
@@ -51,6 +52,26 @@ const addImage = (data) => {
         data
     }
 }
+
+const updateRating = (spotId, avgRating) => {
+    return {
+        type: UPDATE_RATING,
+        spotId,
+        avgRating
+    }
+}
+
+export const updateStarRating = (spotId) => async (dispatch) => {
+    const res = await fetch(`/api/spots/${spotId}`)
+    if (res.ok) {
+        const spot = await res.json()
+        const avgRating = spot.avgStarRating
+        console.log("from spots thunk", spotId, avgRating)
+        dispatch(updateRating(spotId, avgRating))
+        return avgRating
+    }
+}
+
 
 export const getSpots = () => async (dispatch) => {
     const res = await fetch('/api/spots')
@@ -157,6 +178,11 @@ const spotsReducer = (state = initialState, action) => {
             newState = {...state}
             newState.spot.SpotImages = []
             newState.spot.SpotImages.push(action.data)
+            return newState
+        case UPDATE_RATING:
+            console.log("from thunk", action.avgRating)
+            newState = {...state}
+            newState.spot.avgStarRating = action.avgRating
             return newState
     default:
         return state;
