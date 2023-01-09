@@ -1,9 +1,15 @@
 'use strict';
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Reviews', [
+    options.tableName = 'Reviews'
+    return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         userId: 2,
@@ -100,13 +106,11 @@ module.exports = {
         review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
         stars: 3
       },
-    ], {})
+    ])
   },
 
   async down (queryInterface, Sequelize) {
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete('Reviews', {
-      spotId: { [Op.in]: [1, 2, 3]}
-    }, {})
+    options.tableName = 'Reviews'
+    return queryInterface.bulkDelete(options)
   }
 };

@@ -1,11 +1,17 @@
 'use strict';
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 const { urlencoded } = require('express');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('SpotImages', [
+    options.tableName = 'SpotImages'
+    return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         url: "https://a0.muscache.com/im/pictures/miso/Hosting-717134404264905813/original/dfe9fd1e-a010-43c9-b546-0bbc7d59f7f3.jpeg?im_w=1200",
@@ -87,13 +93,11 @@ module.exports = {
         preview: true
       }
 
-    ], {})
+    ])
   },
 
   async down (queryInterface, Sequelize) {
-    const Op = Sequelize.Op
-    return queryInterface.bulkDelete('SpotImages', {
-      spotId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]}
-    }, {})
+    options.tableName = 'SpotImages'
+    return queryInterface.bulkDelete(options)
   }
 };
