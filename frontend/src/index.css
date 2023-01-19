@@ -13,7 +13,7 @@
 }
 
 * {
-    font-family: Thick;
+    font-family: Light;
 }
 
 .spacer {
@@ -23,13 +23,14 @@
 }
 
 html {
-    height: 100vw;
+    height: 100vh;
     position: relative;
 }
 
 body, #root {
     position: absolute;
     box-sizing: border-box;
+    background-color: white;
     height: 100%;
     width: 100%;
     margin: 0;
