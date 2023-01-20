@@ -25,8 +25,13 @@
   },
   "homepage": "https://github.com/Ykk2/API-project#readme",
   "dependencies": {
+    "@babel/runtime": "^7.20.7",
     "bcrypt": "^5.1.0",
     "js-cookie": "^3.0.1",
-    "react-calendar": "^4.0.0"
+    "moment": "^2.29.4",
+    "react": "^16.14.0",
+    "react-calendar": "^4.0.0",
+    "react-dates": "^21.8.0",
+    "react-dom": "^16.14.0"
   }
 }

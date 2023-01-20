@@ -6,6 +6,7 @@ import * as reviewActions from "../../store/review";
 import { Modal } from '../../context/Modal'
 import EditReview from '../EditReview';
 import CalendarComponent from '../Bookings/Calendar';
+import Maps from '../Maps';
 import './SpotPage.css'
 
 function SpotPage() {
@@ -407,6 +408,7 @@ function SpotPage() {
                     ): <div className={"review-content"}>No reviews yet</div>}
             </div>
             <CalendarComponent />
+            <Maps spot={spot}/>
         </div>
         }
 
