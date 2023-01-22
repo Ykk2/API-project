@@ -4,25 +4,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 100vw;
-    max-height: 100vh;
-    min-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 500vh;
 }
 
 .spot-page {
     /* border: 2px red solid; */
-    max-width: 65vw;
-    max-height: 65vw;
-    min-width: 65vw;
-    max-height: 65vw;
+    width: 65vw;
+
 }
 
 .spot-page-top {
     /* border: 2px black dotted; */
     max-width: 65vw;
     min-width: 65vw;
-
 }
 
 .spot-page-details {

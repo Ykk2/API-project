@@ -448,7 +448,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     }
 
     if (spot.ownerId !== userId) {
-        const bookings = await Booking.findAll({ where: { userId: userId }, attributes: { exclude: ['id', 'userId', 'createdAt', 'updatedAt'] } })
+        const bookings = await Booking.findAll({ where: { spotId: spotId } })
         return res.json({ "Bookings": bookings })
     }
 })
@@ -477,7 +477,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             message: "Validation error",
             statusCode: 400,
             errors: {
-                endDate: "endDate cannot be on or before starDate"
+                endDate: "endDate cannot be on or before startDate"
             }
         })
     }
