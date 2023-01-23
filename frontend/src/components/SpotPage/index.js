@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/review";
+import * as bookingActions from "../../store/booking"
 import { Modal } from '../../context/Modal'
 import EditReview from '../EditReview';
 import CalendarComponent from '../Bookings/Calendar';
@@ -26,7 +27,8 @@ function SpotPage() {
     const userId = user?.id
     const ownerId = spot.ownerId
 
-    const reviews = Object.values(useSelector((state) => state.reviews))
+    const reviews = useSelector((state) => Object.values(state.reviews))
+    const bookings = useSelector((state) => Object.values(state.bookings.spotBookings))
 
 
     //useState for spots
@@ -119,7 +121,7 @@ function SpotPage() {
 
     }, [dispatch, userId, ownerId, spotId])
 
-
+    //useEffect to check if user already left a review here
     useEffect(() => {
         const found = reviews.find(review => review.User.id === userId)
         if (found) {
@@ -128,6 +130,9 @@ function SpotPage() {
     }, [reviews, userId])
 
 
+    useEffect(() => {
+        dispatch(bookingActions.getSpotBookings(spotId))
+    }, [dispatch, spotId])
 
 
     //function returning boolean for determining if user is the owner of the review
@@ -407,7 +412,7 @@ function SpotPage() {
                     </div>
                     ): <div className={"review-content"}>No reviews yet</div>}
             </div>
-            <CalendarComponent />
+            <CalendarComponent bookings={bookings}/>
             <Maps spot={spot}/>
         </div>
         }

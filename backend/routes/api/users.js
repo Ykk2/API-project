@@ -73,7 +73,6 @@ router.post(
         }
 
         err.status = 400
-        console.log(err)
         return next(err)
       }
 

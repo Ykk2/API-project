@@ -424,7 +424,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     const { spotId } = req.params
 
     const spot = await Spot.findByPk(spotId)
-
     if (!spot) {
         return res.json({
             message: "Spot couldn't be found",
