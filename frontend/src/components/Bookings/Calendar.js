@@ -33,7 +33,7 @@ const CalendarComponent = ({bookings}) => {
 
     useEffect(() => {
         existingBookings(bookings)
-        validateBookings(bookedDates)
+        // validateBookings(bookedDates)
     }, [dispatch, bookings])
 
     useEffect(() => {
@@ -42,8 +42,6 @@ const CalendarComponent = ({bookings}) => {
 
     const blockDates = (day) => {
         const blockedDates = new Set([...bookedDates, ...validatedDates])
-
-
         return blockedDates.has(moment(day).format('YYYY-MM-DD'))
     }
 
@@ -62,35 +60,41 @@ const CalendarComponent = ({bookings}) => {
         })
     }
 
-    const validateBookings = (date) => {
-        const sortedBookings = bookings.sort(sorter)
-        for (let i = 0; i < sortedBookings.length - 1; i++) {
+    // const validateBookings = (date) => {
+    //     const sortedBookings = bookings.sort(sorter)
+    //     for (let i = 0; i < sortedBookings.length - 1; i++) {
 
-            const currentBooking = sortedBookings[i]
-            const precedingBooking = sortedBookings[i+1]
+    //         const currentBooking = sortedBookings[i]
+    //         const precedingBooking = sortedBookings[i+1]
 
-            if (currentBooking - precedingBooking < 2) {
-                validatedDates.push(currentBooking.endDate + 1)
-            }
-        }
-    }
+    //         if (currentBooking - precedingBooking < 2) {
+    //             validatedDates.push(currentBooking.endDate + 1)
+    //         }
+    //     }
+    // }
 
-    const sorter = (date1, date2) => {
-        if (date1.startDate < date2.startDate) {
-            return -1
-        }
-        if (date1.startDate > date2.startdate) {
-            return 1
-        }
-        return 0
-    }
+    // const sorter = (date1, date2) => {
+    //     if (date1.startDate < date2.startDate) {
+    //         return -1
+    //     }
+    //     if (date1.startDate > date2.startdate) {
+    //         return 1
+    //     }
+    //     return 0
+    // }
 
     const checkGapDays = (day) => {
         if (day > moment()) {
-            console.log()
             const blockedDates = new Set([...bookedDates, ...validatedDates])
             return blockedDates.has(moment(day).add(1, 'days').format('YYYY-MM-DD'))
         }
+    }
+
+    const blockStupidDays = (day) => {
+        if (startDate) {
+            return moment(startDate).diff() < 0
+        }
+
     }
 
     return (
@@ -106,11 +110,13 @@ const CalendarComponent = ({bookings}) => {
                 onFocusChange={focusedInput => setFocusedInput(focusedInput)}
                 showClearDates={true}
                 minimumNights={1}
+                minDate={moment(new Date())}
                 isDayBlocked={blockDates}
                 startDatePlaceholderText="start date"
                 endDatePlaceholderText="end date"
                 hideKeyboardShortcutsPanel={true}
                 isDayHighlighted={checkGapDays}
+                isOutsideRange={blockStupidDays}
             />
         </>
     )
