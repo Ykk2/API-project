@@ -5,8 +5,10 @@ import moment from "moment";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
+import spotsReducer from '../../store/spots';
+import "./calendar.css"
 
-const CalendarComponent = ({bookings}) => {
+const CalendarComponent = ({bookings, spot}) => {
 
     const dispatch = useDispatch()
 
@@ -15,7 +17,7 @@ const CalendarComponent = ({bookings}) => {
     const [focusedInput, setFocusedInput] = useState(null)
     const [bookedDates, setBookedDates] = useState([])
     const [blockedDates, setBlockedDates] = useState([])
-
+    const [days, setDays] = useState()
 
     useEffect(() => {
         existingBookings(bookings)
@@ -62,7 +64,6 @@ const CalendarComponent = ({bookings}) => {
         if(!startDate) {
             return moment(startDate).diff(day, 'days') > 0
         }
-
         if (startDate) {
 
             const blockedDates = [...bookedDates]
@@ -78,8 +79,13 @@ const CalendarComponent = ({bookings}) => {
         }
     }
 
+
+    const test = (e) => {
+        return <h1 className="monkey">monkayo</h1>
+    }
+
     return (
-        <>
+        <div className="calendar-container">
             <DateRangePicker
                 startDate={startDate} // momentPropTypes.momentObj or null,
                 startDateId="startDateId" // PropTypes.string.isRequired,
@@ -89,16 +95,25 @@ const CalendarComponent = ({bookings}) => {
                 focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={focusedInput => setFocusedInput(focusedInput)}
                 showClearDates={true}
+                reopenPickerOnClearDates={startDate}
                 minimumNights={1}
                 minDate={moment(new Date())}
                 isDayBlocked={blockDates}
-                startDatePlaceholderText="start date"
-                endDatePlaceholderText="end date"
+                startDatePlaceholderText="Add Date"
+                endDatePlaceholderText="Add Date"
                 hideKeyboardShortcutsPanel={true}
                 isDayHighlighted={checkGapDays}
                 isOutsideRange={validatedDates}
+                calendarInfoPosition={"top" && "bottom"}
+                renderCalendarInfo={test}
+
             />
-        </>
+
+            <div>${spot.price} x {} nights <span>${spot.price * 3}</span></div>
+            <div>Cleaning fee <span>$100</span></div>
+            <div>Service Fee <span>${((spot.price * 3) * 0.14).toFixed(0)}</span></div>
+            <div> Total before taxes <span>${ +(spot.price * 3) + +((spot.price * 3) * 0.14).toFixed(0) + 100}</span></div>
+        </div>
     )
 }
 

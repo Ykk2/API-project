@@ -6,7 +6,7 @@ import * as reviewActions from "../../store/review";
 import * as bookingActions from "../../store/booking"
 import { Modal } from '../../context/Modal'
 import EditReview from '../EditReview';
-import CalendarComponent from '../Bookings/Calendar';
+import BookingForm from '../Bookings';
 import Maps from '../Maps';
 import './SpotPage.css'
 
@@ -90,20 +90,22 @@ function SpotPage() {
         if (description?.length < 20) error.push("Please provide more description")
         if (price < 0) error.push("You cannot have a negative dollar amount for price")
 
-
-
         setErrors(error)
         setPassed(false)
+
         if (error.length === 0) setPassed(true)
 
-
-}, [address, city, state, country, lat, lng, name, description, price])
+    }, [address, city, state, country, lat, lng, name, description, price])
 
     //dispatch for all reviews
     useEffect(() => {
         dispatch(reviewActions.getReviews(spotId))
     }, [dispatch, showModal, spotId])
 
+    //dispatch for all spot bookings
+    useEffect(() => {
+        dispatch(bookingActions.getSpotBookings(spotId))
+    }, [dispatch, spotId])
 
 
     //useEffect for getting loading this spot and determine if user is the owner
@@ -129,10 +131,6 @@ function SpotPage() {
         }
     }, [reviews, userId])
 
-
-    useEffect(() => {
-        dispatch(bookingActions.getSpotBookings(spotId))
-    }, [dispatch, spotId])
 
 
     //function returning boolean for determining if user is the owner of the review
@@ -412,7 +410,7 @@ function SpotPage() {
                     </div>
                     ): <div className={"review-content"}>No reviews yet</div>}
             </div>
-            <CalendarComponent bookings={bookings}/>
+            <BookingForm bookings={bookings} spot={spot}/>
             <Maps spot={spot}/>
         </div>
         }
