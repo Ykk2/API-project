@@ -104,7 +104,7 @@ const CalendarComponent = ({bookings, spot}) => {
                 hideKeyboardShortcutsPanel={true}
                 isDayHighlighted={checkGapDays}
                 isOutsideRange={validatedDates}
-                calendarInfoPosition={"top" && "bottom"}
+                calendarInfoPosition={"bottom"}
                 renderCalendarInfo={test}
 
             />
