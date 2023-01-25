@@ -9,7 +9,7 @@ import { Fragment } from 'react';
 import "./calendar.css"
 
 
-const CalendarComponent = ({ bookings, spot }) => {
+const CalendarComponent = ({ bookings,setReady }) => {
 
     const dispatch = useDispatch()
 
@@ -27,6 +27,11 @@ const CalendarComponent = ({ bookings, spot }) => {
     useEffect(() => {
         blockedDates.push(bookedDates)
     }, [dispatch, bookedDates])
+
+    useEffect(() => {
+        if (startDate && endDate) setReady(true)
+        if (!startDate || !endDate) setReady(false)
+    }, [startDate, endDate])
 
     const handleDateChanges = ({ startDate, endDate }) => {
         setStartDate(startDate)
@@ -104,7 +109,7 @@ const CalendarComponent = ({ bookings, spot }) => {
 
 
     return (
-        <div className="calendar-container">
+
             <DateRangePicker
                 startDate={startDate} // momentPropTypes.momentObj or null,
                 startDateId="startDateId" // PropTypes.string.isRequired,
@@ -128,11 +133,6 @@ const CalendarComponent = ({ bookings, spot }) => {
 
             />
 
-            <div>${spot.price} x { } nights <span>${spot.price * 3}</span></div>
-            <div>Cleaning fee <span>$100</span></div>
-            <div>Service Fee <span>${((spot.price * 3) * 0.14).toFixed(0)}</span></div>
-            <div> Total before taxes <span>${+(spot.price * 3) + +((spot.price * 3) * 0.14).toFixed(0) + 100}</span></div>
-        </div>
     )
 }
 

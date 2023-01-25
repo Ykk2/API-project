@@ -11,30 +11,82 @@
 
 }
 
-.DayPicker > div {
+.DayPicker>div {
     background-color: white;
     top: 0px;
     position: relative;
 
 }
 
+.DateRangePicker {
+    width: 78% !important;
+    height: 25%;
+}
+
 .DateRangePicker > div {
+    width: 100%;
+
     position: relative;
-    border: 1px solid red
+    border-radius: 15px;
 }
 
 .DateRangePickerInput {
     position: relative;
     z-index: 10 !important;
+    border: none;
+    border-radius: 8px;
+    border: 1px solid gray;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: auto;
 }
 
-.DateRangePickerInput > div:nth-child(1) {
+.DateRangePickerInput__showClearDates {
+    padding-right: 0px !important;
+}
+
+#endDateId {
+    font-size: 0.7em;
+    height: 100%;
+    width: 90%;
+    margin-top: 0;
+    border-radius: 8px;
+}
+
+#startDateId {
+    height: 100%;
+    width: 80%;
+    font-size: 0.7em;
+    margin-top: 0;
+    border-radius: 8px;
+}
+
+.DateInput {
+    border-radius: 8px;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.DateRangePickerInput_clearDates {
 
 }
+
+.DateRangePickerInput_clearDates:hover {
+    background-color: transparent;
+    color: gray
+}
+
+.DateRangePickerInput>div:nth-child(1) {}
 
 .DateRangePicker {
     position: relative;
-    border: 3px solid red
 
 }
 
@@ -57,7 +109,7 @@
 
 .DateInput_input__focused {
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 
@@ -70,12 +122,12 @@
     top: -25%
 }
 
-.calendar-info-top > span:nth-child(1) {
+.calendar-info-top>span:nth-child(1) {
     font-weight: bold;
     font-size: 1.2em
 }
 
-.calendar-info-top > span:nth-child(2) {
+.calendar-info-top>span:nth-child(2) {
     color: gray;
     font-size: 0.8em;
     margin-top: 1.2%
@@ -94,21 +146,21 @@
     bottom: -30%;
 }
 
-.calendar-info-bottom > button:nth-child(1) {
+.calendar-info-bottom>button:nth-child(1) {
     padding: 8px;
     font-weight: bold;
     border-radius: 10px;
     text-decoration: underline;
 }
 
-.calendar-info-bottom > button:nth-child(1):hover {
+.calendar-info-bottom>button:nth-child(1):hover {
     background-color: rgba(128, 128, 128, 0.052);
 
 }
 
 
 
-.calendar-info-bottom > button:nth-child(2) {
+.calendar-info-bottom>button:nth-child(2) {
     color: white;
     background-color: rgb(56, 56, 56);
     margin-left: 10px;
@@ -117,7 +169,7 @@
     font-weight: bold;
 }
 
-.calendar-info-bottom > button:nth-child(2):hover {
+.calendar-info-bottom>button:nth-child(2):hover {
     background-color: black;
 }
 
@@ -139,4 +191,61 @@
 
 .DateRangePickerInput_arrow_svg {
     display: none;
+}
+
+.DayPickerNavigation_button {
+    border: none;
+}
+
+.DayPickerNavigation_button:hover {
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(128, 128, 128, 0.094);
+}
+
+.CalendarDay__highlighted_calendar {
+    color: rgba(128, 128, 128, 0.762);
+    background: white;
+
+}
+
+.CalendarDay__highlighted_calendar:hover {
+    color: rgba(128, 128, 128, 0.762);
+    background: white
+
+}
+
+.CalendarDay__blocked_calendar {
+    background: rgba(128, 128, 128, 0.198);
+    color: rgba(0, 0, 0, 0.641);
+}
+
+.CalendarDay__blocked_calendar:hover {
+    background: rgba(128, 128, 128, 0.198);
+    color: rgba(0, 0, 0, 0.641);
+}
+
+.CalendarDay__selected {
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 50%
+}
+
+.CalendarDay__selected:hover {
+    background: black;
+    color: white;
+
+}
+
+
+.CalendarDay__hovered_span:hover,
+.CalendarDay__hovered_span {
+    background: rgba(0, 0, 0, 0.274);
+
+    color: black
+}
+
+td {
+    border-style : hidden!important;
 }
