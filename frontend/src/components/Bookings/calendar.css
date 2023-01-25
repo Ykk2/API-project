@@ -26,6 +26,9 @@
 .DateRangePickerInput {
     position: relative;
     z-index: 10 !important;
+}
+
+.DateRangePickerInput > div:nth-child(1) {
 
 }
 
@@ -40,7 +43,6 @@
 }
 
 .DayPicker {
-    border: 5px solid gray;
     position: absolute !important;
     top: -6em !important;
     right: -20em !important;
@@ -48,7 +50,75 @@
     height: 30em;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: rgb(0 0 0 / 20%) 0px 6px 20px !important;
+}
+
+.DateInput_input__focused {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+
+.calendar-info-top {
+    display: flex;
+    flex-direction: column;
+    margin-left: 4%;
+    margin-top: 3%;
+    position: absolute;
+    top: -25%
+}
+
+.calendar-info-top > span:nth-child(1) {
+    font-weight: bold;
+    font-size: 1.2em
+}
+
+.calendar-info-top > span:nth-child(2) {
+    color: gray;
+    font-size: 0.8em;
+    margin-top: 1.2%
+}
+
+.calendar-info-bottom {
+    align-self: flex-end;
+    margin-right: 4%;
+    margin-bottom: 4%;
+    width: 40%;
+    display: flex;
+    flex-direction: row;
     justify-content: flex-end;
+    position: absolute;
+    right: 0;
+    bottom: -30%;
+}
+
+.calendar-info-bottom > button:nth-child(1) {
+    padding: 8px;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: underline;
+}
+
+.calendar-info-bottom > button:nth-child(1):hover {
+    background-color: rgba(128, 128, 128, 0.052);
+
+}
+
+
+
+.calendar-info-bottom > button:nth-child(2) {
+    color: white;
+    background-color: rgb(56, 56, 56);
+    margin-left: 10px;
+    width: 30%;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.calendar-info-bottom > button:nth-child(2):hover {
+    background-color: black;
 }
 
 .booking-form-container {

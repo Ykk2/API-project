@@ -5,10 +5,11 @@ import moment from "moment";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
-import spotsReducer from '../../store/spots';
+import { Fragment } from 'react';
 import "./calendar.css"
 
-const CalendarComponent = ({bookings, spot}) => {
+
+const CalendarComponent = ({ bookings, spot }) => {
 
     const dispatch = useDispatch()
 
@@ -27,7 +28,7 @@ const CalendarComponent = ({bookings, spot}) => {
         blockedDates.push(bookedDates)
     }, [dispatch, bookedDates])
 
-    const handleDateChanges = ({startDate, endDate}) => {
+    const handleDateChanges = ({ startDate, endDate }) => {
         setStartDate(startDate)
         setEndDate(endDate)
     }
@@ -42,7 +43,7 @@ const CalendarComponent = ({bookings, spot}) => {
     const existingBookings = (bookings) => {
 
         bookings.forEach(booking => {
-            const {startDate, endDate} = booking
+            const { startDate, endDate } = booking
             let date = new Date(startDate)
             let dateEnd = new Date(endDate)
             while (date < dateEnd) {
@@ -61,7 +62,7 @@ const CalendarComponent = ({bookings, spot}) => {
 
     const validatedDates = (day) => {
 
-        if(!startDate) {
+        if (!startDate) {
             return moment(startDate).diff(day, 'days') > 0
         }
         if (startDate) {
@@ -75,14 +76,32 @@ const CalendarComponent = ({bookings, spot}) => {
                     break
                 }
             }
+            if (moment(startDate).diff(earliestBlockedDate, 'days') > 0) {
+                return moment(startDate).diff(day, 'days') > 0
+            }
             return moment(startDate).diff(day, 'days') > 0 || moment(day).format('YYYY-MM-DD') > earliestBlockedDate
         }
     }
 
 
     const test = (e) => {
-        return <h1 className="monkey">monkayo</h1>
+        return (
+            <Fragment>
+
+                <div className="calendar-info-top">
+                    <span>Select Dates</span>
+                    <span> Add your travel dates for exact pricing</span>
+                </div>
+                <div className="calendar-info-bottom">
+                    <button>Clear dates</button>
+                    <button>Close</button>
+                </div>
+
+            </Fragment>
+        )
     }
+
+
 
     return (
         <div className="calendar-container">
@@ -99,8 +118,8 @@ const CalendarComponent = ({bookings, spot}) => {
                 minimumNights={1}
                 minDate={moment(new Date())}
                 isDayBlocked={blockDates}
-                startDatePlaceholderText="Add Date"
-                endDatePlaceholderText="Add Date"
+                startDatePlaceholderText="Check-in"
+                endDatePlaceholderText="Check-out"
                 hideKeyboardShortcutsPanel={true}
                 isDayHighlighted={checkGapDays}
                 isOutsideRange={validatedDates}
@@ -109,10 +128,10 @@ const CalendarComponent = ({bookings, spot}) => {
 
             />
 
-            <div>${spot.price} x {} nights <span>${spot.price * 3}</span></div>
+            <div>${spot.price} x { } nights <span>${spot.price * 3}</span></div>
             <div>Cleaning fee <span>$100</span></div>
             <div>Service Fee <span>${((spot.price * 3) * 0.14).toFixed(0)}</span></div>
-            <div> Total before taxes <span>${ +(spot.price * 3) + +((spot.price * 3) * 0.14).toFixed(0) + 100}</span></div>
+            <div> Total before taxes <span>${+(spot.price * 3) + +((spot.price * 3) * 0.14).toFixed(0) + 100}</span></div>
         </div>
     )
 }
