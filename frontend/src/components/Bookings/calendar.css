@@ -1,5 +1,4 @@
 
-
 .calendar-container {
     position: relative;
 
@@ -66,16 +65,13 @@
     align-items: center;
 }
 
-.DateRangePickerInput_clearDates {
-
-}
 
 .DateRangePickerInput_clearDates:hover {
     background-color: transparent;
     color: gray
 }
 
-.DateRangePickerInput>div:nth-child(1) {}
+
 
 .DateRangePicker {
     position: relative;

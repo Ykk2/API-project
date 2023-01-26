@@ -9,6 +9,7 @@ import { Fragment } from 'react';
 import "./calendar.css"
 
 
+
 const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDate, setEndDate }) => {
 
     const dispatch = useDispatch()
@@ -36,11 +37,8 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
         const endInput = document.getElementById('endDateId')
         if (!startDate) {
             endInput.disabled = true
-
         }
-
     }, [startDate])
-
 
 
     const handleDateChanges = ({ startDate, endDate }) => {
@@ -59,11 +57,12 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
 
         bookings.forEach(booking => {
             const { startDate, endDate } = booking
-            let date = new Date(startDate)
-            let dateEnd = new Date(endDate)
-            while (date < dateEnd) {
-                bookedDates.push(moment(new Date(date + 1)).format('YYYY-MM-DD'))
-                date.setDate(date.getDate() + 1)
+            let date = moment(startDate)
+            let dateEnd = moment(endDate)
+            bookedDates.push(dateEnd)
+            while (date <= dateEnd) {
+                bookedDates.push(date.format('YYYY-MM-DD'))
+                date.add(1, 'days')
             }
         })
     }

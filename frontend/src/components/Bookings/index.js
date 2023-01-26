@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { newBooking } from "../../store/booking"
+import moment from "moment";
 import CalendarComponent from "./Calendar"
 import "./bookingform.css"
 
@@ -34,7 +35,8 @@ const BookingForm = ({ bookings, spot }) => {
 
     const handleButtonClick = (e) => {
         e.preventDefault()
-        dispatch(newBooking({startDate, endDate, spotId: spot.id}))
+        dispatch(newBooking({startDate: moment(startDate).format("MM-DD-YYYY"),
+                            endDate: moment(endDate).format("MM-DD-YYYY"), spotId: spot.id}))
         history.push('/')
     }
 
