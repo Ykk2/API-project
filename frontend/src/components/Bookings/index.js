@@ -34,7 +34,6 @@ const BookingForm = ({ bookings, spot }) => {
 
     const handleButtonClick = (e) => {
         e.preventDefault()
-        console.log(startDate, endDate)
         dispatch(newBooking({startDate, endDate, spotId: spot.id}))
         history.push('/')
     }

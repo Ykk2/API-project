@@ -151,7 +151,6 @@
 }
 
 
-
 .calendar-info-bottom>button:nth-child(2) {
     color: white;
     background-color: rgb(56, 56, 56);
@@ -191,7 +190,7 @@
 
 .CalendarDay__highlighted_calendar {
     color: rgba(128, 128, 128, 0.762);
-    background: white;
+    background: white
 
 }
 
@@ -201,14 +200,24 @@
 
 }
 
+.CalendarDay:hover {
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.CalendarDay__blocked_out_of_range:hover {
+    background: white !important;
+}
+
 .CalendarDay__blocked_calendar {
-    background: rgba(128, 128, 128, 0.198);
-    color: rgba(0, 0, 0, 0.641);
+    background: white;
+    color: rgba(0, 0, 0, 0.324);
+    text-decoration: line-through
 }
 
 .CalendarDay__blocked_calendar:hover {
-    background: rgba(128, 128, 128, 0.198);
-    color: rgba(0, 0, 0, 0.641);
+    background: white;
+    color: rgba(0, 0, 0, 0.324);
 }
 
 .CalendarDay__selected {
@@ -236,16 +245,14 @@
     border: none;
 }
 
+td {
+    border-style : hidden!important;
+}
 
 .CalendarDay__hovered_span:hover,
 .CalendarDay__hovered_span {
-    background: rgba(0, 0, 0, 0.274);
-
-    color: black
-}
-
-td {
-    border-style : hidden!important;
+    background: rgba(78, 78, 78, 0.081);
+    color: black;
 }
 
 

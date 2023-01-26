@@ -36,8 +36,12 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
         const endInput = document.getElementById('endDateId')
         if (!startDate) {
             endInput.disabled = true
+
         }
+
     }, [startDate])
+
+
 
     const handleDateChanges = ({ startDate, endDate }) => {
         setStartDate(startDate)
@@ -64,12 +68,13 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
         })
     }
 
+
     const checkGapDays = (day) => {
         if (day > moment()) {
-            const blockedDates = new Set([...bookedDates])
-            return blockedDates.has(moment(day).add(1, 'days').format('YYYY-MM-DD'))
+            return bookings.find(booking => moment(booking.startDate).diff(day, 'days') == 1)
         }
     }
+
 
     const validatedDates = (day) => {
 
@@ -98,6 +103,7 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
         e.preventDefault()
         setStartDate()
         setEndDate()
+        document.getElementById('startDateId').focus()
     }
 
     const handleCloseClick = (e) => {
@@ -127,25 +133,26 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
 
     return (
 
-            <DateRangePicker
-                startDate={startDate} // momentPropTypes.momentObj or null,
-                startDateId="startDateId" // PropTypes.string.isRequired,
-                endDate={endDate} // momentPropTypes.momentObj or null,
-                endDateId="endDateId" // PropTypes.string.isRequired,
-                onDatesChange={handleDateChanges} // PropTypes.func.isRequired,
-                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                onFocusChange={focusedInput => setFocusedInput(focusedInput)}
-                reopenPickerOnClearDates={startDate}
-                minimumNights={1}
-                isDayBlocked={blockDates}
-                startDatePlaceholderText="Check-in"
-                endDatePlaceholderText="Check-out"
-                hideKeyboardShortcutsPanel={true}
-                isDayHighlighted={checkGapDays}
-                isOutsideRange={validatedDates}
-                calendarInfoPosition={"bottom"}
-                renderCalendarInfo={addInfo}
-            />
+        <DateRangePicker
+            startDate={startDate} // momentPropTypes.momentObj or null,
+            startDateId="startDateId" // PropTypes.string.isRequired,
+            endDate={endDate} // momentPropTypes.momentObj or null,
+            endDateId="endDateId" // PropTypes.string.isRequired,
+            onDatesChange={handleDateChanges} // PropTypes.func.isRequired,
+            focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+            onFocusChange={focusedInput => setFocusedInput(focusedInput)}
+            reopenPickerOnClearDates={startDate}
+            minimumNights={1}
+            minDate={moment(new Date())}
+            isDayBlocked={blockDates}
+            startDatePlaceholderText="Check-in"
+            endDatePlaceholderText="Check-out"
+            hideKeyboardShortcutsPanel={true}
+            isDayHighlighted={checkGapDays}
+            isOutsideRange={validatedDates}
+            calendarInfoPosition={"bottom"}
+            renderCalendarInfo={addInfo}
+        />
 
     )
 }
