@@ -10,6 +10,7 @@ import "./calendar.css"
 
 
 
+
 const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDate, setEndDate }) => {
 
     const dispatch = useDispatch()
@@ -37,6 +38,8 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
         const endInput = document.getElementById('endDateId')
         if (!startDate) {
             endInput.disabled = true
+            setEndDate()
+            setStartDate()
         }
     }, [startDate])
 
@@ -44,6 +47,7 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
     const handleDateChanges = ({ startDate, endDate }) => {
         setStartDate(startDate)
         setEndDate(endDate)
+
     }
 
     const blockDates = (day) => {
@@ -59,7 +63,6 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
             const { startDate, endDate } = booking
             let date = moment(startDate)
             let dateEnd = moment(endDate)
-            bookedDates.push(dateEnd)
             while (date <= dateEnd) {
                 bookedDates.push(date.format('YYYY-MM-DD'))
                 date.add(1, 'days')
@@ -70,9 +73,13 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
 
     const checkGapDays = (day) => {
         if (day > moment()) {
-            return bookings.find(booking => moment(booking.startDate).diff(day, 'days') == 0)
+            const gapDays = []
+            bookings.forEach(booking => gapDays.push(moment(booking.startDate).subtract(1, "days").format('YYYY-MM-DD')))
+            return gapDays.find(gapDay => gapDay == day.format('YYYY-MM-DD'))
         }
+
     }
+
 
 
     const validatedDates = (day) => {
@@ -84,13 +91,13 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
 
             const blockedDates = [...bookedDates]
             let earliestBlockedDate = blockedDates[0]
-
-            for (let i = 0; i < blockedDates.length; i++) {
-                if (moment(blockedDates[i]) > moment(startDate)) {
+            for (let i = 1; i < blockedDates.length; i++) {
+                if (moment(blockedDates[i]) > moment(startDate) &&
+                    moment(blockedDates[i]).diff(day, 'days') < moment(earliestBlockedDate).diff(day, 'days')) {
                     earliestBlockedDate = blockedDates[i]
-                    break
                 }
             }
+
             if (moment(startDate).diff(earliestBlockedDate, 'days') > 0) {
                 return moment(startDate).diff(day, 'days') > 0
             }
