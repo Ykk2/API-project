@@ -1,11 +1,12 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
 function ProfileButton({ user, setLogin, setShowModal }) {
+
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const history = useHistory()
@@ -48,7 +49,9 @@ function ProfileButton({ user, setLogin, setShowModal }) {
           <Link to={'/host'}>
             <span>Host</span>
           </Link>
-
+          <Link to={`/${user.username}/bookings`}>
+            <span>Trips</span>
+          </Link>
           <button className="logout" onClick={logout}>Log Out</button>
 
         </ul>) :

@@ -9,16 +9,15 @@ import { Fragment } from 'react';
 import "./calendar.css"
 
 
-const CalendarComponent = ({ bookings,setReady }) => {
+const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDate, setEndDate }) => {
 
     const dispatch = useDispatch()
 
-    const [startDate, setStartDate] = useState()
-    const [endDate, setEndDate] = useState()
+
     const [focusedInput, setFocusedInput] = useState(null)
     const [bookedDates, setBookedDates] = useState([])
     const [blockedDates, setBlockedDates] = useState([])
-    const [days, setDays] = useState()
+
 
     useEffect(() => {
         existingBookings(bookings)
@@ -32,6 +31,13 @@ const CalendarComponent = ({ bookings,setReady }) => {
         if (startDate && endDate) setReady(true)
         if (!startDate || !endDate) setReady(false)
     }, [startDate, endDate])
+
+    useEffect(() => {
+        const endInput = document.getElementById('endDateId')
+        if (!startDate) {
+            endInput.disabled = true
+        }
+    }, [startDate])
 
     const handleDateChanges = ({ startDate, endDate }) => {
         setStartDate(startDate)
@@ -88,8 +94,19 @@ const CalendarComponent = ({ bookings,setReady }) => {
         }
     }
 
+    const handleClearDatesClick = (e) => {
+        e.preventDefault()
+        setStartDate()
+        setEndDate()
+    }
 
-    const test = (e) => {
+    const handleCloseClick = (e) => {
+        e.preventDefault()
+        setFocusedInput(null)
+    }
+
+
+    const addInfo = (e) => {
         return (
             <Fragment>
 
@@ -98,8 +115,8 @@ const CalendarComponent = ({ bookings,setReady }) => {
                     <span> Add your travel dates for exact pricing</span>
                 </div>
                 <div className="calendar-info-bottom">
-                    <button>Clear dates</button>
-                    <button>Close</button>
+                    <button onClick={handleClearDatesClick}>Clear dates</button>
+                    <button onClick={handleCloseClick}>Close</button>
                 </div>
 
             </Fragment>
@@ -118,10 +135,8 @@ const CalendarComponent = ({ bookings,setReady }) => {
                 onDatesChange={handleDateChanges} // PropTypes.func.isRequired,
                 focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={focusedInput => setFocusedInput(focusedInput)}
-                showClearDates={true}
                 reopenPickerOnClearDates={startDate}
                 minimumNights={1}
-                minDate={moment(new Date())}
                 isDayBlocked={blockDates}
                 startDatePlaceholderText="Check-in"
                 endDatePlaceholderText="Check-out"
@@ -129,8 +144,7 @@ const CalendarComponent = ({ bookings,setReady }) => {
                 isDayHighlighted={checkGapDays}
                 isOutsideRange={validatedDates}
                 calendarInfoPosition={"bottom"}
-                renderCalendarInfo={test}
-
+                renderCalendarInfo={addInfo}
             />
 
     )

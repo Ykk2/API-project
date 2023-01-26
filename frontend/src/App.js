@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import SpotPage from "./components/SpotPage";
 import CreateSpotForm from "./components/SpotFormPage";
+import UserBookings from "./components/Bookings/UserBookings";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,9 @@ function App() {
           </Route>
           <Route path="/host" >
             <CreateSpotForm />
+          </Route>
+          <Route path="/:username/bookings">
+            <UserBookings />
           </Route>
         </Switch>
       )}

@@ -1,10 +1,4 @@
-.monkey {
-    border: 1px solid red;
-    position: absolute;
-    height: 1em;
-    /* background-color: white; */
-    bottom: 0px
-}
+
 
 .calendar-container {
     position: relative;
@@ -25,7 +19,6 @@
 
 .DateRangePicker > div {
     width: 100%;
-
     position: relative;
     border-radius: 15px;
 }
@@ -97,9 +90,9 @@
 .DayPicker {
     position: absolute !important;
     top: -6em !important;
-    right: -20em !important;
+    right: -17em !important;
     z-index: -1;
-    height: 30em;
+    height: 32em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -173,13 +166,7 @@
     background-color: black;
 }
 
-.booking-form-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    position: relative;
-}
+
 
 .DateInput_fangShape {
     display: none;
@@ -238,6 +225,18 @@
 
 }
 
+.CalendarDay__selected_span {
+    background: black;
+    color: white;
+    border: none;
+}
+
+.CalendarDay__selected_span:hover {
+    background: black;
+    color: white;
+    border: none;
+}
+
 
 .CalendarDay__hovered_span:hover,
 .CalendarDay__hovered_span {
@@ -248,4 +247,49 @@
 
 td {
     border-style : hidden!important;
+}
+
+
+.booking-form-container > div > span:nth-child(1) {
+    font-weight: bold;
+    font-size: 1.25em
+}
+
+.booking-form-container > div > span:nth-child(1) > span {
+    font-weight:100;
+    font-size: 0.7em
+}
+
+.booking-form-container > div:nth-child(1) {
+    width: 78%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
+.booking-form-container > div > span:nth-child(2) {
+    font-size: 0.9em;
+}
+
+.booking-calculations {
+    width: 80%;
+}
+
+.booking-calculations > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 4%;
+}
+
+.booking-calculations > div:nth-child(3) {
+    padding-bottom: 4%;
+    border-bottom: 1px solid gray;
+}
+
+.booking-calculations > div:nth-child(4) {
+    font-weight: bold;
 }
