@@ -133,6 +133,10 @@ router.get('/', async (req, res) => {
             as: 'SpotImages',
             attributes: [],
             duplicating: false
+        }, {
+            model: User,
+            as: 'Owner',
+            attributes: ['id', 'firstName', 'lastName'],
         }],
         attributes: {
             include: [[sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
