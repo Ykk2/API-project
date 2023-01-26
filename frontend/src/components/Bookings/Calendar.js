@@ -70,7 +70,7 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
 
     const checkGapDays = (day) => {
         if (day > moment()) {
-            return bookings.find(booking => moment(booking.startDate).diff(day, 'days') == 1)
+            return bookings.find(booking => moment(booking.startDate).diff(day, 'days') == 0)
         }
     }
 
