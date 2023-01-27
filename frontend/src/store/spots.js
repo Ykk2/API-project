@@ -153,11 +153,11 @@ const spotsReducer = (state = initialState, action) => {
     let newState = {spots: {}, spot: {}}
     switch (action.type) {
         case LOAD_SPOTS:
-
             newState.spots = normalize(action.data.Spots)
             return newState
         case LOAD_SPOT:
             newState.spot = action.data
+            newState.spots = {...state.spots}
             return newState
         case CREATE_SPOT:
             newState.spots = {...state.spots}

@@ -52,6 +52,9 @@ function ProfileButton({ user, setLogin, setShowModal }) {
           <Link to={`/${user.username}/bookings`}>
             <span>Trips</span>
           </Link>
+          <Link to={`/${user.username}/listings`}>
+            <span>Listings</span>
+          </Link>
           <button className="logout" onClick={logout}>Log Out</button>
 
         </ul>) :

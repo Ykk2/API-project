@@ -3,7 +3,7 @@ ul {
 }
 
 .profile-dropdown {
-    /* position: absolute; */
+    position: absolute;
     background-color: white;
     border: 1px solid #666;
     margin-top: 5%;
@@ -15,6 +15,8 @@ ul {
     padding: 0;
     padding-bottom: 10px;
     padding-top: 10px;
+    right: 0;
+    top: 100%;
 }
 
 .profile-dropdown > li {
@@ -24,9 +26,8 @@ ul {
 .profile-button-container {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    right: 5%;
-    top: 35%;
+    position: relative;
+
     background-color: transparent;
 }
 
@@ -55,7 +56,7 @@ ul {
     margin-top: 10px;
     font-size: 14px;
     width: 220px;
-    position: relatve;
+    position: relative;
 }
 
 .profile-dropdown > button {
@@ -104,16 +105,19 @@ button {
 }
 
 .navBar-right {
-    margin-right: 5vw;
+    margin-right: 10%;
+    width: 33%;
 }
 
 .navBar-left {
     display: flex;
     flex-direction: row;
     align-items: center;
-    position: absolute;
+    margin-left: 10%;
     top: 10px;
     left: 5%;
+    width: 33%;
+    cursor: pointer;
 }
 
 .navBar-left > img {
@@ -134,13 +138,10 @@ button {
     box-shadow: 0 0 1px 0 #666;
     margin: 0px;
     padding: 0;
-    max-height: 10%;
-    min-height: 40px;
+    height: 4.5em;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
-    padding-bottom: 15px;
 }

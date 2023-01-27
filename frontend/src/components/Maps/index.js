@@ -57,34 +57,33 @@ const Maps = ({spot}) => {
 
     return (
         <>
+
+            <div className="map_page__container">
+
+                <div style={{ height: '900px', width: '900px' }}>
+                    {isLoaded && <GoogleMap
+                        mapContainerStyle={containerStyle}
+                        zoom={8}
+                        center={currentPosition}
+                        onUnmount={onUnmount}
+                    >
+                        {/* <Marker key={marker.id}
+                            position={{ lat: marker.lat, lng: marker.lng }}
+                            title={marker.name}
+                            icon={{
+                                path: 'M 100 100 L 300 100 L 200 300 z',
+                                fillColor: marker.color,
+                                fillOpacity: 1,
+                                scale: .2,
+                                strokeColor: 'gold',
+                                strokeWeight: 2
+                            }}
+                            streetView={false} /> */}
+                    </GoogleMap>}
+                </div>
+
+            </div>
         </>
-        // Important! Always set the container height explicitly
-
-        // <div className="map_page__container">
-
-        //     <div style={{ height: '900px', width: '900px' }}>
-        //         {isLoaded && <GoogleMap
-        //             mapContainerStyle={containerStyle}
-        //             zoom={8}
-        //             center={currentPosition}
-        //             onUnmount={onUnmount}
-        //         >
-        //             {/* <Marker key={marker.id}
-        //                 position={{ lat: marker.lat, lng: marker.lng }}
-        //                 title={marker.name}
-        //                 icon={{
-        //                     path: 'M 100 100 L 300 100 L 200 300 z',
-        //                     fillColor: marker.color,
-        //                     fillOpacity: 1,
-        //                     scale: .2,
-        //                     strokeColor: 'gold',
-        //                     strokeWeight: 2
-        //                 }}
-        //                 streetView={false} /> */}
-        //         </GoogleMap>}
-        //     </div>
-
-        // </div>
     );
 
 }
