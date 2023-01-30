@@ -41,6 +41,7 @@ const SpotPage = () => {
                 <BookingForm bookings={bookings} spot={spot}/>
             </div>
             <SpotReviews reviews={reviews} spot={spot}/>
+            <div className="map-divider">Where you'll be</div>
             <Maps spot={spot}/>
         </div>
     )
