@@ -1,0 +1,157 @@
+.spot-page {
+    margin: auto;
+    margin-top: 3%;
+    width: 60vw;
+    padding-bottom: 20vw;
+}
+
+
+.spot-images-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 0.6em;
+    column-gap: 0.5em;
+    height: 30vw;
+    width: 60vw;
+    margin: auto;
+    overflow: hidden
+}
+
+.spot-images-container>div>img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+#spotimage-0 {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-row-end: 3;
+    grid-column-end: 3;
+    border-bottom-left-radius: 0.7em;
+    border-top-left-radius: 0.7em;
+    overflow: hidden;
+}
+
+#spotimage-1 {
+    grid-row-start: 1;
+    grid-column-start: 4;
+    grid-row-end: 2;
+    grid-column-end: 5;
+
+    border-top-right-radius: 0.7em;
+    overflow: hidden;
+}
+
+#spotimage-2 {
+    grid-row-start: 2;
+    grid-column-start: 4;
+    grid-row-end: 3;
+    grid-column-end: 5;
+    border-bottom-right-radius: 0.7em;
+    overflow: hidden;
+}
+
+#spotimage-3 {
+    grid-row-start: 1;
+    grid-column-start: 3;
+    grid-row-end: 2;
+    grid-column-end: 4;
+
+}
+
+#spotimage-4 {
+    grid-row-start: 2;
+    grid-column-start: 3;
+    grid-row-end: 3;
+    grid-column-end: 4;
+
+}
+
+.spotTitle {
+    margin: auto;
+    width: 60vw;
+    margin-bottom: 1%;
+}
+
+.spotTitle > h2 {
+    margin-bottom: 0
+}
+
+.spotTitle > span {
+    font-size: 0.9em;
+}
+
+.spotDetails {
+    width: 40vw;
+    margin-top: 5%;
+
+}
+
+.spotDetails-top {
+    font-size: 1.3em;
+    padding-bottom: 4%;
+    border-bottom: 1px solid rgba(190, 190, 190, 0.635);
+    margin-bottom: 4%;
+    font-weight: bold;
+}
+
+.spotDetails-bottom > div:nth-child(1){
+    margin-bottom: 3%;
+    font-size: 1.8em;
+    font-family: Bold
+}
+
+.spotDetails-bottom > div > span:nth-child(1) {
+    color: rgb(254,58,96);
+    font-family: Bold
+}
+
+.spotDetails-bottom > div > span:nth-child(2) {
+    color: rgb(35,35,35);
+    font-family: Bold
+}
+
+.spotDetails-bottom > div:nth-child(2) {
+    margin-bottom: 4%;
+    border-bottom: 1px solid rgba(190, 190, 190, 0.635);
+    padding-bottom: 4%;
+}
+
+
+.reviews-container {
+    margin-top: 4%;
+    padding-top: 4%;
+    border-top: 1px solid rgba(190, 190, 190, 0.635);
+}
+
+.reviews-container-top {
+    margin-bottom: 3%;
+    font-weight: bold;
+    font-size: 1.3em
+}
+
+.review-card > div:nth-child(1){
+    font-weight: bold;
+}
+
+.review-card > div:nth-child(2){
+    color: gray;
+    margin-bottom: 1%;
+}
+
+.booking-flex {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.map-divider {
+    margin-top: 4%;
+    padding-top: 4%;
+    border-top: 1px solid rgba(128, 128, 128, 0.31);
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 4%;
+}

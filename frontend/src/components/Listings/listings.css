@@ -1,0 +1,100 @@
+.listings-container {
+    width: 80%;
+    margin: auto;
+    padding-bottom: 10%;
+}
+
+.listings-header {
+    width: 100%;
+    padding-bottom: 2%;
+    border-bottom: 1px solid gray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.5%;
+}
+
+.listings-header > span {
+    font-weight: bold;
+}
+
+.listings-card {
+    width: 100%;
+    padding-bottom: 0.5%;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.418);
+    margin-bottom: 0.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.listing-img {
+    height: 3.8em;
+    width: 5em;
+    object-fit: cover
+}
+
+#listings-col-1 {
+    width: 30%;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#odd {
+    font-size: 1rem;
+    margin-left: 1em;
+}
+
+#listings-col-2 {
+    width: 5%;
+    font-size: 1rem;
+}
+
+#listings-col-3 {
+    width: 5%;
+    font-size: 1rem;
+}
+
+#listings-col-4 {
+    width: 10%;
+    font-size: 1rem;
+}
+
+#listings-col-5 {
+    width: 10%;
+    font-size: 1rem;
+}
+
+
+#listings-col-6 {
+    width: 10%;
+    font-size: 1rem;
+    white-space: nowrap;
+
+}
+
+.listings-card-left-flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.fa-solid {
+    color: green !important;
+}
+
+#listings-col-5 > button {
+    border-radius: 5px;
+    background-color: rgb(255,56,92);
+    color: white;
+    font-size: 0.7em;
+
+}
+
+#listings-col-5 > button:nth-child(2) {
+    margin-left: 5%;
+}
+
+.listings-container > div:nth-child(1) {
+    margin-bottom: 1%;
+}
