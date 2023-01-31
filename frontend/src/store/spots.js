@@ -2,6 +2,7 @@ import { normalize } from "./helperFunctions"
 import { csrfFetch } from './csrf';
 
 const LOAD_SPOTS = '/spots/loadSpots'
+const LOAD_USER_SPOTS = '/spots/loadUserSpots'
 const LOAD_SPOT = '/spots/getSpot'
 const EDIT_SPOT = '/spots/editSpot'
 const CREATE_SPOT = '/spots/createSpot'
@@ -21,6 +22,13 @@ const loadSpots = (data) => {
 const loadSpot = (data) => {
     return {
         type: LOAD_SPOT,
+        data
+    }
+}
+
+const loadUserSpots = (data) => {
+    return {
+        type: LOAD_USER_SPOTS,
         data
     }
 }
@@ -81,6 +89,15 @@ export const getSpots = () => async (dispatch) => {
     }
 }
 
+export const getUserSpots = () => async (dispatch) => {
+    const res = await fetch('/api/spots/current')
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(loadUserSpots(data))
+        return data
+    }
+}
+
 export const getSpot = (id) => async (dispatch) => {
     const res = await fetch(`/api/spots/${id}`)
     if (res.ok) {
@@ -127,7 +144,7 @@ export const removeSpot = (id) => async (dispatch) => {
     })
     if (res.ok) {
         const response = await res.json()
-        dispatch(deleteSpot(response))
+        dispatch(deleteSpot(id))
         return response
     }
 }
@@ -147,13 +164,17 @@ export const addSpotImage = (data) => async (dispatch) => {
     }
 }
 
-const initialState = {spots: {}, spot: {}}
+const initialState = {spots: {}, spot: {}, userSpots: {}}
 
 const spotsReducer = (state = initialState, action) => {
-    let newState = {spots: {}, spot: {}}
+    let newState = {spots: {}, spot: {}, userSpots: {}}
     switch (action.type) {
         case LOAD_SPOTS:
             newState.spots = normalize(action.data.Spots)
+            return newState
+        case LOAD_USER_SPOTS:
+            newState.userSpots = normalize(action.data.Spots)
+            newState.spots = {...state.spots}
             return newState
         case LOAD_SPOT:
             newState.spot = action.data
@@ -172,7 +193,7 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case DELETE_SPOT:
             newState = {...state}
-            delete newState[action.data.id]
+            delete newState.userSpots[action.data]
             return newState
         case ADD_IMAGE:
             newState = {...state}

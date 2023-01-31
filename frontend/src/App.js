@@ -8,6 +8,7 @@ import Spots from "./components/Spots";
 import SpotPage from "./components/SpotPage";
 import CreateSpotForm from "./components/SpotFormPage";
 import UserBookings from "./components/Bookings/UserBookings";
+import Listings from "./components/Listings";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,14 +34,17 @@ function App() {
           <Route exact path='/'>
             <Spots />
           </Route>
-          <Route path="/spots/:spotId">
+          <Route exact path="/spots/:spotId">
             <SpotPage />
           </Route>
-          <Route path="/host" >
+          <Route exact path="/host" >
             <CreateSpotForm />
           </Route>
-          <Route path="/:username/bookings">
+          <Route exact path="/:username/bookings">
             <UserBookings />
+          </Route>
+          <Route>
+            <Listings exact path="/:username/listings"/>
           </Route>
         </Switch>
       )}

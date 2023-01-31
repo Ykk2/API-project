@@ -4,9 +4,6 @@ const { User } = require('../../db/models');
 const { Spot, sequelize } = require('../../db/models');
 const { Review } = require('../../db/models');
 const { SpotImage, ReviewImage, Booking } = require('../../db/models');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
-const { UniqueConstraintError } = require('sequelize');
 const booking = require('../../db/models/booking');
 
 
