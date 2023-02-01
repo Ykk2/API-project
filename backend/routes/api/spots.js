@@ -7,6 +7,7 @@ const { SpotImage, ReviewImage, Booking } = require('../../db/models');
 const booking = require('../../db/models/booking');
 
 
+
 const router = express.Router();
 
 
@@ -26,7 +27,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }, {
             model: SpotImage,
             as: 'SpotImages',
-            attributes: [],
+            attributes: ['id', 'url', 'preview'],
             duplicating: false
         }],
         attributes: {
@@ -36,6 +37,15 @@ router.get('/current', requireAuth, async (req, res) => {
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
     })
+
+
+    for (let i = 0; i < spots.length; i++) {
+        const images = await SpotImage.findAll({
+            where: {spotId: spots[i].id}
+        })
+        spots[i].dataValues.SpotImages = images
+    }
+
     return res.json({ "Spots": spots })
 })
 
@@ -153,7 +163,7 @@ router.get('/', async (req, res) => {
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     const { spotId } = req.params
-    const { url, preview } = req.body
+    const { url } = req.body
 
     const spot = await Spot.findByPk(spotId)
     const err = {message: ["Spot couldn't be found"], errors: []}
@@ -165,7 +175,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     }
 
 
-    const image = await SpotImage.create({ spotId, url, preview })
+    const image = await SpotImage.create({ spotId, url, preview: true })
     const spotImage = await SpotImage.findOne({
         where: { id: image.id }
     })

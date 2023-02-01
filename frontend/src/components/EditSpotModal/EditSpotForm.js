@@ -102,7 +102,7 @@ const EditSpotForm = ({ spot, setShowModal }) => {
             <div>Edit your listing</div>
             <div>
                 <form className="edit-spot-form">
-                    <input
+                    {/* <input
                         type="text"
                         placeholder="address"
                         required
@@ -129,7 +129,7 @@ const EditSpotForm = ({ spot, setShowModal }) => {
                         required
                         value={country}
                         onChange={updateCountry}
-                    />
+                    /> */}
                     {/* <input
                         type="number"
                         placeholder="lat"
