@@ -1,0 +1,229 @@
+.edit-spot-form-container {
+    height: 90%;
+    width: 45vw;
+    padding-bottom: 2.2%;
+    position: relative;
+}
+
+
+.edit-spot-images-grid {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 0.3em;
+    column-gap: 0.3em;
+    height: 40%;
+    width: 90%;
+    overflow: hidden;
+}
+
+.edit-spot-images-grid >img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+#spotimage-0 {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-row-end: 3;
+    grid-column-end: 3;
+    border-bottom-left-radius: 0.7em;
+    border-top-left-radius: 0.7em;
+    overflow: hidden;
+}
+
+#spotimage-1 {
+    grid-row-start: 1;
+    grid-column-start: 4;
+    grid-row-end: 2;
+    grid-column-end: 5;
+
+    border-top-right-radius: 0.7em;
+    overflow: hidden;
+}
+
+#spotimage-2 {
+    grid-row-start: 2;
+    grid-column-start: 4;
+    grid-row-end: 3;
+    grid-column-end: 5;
+    border-bottom-right-radius: 0.7em;
+    overflow: hidden;
+}
+
+#spotimage-3 {
+    grid-row-start: 1;
+    grid-column-start: 3;
+    grid-row-end: 2;
+    grid-column-end: 4;
+
+}
+
+#spotimage-4 {
+    grid-row-start: 2;
+    grid-column-start: 3;
+    grid-row-end: 3;
+    grid-column-end: 4;
+
+}
+
+.edit-spot-form-container > div:nth-child(1) {
+    margin: auto;
+    width: 90%;
+    margin-top: 4%;
+    margin-bottom: 1%;
+}
+
+.edit-spot-form-container > div:nth-child(2) {
+    margin: auto;
+    width: 90%;
+    margin-bottom: 2%;
+}
+
+.edit-spot-form-container > div:nth-child(2) > span {
+    font-size: 0.8em;
+    padding: 1%;
+}
+
+.edit-spot-form-container > div:nth-child(2) > span:nth-child(2) {
+    margin-left: 4%;
+}
+
+.edit-spot-form-container > div:nth-child(2) > span:hover {
+    cursor: pointer;
+    background-color: rgba(128, 128, 128, 0.269);
+    border-radius: 7px;
+
+}
+
+.edit-spot-form-container > div:nth-child(2) > span:active {
+    cursor: pointer;
+    background-color: rgba(128, 128, 128, 0.607);
+    border-radius: 7px;
+}
+
+.edit-spot-form-bottom {
+    margin: auto;
+    width: 90%;
+
+    height: 50%;
+}
+
+.edit-spot-button-container {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    position: absolute;
+    bottom: 3%;
+    right: 4%;
+}
+
+.edit-spot-button-container > button:nth-child(1) {
+    padding: 1% 2% 1% 2%;
+    border-radius: 10px;
+
+}
+
+.edit-spot-button-container > button:nth-child(1):hover {
+    background-color: rgba(128, 128, 128, 0.17);
+
+}
+
+.edit-spot-button-container > button:nth-child(2) {
+    margin-left: 2%;
+    background-color: #FF385C;
+    color: white;
+    border-radius: 10px;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.edit-spot-button-container > button:nth-child(2):hover {
+    background-color: #ff264e;
+}
+
+.edit-spot-button-container > button:nth-child(2):active {
+    background-color: #ff385d;
+}
+
+.edit-spot-form {
+    height: 37.3%;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+
+.edit-spot-form-input-container > input {
+    height: 80%;
+    width: 97%;
+    padding-left: 2%;
+    padding-bottom: none;
+    border: 1px solid rgba(128, 128, 128, 0.189);
+    padding-top: 1%;
+}
+
+.edit-spot-form-input-container {
+
+    position: relative;
+    width: 90%;
+    margin-bottom: 1%;
+    padding-top: 1%;
+}
+
+.edit-spot-form-input-container > label {
+    position: absolute;
+    background-color: white;
+    font-size: 0.7em;
+    left: 2%;
+    top: 20%;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.edit-spot-form-image-inputs {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.edit-spot-form-img-input-container {
+    width: 33%;
+    position: relative;
+}
+
+.edit-spot-form-img-input-container > input {
+    width: 80%;
+    padding-left: 5%;
+    padding-bottom: none;
+    border: 1px solid rgba(128, 128, 128, 0.189);
+}
+
+.edit-spot-form-img-input-container > label {
+    position: absolute;
+    background-color: white;
+    font-size: 0.7em;
+    left: 4%;
+    top:4%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.edit-spot-form > div:nth-child(3) {
+    margin-bottom: 4%;
+}
+
+.edit-spot-form-errors {
+    margin: auto;
+    width: 90%;
+    margin-top: 2%;
+    color: red;
+    font-size: 0.8em;
+    font-weight: bold;
+}
