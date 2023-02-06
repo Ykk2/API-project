@@ -8,7 +8,7 @@ const Maps = ({ spot }) => {
 
     //This sets the center of the map. This must be set BEFORE the map loads
 
-    const [currentPosition, setCurrentPosition] = useState()
+    const [currentPosition, setCurrentPosition] = useState({lng: spot.lng, lat: spot.lat})
 
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
     // set response language. Defaults to english.
@@ -18,22 +18,6 @@ const Maps = ({ spot }) => {
 
     // Enable or disable logs. Its optional.
     Geocode.enableDebug();
-
-    useEffect(() => {
-        // Get latitude & longitude from address
-        const makeMap = () => {
-            Geocode.fromAddress(`${spot.city}`).then(
-                (response) => {
-                    const { lat, lng } = response.results[0].geometry.location;
-                    setCurrentPosition({ lat, lng });
-                },
-                (error) => {
-                    console.error(error);
-                }
-            );
-        };
-        makeMap();
-    }, []);
 
 
     const { isLoaded } = useJsApiLoader({
@@ -67,12 +51,12 @@ const Maps = ({ spot }) => {
                             center={currentPosition}
                             onUnmount={onUnmount}
                         >
-                            <Marker key={spot.id}
-                                position={{ lat: currentPosition?.lat, lng: currentPosition?.lng }}
-                                title={spot.name}
-                                icon={homeMarker}
-                                streetView={false}
-                                id="spot-marker" />
+                        <Marker key={spot.id}
+                            position={{ lat: currentPosition?.lat, lng: currentPosition?.lng }}
+                            title={spot.name}
+                            icon={homeMarker}
+                            streetView={false}
+                            id="spot-marker" />
 
                         </GoogleMap>}
                 </div>

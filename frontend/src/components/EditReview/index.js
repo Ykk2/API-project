@@ -6,13 +6,15 @@ import * as spotActions from "../../store/spots";
 import './EditReview.css'
 
 
-function EditReview ({clearErrors, currentReview, currentRating, setShowModal, setHasReview, reviewId, spotId, user}) {
+function EditReview ({currentReview, setShowModal, spot}) {
 
     const history = useHistory()
     const dispatch = useDispatch()
 
-    const [review, setReview] = useState(currentReview)
-    const [stars, setStars] = useState(+currentRating)
+    const user = useSelector((state) => state.session.user)
+
+    const [review, setReview] = useState(currentReview.review)
+    const [stars, setStars] = useState(+currentReview.stars)
     const ratingIndex = [1, 2, 3, 4, 5]
 
     const [errors, setErrors] = useState([])
@@ -42,12 +44,9 @@ function EditReview ({clearErrors, currentReview, currentRating, setShowModal, s
         e.stopPropagation()
         if (passed === true) {
             const payload = {review, stars:+stars}
-            let res = await dispatch(reviewActions.updateReview(reviewId, payload, user))
-            let ratingUpdate = await dispatch(spotActions.updateStarRating(spotId))
+            let res = await dispatch(reviewActions.updateReview(currentReview.id, payload, user))
+            let ratingUpdate = await dispatch(spotActions.updateStarRating(spot.id))
             if (res) {
-                history.push(`/spots/${spotId}`)
-                setReview("")
-                setStars("")
                 setShowModal(false)
             }
             setPassed(false)
@@ -55,14 +54,10 @@ function EditReview ({clearErrors, currentReview, currentRating, setShowModal, s
     }
 
 
-    const handleDeleteClick = async (e) => {
+    const handleDeleteClick = (e) => {
         e.preventDefault()
-        let res = await dispatch(reviewActions.removeReview(reviewId))
-        let ratingUpdate = await dispatch(spotActions.updateStarRating(spotId))
-        if (res) {
-            setHasReview(false)
-            clearErrors([])
-        }
+        dispatch(reviewActions.removeReview(currentReview.id))
+        setShowModal(false)
     }
 
 
@@ -98,7 +93,7 @@ function EditReview ({clearErrors, currentReview, currentRating, setShowModal, s
             <div className="edit-review-buttons">
             <button type="button" onClick={handleCancelClick}>Cancel</button>
             <button type="submit" >Save</button>
-            <button type="button" onClick={handleDeleteClick}>Delete Review</button>
+            <button type="button" onClick={handleDeleteClick}>Delete</button>
             </div>
             </form>
         </section>

@@ -1,48 +1,30 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { getUserReviews } from "../../store/review";
 import moment from "moment";
 
+import PastBookingsCard from "./PastBookingCard";
 
 
 const PastBookings = ({bookings, spots}) => {
 
+    const dispatch = useDispatch()
+
+    const reviews = useSelector(state => Object.values(state.reviews))
     const filteredBookings = bookings.filter(booking => moment(new Date()).diff(moment(booking.startDate), 'day') > 0)
+
+    useEffect(() => {
+        dispatch(getUserReviews())
+    }, [dispatch])
+
+
+    console.log(reviews)
 
     return (
         <div>
             {filteredBookings.map(booking =>
-                <div className="upcoming-booking-card">
-
-                    <div className="upcoming-booking-card-left">
-                        <div>
-                            <div>
-                                {spots[booking.spotId]?.name}
-                            </div>
-                            <div>
-                                Entire home hosted by {spots[booking.spotId]?.Owner?.firstName}
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <div>
-                                {moment(booking.startDate).format('MMM D')} -
-                                </div>
-                                <div>
-                                {moment(booking.endDate).format('MMM D YY')}
-                                </div>
-                            </div>
-                            <div>
-                                <div>{spots[booking.spotId]?.address} </div>
-                                <div>{spots[booking.spotId]?.city} {spots[booking.spotId]?.state} </div>
-                                <div>{spots[booking.spotId]?.country}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="upcoming-booking-card-right">
-                        <img src={spots[booking.spotId]?.previewImage}></img>
-                    </div>
-
-                </div>
+                <PastBookingsCard key={booking} booking={booking} spots={spots} reviews={reviews}/>
             )}
         </div>
     )

@@ -38,7 +38,16 @@ const editReview = (data) => {
 }
 
 export const getReviews = (spotId) => async (dispatch) => {
-    const res = await fetch(`/api/spots/${spotId}/reviews`)
+    const res = await csrfFetch(`/api/spots/${spotId}/reviews`)
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(loadReviews(data))
+        return data
+    }
+}
+
+export const getUserReviews = () => async (dispatch) => {
+    const res = await csrfFetch(`/api/reviews/current`)
     if (res.ok) {
         const data = await res.json()
         dispatch(loadReviews(data))

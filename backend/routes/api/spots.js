@@ -153,7 +153,7 @@ router.get('/', async (req, res) => {
         order: [['id', 'ASC']],
         ...pagination
     })
-
+    console.log(spots)
     return res.json({ "Spots": spots, page, size })
 })
 
@@ -199,11 +199,9 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     }
 
 
-    const image = await SpotImage.update({ spotId, url, preview: true })
-    const spotImage = await SpotImage.findOne({
-        where: { id: image.id }
-    })
-    return res.json(spotImage)
+    const image = await SpotImage.create({ spotId, url, preview: true })
+
+    return res.json(image)
 })
 
 

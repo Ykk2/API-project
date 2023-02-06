@@ -414,11 +414,6 @@ function SpotPage() {
             <Maps spot={spot}/>
         </div>
         }
-
-
-
     </div>
     )
 }
-
-export default SpotPage

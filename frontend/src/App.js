@@ -28,9 +28,6 @@ function App() {
       <div className="spacer"></div>
       {isLoaded && (
         <Switch>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
           <Route exact path='/'>
             <Spots />
           </Route>
