@@ -158,11 +158,35 @@ router.get('/', async (req, res) => {
 })
 
 
+//edit spotImage
+router.put('/:spotId/images/edit', requireAuth, async (req, res, next) => {
+
+    const { imageId } = req.body
+    const { url } = req.body
+    const { spotId } = req.params
+
+    const oldImage = await SpotImage.findByPk(imageId)
+    const err = {message: ["Spot couldn't be found"], errors: []}
+
+    if (!oldImage) {
+        err.errors.push("Spot couldn't be found")
+        err.status = 404
+        return next(err)
+    }
+
+
+    await oldImage.update({ spotId, url, preview: true })
+    await oldImage.save()
+
+    return res.json(oldImage)
+})
+
+
 //add an image to a spot
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
-    const { spotId } = req.params
+    const { spotId } = req.body
     const { url } = req.body
 
     const spot = await Spot.findByPk(spotId)
@@ -175,12 +199,14 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     }
 
 
-    const image = await SpotImage.create({ spotId, url, preview: true })
+    const image = await SpotImage.update({ spotId, url, preview: true })
     const spotImage = await SpotImage.findOne({
         where: { id: image.id }
     })
     return res.json(spotImage)
 })
+
+
 
 
 //create a spot

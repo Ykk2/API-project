@@ -1,8 +1,7 @@
 import { useState, useEffect, Fragment } from "react"
 import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { updateSpot } from "../../store/spots"
-import Geocode from 'react-geocode'
+import { updateSpot, editSpotImage, getUserSpots } from "../../store/spots"
 import placeholder from '../../assets/icons/picture-default.svg'
 import './EditSpotForm.css'
 
@@ -13,12 +12,6 @@ const EditSpotForm = ({ spot, setShowModal }) => {
 
     const images = spot.SpotImages
 
-    const [address, setAddress] = useState(spot.address)
-    const [city, setCity] = useState(spot.city)
-    const [state, setState] = useState(spot.state)
-    const [country, setCountry] = useState(spot.country)
-    const [lat, setLat] = useState(spot.lat)
-    const [lng, setLng] = useState(spot.lng)
     const [name, setName] = useState(spot.name)
     const [description, setDescription] = useState(spot.description)
     const [price, setPrice] = useState(spot.price)
@@ -29,43 +22,35 @@ const EditSpotForm = ({ spot, setShowModal }) => {
     const [img4, setImg4] = useState(images[3].url)
     const [img5, setImg5] = useState(images[4].url)
 
-    const [editImage, setEditImage] = useState(false)
-
 
     //useState for editting spots
     const [errors, setErrors] = useState([])
+    const [showErrors, setShowErrors] = useState(false)
     const [passed, setPassed] = useState(false)
 
     useEffect(() => {
-
         let error = []
-
-        const addressRegex = /^[a-zA-Z0-9\s\,\''\-]*$/
-        const alphaRegex = /^[a-zA-Z ]*$/
-
-        if (!addressRegex.test(address)) error.push("Please enter a valid address")
-        if (!alphaRegex.test(city)) error.push("City cannot contain numbers")
-        if (!alphaRegex.test(state)) error.push("State cannot contain numbers")
-        if (!alphaRegex.test(country)) error.push("Country cannot contain numbers")
-        if (+lat < -90 || +lat > 90) error.push("latitude must be between -90 and 90")
-        if (+lng < -180 || +lng > 180) error.push("longitude must be between -180 and 180")
-        if (name && name?.length > 30) error.push("Please keep name under 30 characters")
+        if (!name) error.push("Please provide a name")
+        if (!price) error.push("Please provide a price")
+        if (name && name?.length > 80) error.push("Please keep name under 30 characters")
         if (description?.length < 20) error.push("Please provide more description")
-        if (price < 0) error.push("You cannot have a negative dollar amount for price")
+        if (price < 0) error.push("You cannot have a negative amount for price")
+        if (!img1 || !img2 || !img3 || !img4 || !img5) error.push("All fives images are required")
+        if ((!img1.includes("https://") && img1) ||
+            (!img2.includes("https://") && img2) ||
+            (!img3.includes("https://") && img3) ||
+            (!img4.includes("https://") && img4) ||
+            (!img5.includes("https://") && img5)) error.push("Sorry, we are only accepting URL links at the moment")
 
         setErrors(error)
-        setPassed(false)
+        if (error.length === 0) {
+            setShowErrors(false)
+            setPassed(true)
+        }
+        else  setPassed(false)
 
-        if (error.length === 0) setPassed(true)
+    }, [name, description, price, img1, img2, img3, img4, img5])
 
-    }, [address, city, state, country, lat, lng, name, description, price])
-
-    const updateAddress = (e) => setAddress(e.target.value)
-    const updateCity = (e) => setCity(e.target.value)
-    const updateState = (e) => setState(e.target.value)
-    const updateCountry = (e) => setCountry(e.target.value)
-    // const updateLat = (e) => setLat(e.target.value)
-    // const updateLng = (e) => setLng(e.target.value)
     const updateName = (e) => setName(e.target.value)
     const updateDescription = (e) => setDescription(e.target.value)
     const updatePrice = (e) => setPrice(e.target.value)
@@ -78,14 +63,26 @@ const EditSpotForm = ({ spot, setShowModal }) => {
     //save click for updating spot
     const handleSpotSaveClick = async (e) => {
         e.preventDefault()
-        // if (passed === true) {
+        setShowErrors(true)
+        if (passed === true) {
+            const payload = { address:spot.address, city:spot.city, state:spot.state, country:spot.country, lat:spot.lat, lng:spot.lng, name, description, price }
 
-        //     const payload = { address, city, state, country, lat, lng, name, description, price }
+            const image1 = {imageId : images[0].id, url: img1, spotId: spot.id}
+            const image2 = {imageId : images[1].id, url: img2, spotId: spot.id}
+            const image3 = {imageId : images[2].id, url: img3, spotId: spot.id}
+            const image4 = {imageId : images[3].id, url: img4, spotId: spot.id}
+            const image5 = {imageId : images[4].id, url: img5, spotId: spot.id}
 
-        //     getGeo().then(dispatch(updateSpot(spot.id, payload)))
-        //     history.push(`/spots/${spot.id}`)
-        //     setPassed(false)
-        // }
+            dispatch(updateSpot(spot.id, payload))
+            dispatch(editSpotImage(image1))
+            dispatch(editSpotImage(image2))
+            dispatch(editSpotImage(image3))
+            dispatch(editSpotImage(image4))
+            dispatch(editSpotImage(image5))
+            setPassed(false)
+            setShowModal(false)
+            dispatch(getUserSpots())
+        }
     }
 
     //cancel click for cancelling updating spot
@@ -94,165 +91,111 @@ const EditSpotForm = ({ spot, setShowModal }) => {
         setShowModal(false)
     }
 
-    // add check validation before swapping over
-    const handleEditImageClick = (e) => {
-        e.preventDefault()
-        setEditImage(true)
-    }
-
-    // add check validation before swapping over
-    const handleEditDescriptionClick = (e) => {
-        e.preventDefault()
-        setEditImage(false)
-    }
-
-    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
-    Geocode.setLanguage('en');
-    Geocode.setLocationType('ROOFTOP');
-    Geocode.enableDebug();
-
-    // Get latitude & longitude from address
-    const getGeo = () => {
-        Geocode.fromAddress(`${city}, ${state}`).then(
-            (response) => {
-                const { lat, lng } = response.results[0].geometry.location;
-                setLat(lat)
-                setLng(lng)
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
-    };
-
-
     return (
         <div className="edit-spot-form-container">
             <div>Edit your listing</div>
-            <div><span onClick={handleEditImageClick}>Edit images</span><span onClick={handleEditDescriptionClick}>Edit description</span></div>
+            <div className="edit-spot-images-grid">
+                <img id="spotimage-0" src={img1 ? img1 : placeholder} />
+                <img id="spotimage-3" src={img2 ? img2 : placeholder} />
+                <img id="spotimage-1" src={img3 ? img3 : placeholder} />
+                <img id="spotimage-4" src={img4 ? img4 : placeholder} />
+                <img id="spotimage-2" src={img5 ? img5 : placeholder} />
+            </div>
             <form className="edit-spot-form">
-                <div className="edit-spot-images-grid">
-                    <img id="spotimage-0" src={img1 ? img1 : placeholder} />
-                    <img id="spotimage-3" src={img2 ? img2 : placeholder} />
-                    <img id="spotimage-1" src={img3 ? img3 : placeholder} />
-                    <img id="spotimage-4" src={img4 ? img4 : placeholder} />
-                    <img id="spotimage-2" src={img5 ? img5 : placeholder} />
+                <div className="edit-spot-form-input-container">
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        placeholder="name"
+                        required
+                        value={name}
+                        onChange={updateName}
+                    />
                 </div>
-                {/* <input
-                        type="text"
-                        placeholder="address"
-                        required
-                        value={address}
-                        onChange={updateAddress}
-                    />
+                <div className="edit-spot-form-input-container">
+                    <label>Description</label>
                     <input
                         type="text"
-                        placeholder="city"
+                        placeholder="description"
                         required
-                        value={city}
-                        onChange={updateCity}
+                        value={description}
+                        onChange={updateDescription}
                     />
+                </div>
+                <div className="edit-spot-form-input-container">
+                    <label>Price</label>
                     <input
-                        type="text"
-                        placeholder="state"
+                        type="integer"
+                        placeholder="price"
+                        min="0"
                         required
-                        value={state}
-                        onChange={updateState}
+                        value={price}
+                        onChange={updatePrice}
                     />
-                    <input
-                        type="text"
-                        placeholder="country"
-                        required
-                        value={country}
-                        onChange={updateCountry}
-                    /> */}
-                {/* <input
-                        type="number"
-                        placeholder="lat"
-                        required
-                        value={lat}
-                        onChange={updateLat}
-                    />
-                    <input
-                        type="number"
-                        placeholder="lng"
-                        required
-                        value={lng}
-                        onChange={updateLng}
-                    /> */}
-                {
-                    editImage ?
+                </div>
+                <div className="edit-spot-form-image-inputs">
+                    <div className="edit-spot-form-img-input-container">
+                        <label>Main image</label>
+                        <input
+                            type='text'
+                            placeHolder="main image"
+                            required
+                            value={img1}
+                            onChange={updateImg1}
+                        />
+                    </div>
 
-                        <div className="edit-spot-form-bottom">
-                            <input
-                                type='text'
-                                placeHolder="main image"
-                                required
-                                value={img1}
-                                onChange={updateImg1}
-                            />
-                            <input
-                                type='text'
-                                placeHolder="image 2"
-                                required
-                                value={img2}
-                                onChange={updateImg2}
-                            />
-                            <input
-                                type='text'
-                                placeHolder="image 3"
-                                required
-                                value={img3}
-                                onChange={updateImg3}
-                            />
-                            <input
-                                type='text'
-                                placeHolder="image 4"
-                                required
-                                value={img4}
-                                onChange={updateImg4}
-                            />
-                            <input
-                                type='text'
-                                placeHolder="image 5"
-                                required
-                                value={img5}
-                                onChange={updateImg5}
-                            />
-                        </div>
-
-                        :
-
-                        <div className="edit-spot-form-bottom">
-                            <label>Name</label>
-                            <input
-                                type="text"
-                                placeholder="name"
-                                required
-                                value={name}
-                                onChange={updateName}
-                            />
-                            <label>Description</label>
-                            <input
-                                type="text"
-                                placeholder="description"
-                                required
-                                value={description}
-                                onChange={updateDescription}
-                            />
-                            <label>Price</label>
-                            <input
-                                type="integer"
-                                placeholder="price"
-                                min="0"
-                                required
-                                value={price}
-                                onChange={updatePrice}
-                            />
-                        </div>
-
-                }
+                    <div className="edit-spot-form-img-input-container">
+                        <label>Image 2</label>
+                        <input
+                            type='text'
+                            placeHolder="image 2"
+                            required
+                            value={img2}
+                            onChange={updateImg2}
+                        />
+                    </div>
+                    <div className="edit-spot-form-img-input-container">
+                        <label>Image 3</label>
+                        <input
+                            type='text'
+                            placeHolder="image 3"
+                            required
+                            value={img3}
+                            onChange={updateImg3}
+                        />
+                    </div>
+                    <div className="edit-spot-form-img-input-container">
+                        <label>Image 4</label>
+                        <input
+                            type='text'
+                            placeHolder="image 4"
+                            required
+                            value={img4}
+                            onChange={updateImg4}
+                        />
+                    </div>
+                    <div className="edit-spot-form-img-input-container">
+                        <label>Image 5</label>
+                        <input
+                            type='text'
+                            placeHolder="image 5"
+                            required
+                            value={img5}
+                            onChange={updateImg5}
+                        />
+                    </div>
+                </div>
             </form>
+            <div className="edit-spot-form-errors">
+                {
+                    errors.length > 0 ?
+                    errors.map(e =>
+                        <div>{e}</div>)
+                        :
+                    null
+                }
+            </div>
             <div className="edit-spot-button-container">
                 <button type="button" onClick={handleSpotCancelClick}>Cancel</button>
                 <button type="button" onClick={handleSpotSaveClick}>Save</button>

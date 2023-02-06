@@ -38,9 +38,9 @@ ul {
     background-color: transparent;
 }
 
-.fa-user-circle:hover {
+/* .fa-user-circle:hover {
     box-shadow: 0 0 10px 1px rgb(194, 190, 190)
-}
+} */
 
 .fa-user-circle {
     font-size: 29px;

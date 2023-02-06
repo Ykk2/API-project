@@ -54,6 +54,13 @@ const editSpot = (data) => {
     }
 }
 
+const editImage = (data) => {
+    return {
+        type: ADD_IMAGE,
+        data
+    }
+}
+
 const addImage = (data) => {
     return {
         type: ADD_IMAGE,
@@ -164,6 +171,25 @@ export const addSpotImage = (data) => async (dispatch) => {
     }
 }
 
+
+export const editSpotImage = (data) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${data.spotId}/images/edit`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    if (res.ok) {
+
+        const data = await res.json()
+        console.log(data, "succesful")
+        dispatch(addImage(data))
+        return data
+    }
+    console.log("failed")
+}
+
 const initialState = {spots: {}, spot: {}, userSpots: {}}
 
 const spotsReducer = (state = initialState, action) => {
@@ -197,8 +223,8 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case ADD_IMAGE:
             newState = {...state}
-            newState.spot.SpotImages = []
-            newState.spot.SpotImages.push(action.data)
+            // newState.spot.SpotImages = []
+            // newState.spot.SpotImages.push(action.data)
             return newState
         case UPDATE_RATING:
             newState = {...state}
