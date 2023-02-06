@@ -65,11 +65,11 @@ const Maps = ({ spot }) => {
                         <GoogleMap
                             mapContainerStyle={containerStyle}
                             zoom={10}
-                            center={{lng: spot.lng, lat: spot.lat}}
+                            center={{lng: +spot.lng, lat: +spot.lat}}
                             onUnmount={onUnmount}
                         >
                         <Marker key={spot.id}
-                            position={{lng: spot.lng, lat: spot.lat}}
+                            position={{lng: +spot.lng, lat: +spot.lat}}
                             title={spot.name}
                             icon={homeMarker}
                             streetView={false}
