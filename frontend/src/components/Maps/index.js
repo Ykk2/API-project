@@ -8,7 +8,7 @@ const Maps = ({ spot }) => {
 
     //This sets the center of the map. This must be set BEFORE the map loads
 
-    const [currentPosition, setCurrentPosition] = useState({lng: spot.lng, lat: spot.lat})
+    const [currentPosition, setCurrentPosition] = useState()
 
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
     // set response language. Defaults to english.
@@ -31,7 +31,7 @@ const Maps = ({ spot }) => {
     };
 
     useEffect(() => {
-        setCurrentPosition({lng: spot.lng, lat: spot.lat})
+        if (spot) setCurrentPosition({lng: spot.lng, lat: spot.lat})
     }, [spot])
 
 
@@ -41,6 +41,7 @@ const Maps = ({ spot }) => {
                 (response) => {
                     const { lat, lng } = response.results[0].geometry.location;
                     setCurrentPosition({lat, lng})
+
                 }
             );
         };
@@ -53,7 +54,7 @@ const Maps = ({ spot }) => {
         setMap(null)
     }, [])
 
-
+    console.log(currentPosition)
 
     return (
         <>
@@ -64,11 +65,11 @@ const Maps = ({ spot }) => {
                         <GoogleMap
                             mapContainerStyle={containerStyle}
                             zoom={10}
-                            center={currentPosition}
+                            center={{lng: spot.lng, lat: spot.lat}}
                             onUnmount={onUnmount}
                         >
                         <Marker key={spot.id}
-                            position={{ lat: currentPosition.lat, lng: currentPosition.lng }}
+                            position={{lng: spot.lng, lat: spot.lat}}
                             title={spot.name}
                             icon={homeMarker}
                             streetView={false}
