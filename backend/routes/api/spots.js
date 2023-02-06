@@ -151,9 +151,8 @@ router.get('/', async (req, res) => {
         },
         group: ['Spot.id', 'SpotImages.url'],
         order: [['id', 'ASC']],
-        ...pagination
+        raw: true
     })
-    console.log(spots)
     return res.json({ "Spots": spots, page, size })
 })
 

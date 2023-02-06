@@ -30,6 +30,22 @@ const Maps = ({ spot }) => {
         height: '30em'
     };
 
+    useEffect(() => {
+        setCurrentPosition({lng: spot.lng, lat: spot.lat})
+    }, [spot])
+
+
+    useEffect(() => {
+        const makeMap = () => {
+            Geocode.fromAddress(`${spot.city} ${spot.country}`).then(
+                (response) => {
+                    const { lat, lng } = response.results[0].geometry.location;
+                    setCurrentPosition({lat, lng})
+                }
+            );
+        };
+        makeMap()
+    }, []);
 
     const [map, setMap] = useState(null)
 
@@ -52,7 +68,7 @@ const Maps = ({ spot }) => {
                             onUnmount={onUnmount}
                         >
                         <Marker key={spot.id}
-                            position={{ lat: currentPosition?.lat, lng: currentPosition?.lng }}
+                            position={{ lat: currentPosition.lat, lng: currentPosition.lng }}
                             title={spot.name}
                             icon={homeMarker}
                             streetView={false}
