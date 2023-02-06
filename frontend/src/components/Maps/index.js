@@ -30,23 +30,23 @@ const Maps = ({ spot }) => {
         height: '30em'
     };
 
-    useEffect(() => {
-        if (spot) setCurrentPosition({lng: spot.lng, lat: spot.lat})
-    }, [spot])
+    // useEffect(() => {
+    //     if (spot) setCurrentPosition({lng: spot.lng, lat: spot.lat})
+    // }, [spot])
 
 
-    useEffect(() => {
-        const makeMap = () => {
-            Geocode.fromAddress(`${spot.city} ${spot.country}`).then(
-                (response) => {
-                    const { lat, lng } = response.results[0].geometry.location;
-                    setCurrentPosition({lat, lng})
+    // useEffect(() => {
+    //     const makeMap = () => {
+    //         Geocode.fromAddress(`${spot.city}`).then(
+    //             (response) => {
+    //                 const { lat, lng } = response.results[0].geometry.location;
+    //                 setCurrentPosition({lat, lng})
 
-                }
-            );
-        };
-        makeMap()
-    }, []);
+    //             }
+    //         );
+    //     };
+    //     makeMap()
+    // }, []);
 
     const [map, setMap] = useState(null)
 
@@ -65,11 +65,11 @@ const Maps = ({ spot }) => {
                         <GoogleMap
                             mapContainerStyle={containerStyle}
                             zoom={10}
-                            center={{lng: +spot.lng, lat: +spot.lat}}
+                            center={{lng: -(+spot.lng), lat: +spot.lat}}
                             onUnmount={onUnmount}
                         >
                         <Marker key={spot.id}
-                            position={{lng: +spot.lng, lat: +spot.lat}}
+                            position={{lng: -(+spot.lng), lat: +spot.lat}}
                             title={spot.name}
                             icon={homeMarker}
                             streetView={false}
