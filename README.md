@@ -23,24 +23,23 @@ AirBnB clone that attempts to imitate the functionalities of the original site.
 	<code><img height="50" src="https://user-images.githubusercontent.com/25181517/183898674-75a4a1b1-f960-4ea9-abcb-637170a00a75.png" alt="CSS" title="CSS" /></code>
 </div>
 
-## Features
+## Landing Page Preview
+![landing-page-bnb-min](https://user-images.githubusercontent.com/108952654/217375894-0bda9a58-6fc1-4c12-964d-70ebeb91c40c.gif)
 
-- User can sign up or continue as a demo user. 
-- User can host a spot with a preview image.
-- User can update a spot.
-- User can delete a spot they hosted.
-- User can create a review for a spot.
-- User can update a review for a spot.
-- User can delete a review they created.
-- User can view spots and view individual spots in more detail. 
+## Spot Page Preview
+![spot-page-bnb-min](https://user-images.githubusercontent.com/108952654/217375907-7f179f0b-b5d9-4006-9f41-76fe33de7c64.gif)
 
-## Future Features
+## Listings Page Preview
+![listing-page-bnb](https://user-images.githubusercontent.com/108952654/217375920-2292ad0f-6632-43e3-b56a-59d66e9092fb.gif)
 
-- User profile page with user's reviews, hosted spots, and favorited spots. 
-- User ability to book a spot, update that booking, and delete it.
-- User ability to upload and view more than one image.
-- User ability to sign in via other methods (google, etc)
-- More design features to make the site feel more responsive and engaging. 
+## Trips Page Preview
+![chrome-capture-2023-1-7](https://user-images.githubusercontent.com/108952654/217375951-fc35992a-9c3c-4c4a-be4c-fae4b4ae9353.gif)
+
+## Wiki Links:
+
+### [Features List](https://github.com/Ykk2/AirBnB-clone/wiki/Features-List)
+### [API Documentation](https://github.com/Ykk2/AirBnB-clonee/wiki/API-Documentation)
+### [DB Schema](https://github.com/Ykk2/AirBnB-clone/wiki/Schema-Table)
 
 ## How to get started
 
