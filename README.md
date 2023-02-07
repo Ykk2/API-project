@@ -38,8 +38,8 @@ AirBnB clone that attempts to imitate the functionalities of the original site.
 ## Wiki Links:
 
 ### [Features List](https://github.com/Ykk2/AirBnB-clone/wiki/Features-List)
-### [API Documentation](https://github.com/Ykk2/AirBnB-clonee/wiki/API-Documentation)
-### [DB Schema](https://github.com/Ykk2/AirBnB-clone/wiki/Schema-Table)
+### [API Documentation](https://github.com/Ykk2/AirBnB-clone/wiki/API-Documentation)
+### [DB Schema](https://github.com/Ykk2/AirBnB-clone/wiki/Database-Schema)
 
 ## How to get started
 
