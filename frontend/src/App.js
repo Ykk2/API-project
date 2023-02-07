@@ -29,23 +29,23 @@ function App() {
       <div className="spacer"></div>
       {isLoaded && (
         <Switch>
-          <Route exact path='/'>
+          <Route exact={true} path='/'>
             <Spots />
           </Route>
-          <Route exact path="/spots/:spotId">
+          <Route exact={true} path="/spots/:spotId">
             <SpotPage />
           </Route>
-          <Route exact path="/host" >
+          <Route exact={true} path="/host" >
             <CreateSpotForm />
           </Route>
-          <Route>
-            <About exact path="/about"/>
-          </Route>
-          <Route exact path="/:username/bookings">
+          <Route path="/bookings/:username">
             <UserBookings />
           </Route>
-          <Route>
-            <Listings exact path="/:username/listings"/>
+          <Route exact={true} path="/listings/:username">
+            <Listings />
+          </Route>
+          <Route exact={true} path="/about/bnb">
+            <About />
           </Route>
         </Switch>
       )}
