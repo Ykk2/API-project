@@ -38,7 +38,6 @@ function ProfileButton({ user, setLogin, setShowModal }) {
     <div className="profile-button-container">
       <button className="profile-button" onClick={openMenu}>
         <i className="fas fa-user-circle" />
-
       </button>
       {showMenu && ( user ?
         (<ul className="profile-dropdown">
@@ -54,6 +53,9 @@ function ProfileButton({ user, setLogin, setShowModal }) {
           </Link>
           <Link to={`/${user.username}/listings`}>
             <span>Listings</span>
+          </Link>
+          <Link to={'/about'}>
+            <span>About</span>
           </Link>
           <button className="logout" onClick={logout}>Log Out</button>
 

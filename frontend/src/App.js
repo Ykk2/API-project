@@ -9,6 +9,7 @@ import SpotPage from "./components/SpotPage";
 import CreateSpotForm from "./components/SpotFormPage";
 import UserBookings from "./components/Bookings/UserBookings";
 import Listings from "./components/Listings";
+import About from "./components/About";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route exact path="/host" >
             <CreateSpotForm />
+          </Route>
+          <Route>
+            <About exact path="/about"/>
           </Route>
           <Route exact path="/:username/bookings">
             <UserBookings />

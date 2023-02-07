@@ -1,15 +1,24 @@
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { removeBooking } from "../../store/booking";
 
 
 const UpcomingBookings = ({bookings, spots}) => {
 
+    const dispatch = useDispatch()
+
     const filteredBookings = bookings.filter(booking => moment(new Date()).diff(moment(booking.startDate), 'day') <= 0)
+
+    const handleBookingDeleteClick = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        dispatch(removeBooking(e.target.value))
+    }
 
     return (
         <div>
             {filteredBookings.map(booking =>
                 <div className="upcoming-booking-card">
-
                     <div className="upcoming-booking-card-left">
                         <div>
                             <div>
@@ -33,6 +42,7 @@ const UpcomingBookings = ({bookings, spots}) => {
                                 <div>{spots[booking.spotId]?.city} {spots[booking.spotId]?.state} </div>
                                 <div>{spots[booking.spotId]?.country}</div>
                             </div>
+                            <button onClick={handleBookingDeleteClick} value={booking.id}>Cancel Reservation</button>
                         </div>
                     </div>
 
