@@ -1,0 +1,93 @@
+#page-one-icons {
+    padding-top: 0.7vw;
+    padding-bottom: 0.7vw;
+    width: 3vw;
+    height: auto;
+}
+
+.about {
+    margin: auto;
+    width: 50vw;
+}
+
+.about>div:nth-child(1) {
+    font-size: 2em;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.377);
+    padding-bottom: 1%;
+    margin-bottom: 2%
+}
+
+.about>div:nth-child(2) {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.377);
+    padding-bottom: 1%;
+    margin-bottom: 2%
+}
+
+.about>div:nth-child(3) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.about>div:nth-child(3) > a {
+    height: auto;
+    width: auto;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.angel-list {
+    transition-duration: 0.35s;
+    -webkit-transition-duration: 0.35s;
+}
+
+.angel-list:hover {
+    filter: invert(38%) sepia(33%) saturate(6910%) hue-rotate(329deg) brightness(101%) contrast(101%);
+    -webkit-animation: rotation 0.2s 2 linear;
+    animation: rotation 0.2s 2 linear;
+}
+
+
+@keyframes rotation {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    25% {
+        -webkit-transform: rotate(20deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    75% {
+        -webkit-transform: rotate(-20deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg);
+    }
+}
+
+
+.git-hub {
+    transition-duration: 0.35s;
+    -webkit-transition-duration: 0.35s;
+}
+
+.git-hub:hover {
+    filter: invert(38%) sepia(33%) saturate(6910%) hue-rotate(329deg) brightness(101%) contrast(101%);
+    transition: all 1.5s ease;
+}
+
+.linked-in {
+    transition-duration: 0.35s;
+    -webkit-transition-duration: 0.35s;
+}
+
+.linked-in:hover {
+    filter: invert(38%) sepia(33%) saturate(6910%) hue-rotate(329deg) brightness(101%) contrast(101%);
+    transition: all 1.5s ease;
+}
