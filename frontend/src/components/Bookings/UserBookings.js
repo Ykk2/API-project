@@ -8,7 +8,7 @@ import './trips.css'
 
 
 const UserBookings = () => {
-
+    
     const dispatch = useDispatch()
 
     const bookings = useSelector(state => Object.values(state.bookings.userBookings))

@@ -41,6 +41,9 @@ const BookingForm = ({ bookings, spot }) => {
 
     const handleButtonClick = (e) => {
         e.preventDefault()
+        if (!user) {
+            return setShowModal(true)
+        }
         dispatch(newBooking({
             startDate: moment(startDate).format("MM-DD-YYYY"),
             endDate: moment(endDate).format("MM-DD-YYYY"), spotId: spot.id
