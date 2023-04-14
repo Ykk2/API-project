@@ -10,6 +10,7 @@ import UserBookings from "./components/Bookings/UserBookings";
 import Listings from "./components/Listings";
 import AboutSite from "./components/About";
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -22,13 +23,13 @@ function App() {
     window.scrollTo(0, 0)
   }, [])
 
-
   return (
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
           <Route exact={true} path='/'>
+
             <Spots />
           </Route>
           <Route exact={true} path="/spots/:spotId">
