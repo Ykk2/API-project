@@ -36,43 +36,42 @@ const setTokenCookie = (res, user) => {
 // ...
 
 const restoreUser = (req, res, next) => {
-    // token parsed from cookies
-    const { token } = req.cookies;
-    req.user = null;
+  // token parsed from cookies
+  const { token } = req.cookies;
 
-    return jwt.verify(token, secret, null, async (err, jwtPayload) => {
-      if (err) {
-        return next();
-      }
-
-      try {
-        const { id } = jwtPayload.data;
-        req.user = await User.scope('currentUser').findByPk(id);
-      } catch (e) {
-        res.clearCookie('token');
-        return next();
-      }
-
-      if (!req.user) res.clearCookie('token');
-
+  jwt.verify(token, secret, null, async (err, jwtPayload) => {
+    if (err) {
       return next();
-    });
-  };
+    }
+
+    try {
+      const { id } = jwtPayload.data;
+      req.user = await User.scope('currentUser').findByPk(id);
+    } catch (e) {
+      // User not found or database error
+    }
+
+    if (!req.user) {
+      res.clearCookie('token');
+    }
+
+    return next();
+  });
+};
 
 
-  // backend/utils/auth.js
-// ...
 
 // If there is no current user, return an error
-const requireAuth = function (req, _res, next) {
-    if (req.user) return next();
-
-    const err = new Error('Unauthorized');
-    err.title = 'Unauthorized';
-    err.errors = ['Unauthorized'];
-    err.status = 401;
-    return next(err);
+const requireAuth = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "Unauthorized" });
   }
+  return next();
+};
 
 
-module.exports = { setTokenCookie, restoreUser, requireAuth };
+module.exports = {
+  setTokenCookie,
+  restoreUser,
+  requireAuth
+};

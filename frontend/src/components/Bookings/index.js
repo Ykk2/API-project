@@ -46,7 +46,8 @@ const BookingForm = ({ bookings, spot }) => {
         }
         dispatch(newBooking({
             startDate: moment(startDate).format("MM-DD-YYYY"),
-            endDate: moment(endDate).format("MM-DD-YYYY"), spotId: spot.id
+            endDate: moment(endDate).format("MM-DD-YYYY"),
+            spotId: spot.id
         })).then(
             history.push(`/bookings/${user.username}`)
         )
