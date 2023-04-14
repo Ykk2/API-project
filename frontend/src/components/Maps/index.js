@@ -54,8 +54,6 @@ const Maps = ({ spot }) => {
         setMap(null)
     }, [])
 
-    console.log(currentPosition)
-
     return (
         <>
 

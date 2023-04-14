@@ -40,7 +40,7 @@
 }
 
 #endDateId {
-    font-size: 0.7em;
+    font-size: 0.7rem;
     height: 100%;
     width: 90%;
     margin-top: 0;
@@ -50,7 +50,7 @@
 #startDateId {
     height: 100%;
     width: 80%;
-    font-size: 0.7em;
+    font-size: 0.7rem;
     margin-top: 0;
     border-radius: 8px;
 }
@@ -112,12 +112,12 @@
 
 .calendar-info-top>span:nth-child(1) {
     font-weight: bold;
-    font-size: 1.2em
+    font-size: 1.2rem
 }
 
 .calendar-info-top>span:nth-child(2) {
     color: gray;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     margin-top: 1.2%
 }
 
@@ -254,12 +254,12 @@ td {
 
 .booking-form-container > div > span:nth-child(1) {
     font-weight: bold;
-    font-size: 1.25em
+    font-size: 1.25rem
 }
 
 .booking-form-container > div > span:nth-child(1) > span {
     font-weight:100;
-    font-size: 0.7em
+    font-size: 0.7rem
 }
 
 .booking-form-container > div:nth-child(1) {
@@ -273,7 +273,7 @@ td {
 }
 
 .booking-form-container > div > span:nth-child(2) {
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 .booking-calculations {

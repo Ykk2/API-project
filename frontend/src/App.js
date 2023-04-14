@@ -13,6 +13,7 @@ import AboutSite from "./components/About";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -25,7 +26,6 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <div className="spacer"></div>
       {isLoaded && (
         <Switch>
           <Route exact={true} path='/'>

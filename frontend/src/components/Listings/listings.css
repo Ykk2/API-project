@@ -79,7 +79,7 @@
     flex-direction: row;
 }
 
-.fa-solid {
+.fa-circle-check {
     color: green !important;
 }
 
@@ -87,7 +87,7 @@
     border-radius: 5px;
     background-color: rgb(255,56,92);
     color: white;
-    font-size: 0.7em;
+    font-size: 0.7rem;
 
 }
 

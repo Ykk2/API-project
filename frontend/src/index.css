@@ -20,27 +20,12 @@
 
 * {
     font-family: Light;
+    box-sizing: border-box
 }
 
-.spacer {
-    max-height: 10%;
-    min-height: 40px;
-    width: 100%;
-}
 
-html {
-    height: 100vh;
-    position: relative;
-}
-
-body, #root {
-    position: absolute;
-    box-sizing: border-box;
-    background-color: white;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+body {
+    margin: 0
 }
 
 li {
@@ -49,4 +34,8 @@ li {
 
 button {
     cursor: pointer;
+}
+
+ul {
+    list-style-type: none
 }

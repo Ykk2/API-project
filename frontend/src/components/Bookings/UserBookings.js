@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getUserBookings } from "../../store/booking"
 import { getSpots } from "../../store/spots"
@@ -8,7 +8,7 @@ import './trips.css'
 
 
 const UserBookings = () => {
-    
+
     const dispatch = useDispatch()
 
     const bookings = useSelector(state => Object.values(state.bookings.userBookings))

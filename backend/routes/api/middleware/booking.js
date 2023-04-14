@@ -1,9 +1,6 @@
 const { Booking, Spot } = require('../../../db/models');
 
-
-
 const getUserBookings = async (req, res) => {
-    console.log(Booking)
     try {
         const userId = req.user.id;
         const bookings = await Booking.findAllCurrentBookingsByUserId(userId);
@@ -12,7 +9,6 @@ const getUserBookings = async (req, res) => {
         return res.status(400).json({ message: error.message });
     }
 };
-
 
 const updateBooking = async (req, res) => {
     const { bookingId } = req.params;

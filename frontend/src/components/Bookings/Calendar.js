@@ -8,18 +8,12 @@ import { DateRangePicker } from 'react-dates';
 import { Fragment } from 'react';
 import "./calendar.css"
 
-
-
-
 const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDate, setEndDate }) => {
 
     const dispatch = useDispatch()
-
-
     const [focusedInput, setFocusedInput] = useState(null)
     const [bookedDates, setBookedDates] = useState([])
     const [blockedDates, setBlockedDates] = useState([])
-
 
     useEffect(() => {
         existingBookings(bookings)
@@ -70,7 +64,6 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
         })
     }
 
-
     const checkGapDays = (day) => {
         if (day > moment()) {
             const gapDays = []
@@ -79,8 +72,6 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
         }
 
     }
-
-
 
     const validatedDates = (day) => {
 
@@ -117,7 +108,6 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
         setFocusedInput(null)
     }
 
-
     const addInfo = (e) => {
         return (
             <Fragment>
@@ -134,8 +124,6 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
             </Fragment>
         )
     }
-
-
 
     return (
 
@@ -162,6 +150,5 @@ const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDat
 
     )
 }
-
 
 export default CalendarComponent

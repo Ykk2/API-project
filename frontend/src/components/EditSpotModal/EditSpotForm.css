@@ -82,7 +82,7 @@
 }
 
 .edit-spot-form-container > div:nth-child(2) > span {
-    font-size: 0.8em;
+    font-size: 0.8rem;
     padding: 1%;
 }
 
@@ -179,7 +179,7 @@
 .edit-spot-form-input-container > label {
     position: absolute;
     background-color: white;
-    font-size: 0.7em;
+    font-size: 0.7rem;
     left: 2%;
     top: 20%;
     padding-left: 1%;
@@ -208,7 +208,7 @@
 .edit-spot-form-img-input-container > label {
     position: absolute;
     background-color: white;
-    font-size: 0.7em;
+    font-size: 0.7rem;
     left: 4%;
     top:4%;
     padding-left: 2%;
@@ -224,6 +224,6 @@
     width: 90%;
     margin-top: 2%;
     color: red;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     font-weight: bold;
 }

@@ -80,7 +80,7 @@
 }
 
 .spotTitle > span {
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 .spotDetails {
@@ -90,7 +90,7 @@
 }
 
 .spotDetails-top {
-    font-size: 1.3em;
+    font-size: 1.3rem;
     padding-bottom: 4%;
     border-bottom: 1px solid rgba(190, 190, 190, 0.635);
     margin-bottom: 4%;
@@ -99,7 +99,7 @@
 
 .spotDetails-bottom > div:nth-child(1){
     margin-bottom: 3%;
-    font-size: 1.8em;
+    font-size: 1.8rem;
     font-family: Bold
 }
 
@@ -129,7 +129,7 @@
 .reviews-container-top {
     margin-bottom: 3%;
     font-weight: bold;
-    font-size: 1.3em
+    font-size: 1.3rem
 }
 
 .review-card > div:nth-child(1){
@@ -151,7 +151,7 @@
     margin-top: 4%;
     padding-top: 4%;
     border-top: 1px solid rgba(128, 128, 128, 0.31);
-    font-size: 1.4em;
+    font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 4%;
 }

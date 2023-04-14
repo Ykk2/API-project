@@ -8,8 +8,6 @@ import moment from "moment";
 import CalendarComponent from "./Calendar"
 import "./bookingform.css"
 
-
-
 const BookingForm = ({ bookings, spot }) => {
 
     const dispatch = useDispatch()

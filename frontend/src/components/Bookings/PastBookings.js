@@ -10,16 +10,12 @@ import PastBookingsCard from "./PastBookingCard";
 const PastBookings = ({bookings, spots}) => {
 
     const dispatch = useDispatch()
-
     const reviews = useSelector(state => Object.values(state.reviews))
     const filteredBookings = bookings.filter(booking => moment(new Date()).diff(moment(booking.startDate), 'day') > 0)
 
     useEffect(() => {
         dispatch(getUserReviews())
     }, [dispatch])
-
-
-    console.log(reviews)
 
     return (
         <div>
