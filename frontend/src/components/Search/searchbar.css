@@ -10,6 +10,7 @@
     justify-self: center;
     margin-top: 1em;
     margin-bottom: 1em;
+    z-index: 1000;
 }
 
 .search-bar {
