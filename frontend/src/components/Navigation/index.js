@@ -6,8 +6,8 @@ import { Modal } from '../../context/Modal'
 import LoginForm from '../LoginFormModal/LoginForm';
 import SignupFormPage from '../SignupFormPage';
 import SearchBar from '../Search';
-import Carousel from '../Spots/carousel/carousel';
-import items from '../Spots/carousel/icons';
+import Carousel from './carousel/carousel';
+import items from './carousel/icons';
 import './Navigation.css';
 
 
