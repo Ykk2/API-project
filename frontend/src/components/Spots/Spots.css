@@ -128,3 +128,11 @@ p {
 .details-container > p {
   margin: 0;
 }
+
+#cost {
+  font-weight: bold;
+}
+
+#cost > span {
+  font-weight: normal
+}

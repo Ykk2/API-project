@@ -29,7 +29,6 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact={true} path='/'>
-
             <Spots />
           </Route>
           <Route exact={true} path="/spots/:spotId">

@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import './carousel.css';
 
-const CarouselItem = ({ description, src }) => (
 
+const CarouselItem = ({ description, src }) => (
   <div className="carousel-item">
     <img src={src} className={`item-icon`} />
     <p className="item-description">{description}</p>
   </div>
 );
-
 
 const Carousel = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -6,7 +6,7 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
 import { Fragment } from 'react';
-import "./calendar.css"
+import "./styles/calendar.css"
 
 const CalendarComponent = ({ bookings, setReady, startDate, endDate, setStartDate, setEndDate }) => {
 

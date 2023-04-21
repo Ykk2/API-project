@@ -6,7 +6,7 @@ import { Modal } from '../../context/Modal'
 import LoginForm from "../LoginFormModal/LoginForm"
 import moment from "moment";
 import CalendarComponent from "./Calendar"
-import "./bookingform.css"
+import "./styles/bookingform.css"
 
 const BookingForm = ({ bookings, spot }) => {
 

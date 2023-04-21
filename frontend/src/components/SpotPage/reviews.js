@@ -2,7 +2,6 @@
 
 const SpotReviews = ({reviews, spot}) => {
 
-
     const dateConverter = (date) => {
         const newDate = new Date(date)
         return newDate.toLocaleString('default', {month: 'short', year: 'numeric'})

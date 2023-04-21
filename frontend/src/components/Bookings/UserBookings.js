@@ -4,7 +4,7 @@ import { getUserBookings } from "../../store/booking"
 import { getSpots } from "../../store/spots"
 import UpcomingBookings from "./UpcomingBookings"
 import PastBookings from "./PastBookings"
-import './trips.css'
+import './styles/trips.css'
 
 
 const UserBookings = () => {

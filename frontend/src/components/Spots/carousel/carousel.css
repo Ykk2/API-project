@@ -5,7 +5,9 @@
   justify-content: center;
   width: 90vw;
   margin: 25px auto 20px auto;
+  transition: transform 0.3s ease-in-out;
 }
+
 
 .carousel-button {
   background-color: transparent;
@@ -36,10 +38,6 @@
 
 }
 
-/* .carousel-item:hover {
-
-  border-bottom: 2px solid rgb(97, 97, 97);
-} */
 
 .carousel-item:hover .item-icon,
 .carousel-item:hover .item-description {

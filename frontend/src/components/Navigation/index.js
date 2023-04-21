@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { Modal } from '../../context/Modal'
 import LoginForm from '../LoginFormModal/LoginForm';
 import SignupFormPage from '../SignupFormPage';
 import SearchBar from '../Search';
-import Carousel from './carousel/carousel';
-import items from './carousel/icons';
+
 import './Navigation.css';
 
 
@@ -34,7 +32,6 @@ function Navigation() {
           />
         </div>
       </div>
-      <Carousel items={items} />
       {
         showModal &&
         <Modal

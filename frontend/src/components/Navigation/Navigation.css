@@ -1,7 +1,7 @@
 .navBar {
     background: rgb(255, 255, 255);
     position: sticky;
-    top: 0px;
+    top: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,7 @@
     align-items: center;
     border-bottom: 1px solid rgb(232, 232, 232);
     z-index: 99;
+
 }
 .navBar a {
     text-decoration: none;
@@ -18,7 +19,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    border-bottom: 1px solid rgb(232, 232, 232);
+
 }
 
 .nav-container {

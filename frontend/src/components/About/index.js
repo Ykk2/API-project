@@ -10,7 +10,7 @@ const AboutSite = () => {
             <div>About</div>
             <div>
                 <p>Hello! Welcome to BnB.</p>
-                <p>My name is Richard and this is my first fullstack application.</p>
+                <p>This was created by Richard Kwon and this is my first fullstack application.</p>
                 <p>Please feel free to reach out to me via the links below with any comments or suggestions!</p>
             </div>
             <div>

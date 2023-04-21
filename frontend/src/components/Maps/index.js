@@ -7,8 +7,7 @@ import './maps.css'
 const Maps = ({ spot }) => {
 
     //This sets the center of the map. This must be set BEFORE the map loads
-
-    const [currentPosition, setCurrentPosition] = useState()
+    // const [currentPosition, setCurrentPosition] = useState()
 
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
     // set response language. Defaults to english.

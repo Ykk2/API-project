@@ -45,7 +45,7 @@ function EditReview ({currentReview, setShowModal, spot}) {
         if (passed === true) {
             const payload = {review, stars:+stars}
             let res = await dispatch(reviewActions.updateReview(currentReview.id, payload, user))
-            let ratingUpdate = await dispatch(spotActions.updateStarRating(spot.id))
+            await dispatch(spotActions.updateStarRating(spot.id))
             if (res) {
                 setShowModal(false)
             }

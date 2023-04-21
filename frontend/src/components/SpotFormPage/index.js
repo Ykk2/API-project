@@ -95,9 +95,6 @@ const CreateSpotForm = () => {
         e.preventDefault()
         history.push('/')
     }
-
-
-
     ////////////////////////////////////////////////////////////////////////////////////////
 
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API);
@@ -116,8 +113,6 @@ const CreateSpotForm = () => {
         };
         if (city && passed === true) makeMap()
     }, [city, passed]);
-
-
 
 
     return (
