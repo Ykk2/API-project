@@ -58,30 +58,36 @@ AirBnB clone that attempts to imitate the functionalities of the original site.
 
 ## Dependencies:
 
-- Frontend
-	- Babel
-	- js-cookie
-	- moment
-	- react
-	- react-dates
-	- react-dom
-
-- Backend
-	- bcryptjs
-	- cookie-parser
-	- cors
-	- csurf
-	- dotenv
-	- express
-	- express-async-errors
-	- express-validator
-	- helmet
-	- jsonwebtoken
-	- morgan
-	- per-env
-	- pg
-	- sequelize
-	- sequelize-cli
+- Babel
+- js-cookie
+- moment
+- react
+- react-dates
+- react-dom
+- react-google-maps
+- react-geocode
+- react-redux
+- react-scripts
+- redux
+- redux-thunk
+- react-router-dom
+- date-fns
+- font-aweome
+- bcryptjs
+- cookie-parser
+- cors
+- csurf
+- dotenv
+- express
+- express-async-errors
+- express-validator
+- helmet
+- jsonwebtoken
+- morgan
+- per-env
+- pg
+- sequelize
+- sequelize-cli
 
 
 ## Contact Me
