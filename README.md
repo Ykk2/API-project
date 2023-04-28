@@ -10,6 +10,13 @@ To learn how to develop a fullstack application.
 
 AirBnB clone that attempts to imitate the functionalities of the original site.
 
+
+## Wiki Links:
+
+### [Features List](https://github.com/Ykk2/AirBnB-clone/wiki/Feature-List)
+### [API Documentation](https://github.com/Ykk2/AirBnB-clone/wiki/API-Documentation)
+### [DB Schema](https://github.com/Ykk2/AirBnB-clone/wiki/Database-Schema)
+
 ## Technologies
 <div align="center">
 	<code><img height="50" src="https://user-images.githubusercontent.com/25181517/117447155-6a868a00-af3d-11eb-9cfe-245df15c9f3f.png" alt="JavaScript" title="JavaScript" /></code>
@@ -35,11 +42,7 @@ AirBnB clone that attempts to imitate the functionalities of the original site.
 ## Trips Page Preview
 ![chrome-capture-2023-1-7](https://user-images.githubusercontent.com/108952654/217375951-fc35992a-9c3c-4c4a-be4c-fae4b4ae9353.gif)
 
-## Wiki Links:
 
-### [Features List](https://github.com/Ykk2/AirBnB-clone/wiki/Feature-List)
-### [API Documentation](https://github.com/Ykk2/AirBnB-clone/wiki/API-Documentation)
-### [DB Schema](https://github.com/Ykk2/AirBnB-clone/wiki/Database-Schema)
 
 ## How to get started
 
@@ -52,13 +55,41 @@ AirBnB clone that attempts to imitate the functionalities of the original site.
 6) A new browser should be open now with the running application.
 
 
+
+## Dependencies:
+
+- Frontend
+	- Babel
+	- js-cookie
+	- moment
+	- react
+	- react-dates
+	- react-dom
+
+- Backend
+	- bcryptjs
+	- cookie-parser
+	- cors
+	- csurf
+	- dotenv
+	- express
+	- express-async-errors
+	- express-validator
+	- helmet
+	- jsonwebtoken
+	- morgan
+	- per-env
+	- pg
+	- sequelize
+	- sequelize-cli
+
+
 ## Contact Me
 
 Please feel free to reach out to me with anything related to this project. 
 
-<code>
+
 <a href="www.linkedin.com/in/richardkwon2">
 <img height="50" src="https://www.vectorlogo.zone/logos/linkedin/linkedin-icon.svg" alt="CSS" title="CSS" />
 </a>
-</code>
-</div>
+
