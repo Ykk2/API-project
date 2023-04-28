@@ -54,13 +54,6 @@ const editSpot = (data) => {
     }
 }
 
-const editImage = (data) => {
-    return {
-        type: ADD_IMAGE,
-        data
-    }
-}
-
 const addImage = (data) => {
     return {
         type: ADD_IMAGE,
@@ -183,11 +176,9 @@ export const editSpotImage = (data) => async (dispatch) => {
     if (res.ok) {
 
         const data = await res.json()
-        console.log(data, "succesful")
         dispatch(addImage(data))
         return data
     }
-    console.log("failed")
 }
 
 const initialState = {spots: {}, spot: {}, userSpots: {}}
