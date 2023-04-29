@@ -1,15 +1,13 @@
-# Build stage
-FROM node:16.18.1-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+FROM node:16.18.1
 
-# Production stage
-FROM node:16.18.1-alpine
 WORKDIR /app
-COPY --from=build /app/build ./build
-COPY package*.json ./
-RUN npm install --production
+
+COPY . .
+
+RUN npm install
+
+RUN npm run render-postbuild && npm run build && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all
+
+EXPOSE 8000
+
 CMD ["npm", "start"]

@@ -1,7 +1,7 @@
 {
-  "name": "bnb",
+  "name": "authenticate-me",
   "version": "1.0.0",
-  "description": "airbnb clone",
+  "description": "## Database Schema Design",
   "main": "index.js",
   "scripts": {
     "render-postbuild": "npm run build --prefix frontend",
