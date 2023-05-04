@@ -111,6 +111,12 @@
     box-shadow: 2px 2px 5px rgba(145, 145, 145, 0.3);
 }
 
+@media (max-width: 999px) {
+    .place-holder-search-bar {
+      display: none;
+    }
+  }
+
 
 #search-place {
     margin: auto;
